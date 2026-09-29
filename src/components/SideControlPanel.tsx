@@ -173,6 +173,17 @@ export const SideControlPanel: React.FC = () => {
         </button>
       </div>
 
+      {/* GitHub Actions CI/CD Info Card */}
+      <div className="bg-[#181818] border border-[#2a2a2a] rounded-xl p-3 flex flex-col gap-1.5 text-[11px]">
+        <div className="flex items-center gap-1.5 text-pink-400 font-semibold">
+          <CheckCircle2 className="w-3.5 h-3.5" />
+          <span>GitHub APK Release CI/CD</span>
+        </div>
+        <p className="text-gray-400 text-[10px] leading-relaxed">
+          Workflow configured in <code className="text-gray-200">.github/workflows/build-and-release-apk.yml</code>. Pushing to GitHub builds & releases the APK in Releases assets automatically.
+        </p>
+      </div>
+
       {/* Primary Export CTA */}
       <div className="mt-auto pt-3 border-t border-[#222222] flex flex-col gap-2">
         <button
