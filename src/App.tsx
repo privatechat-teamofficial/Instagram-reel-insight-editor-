@@ -44,7 +44,7 @@ const ReelInsightsScreen: React.FC = () => {
   } = useInsights();
 
   return (
-    <div className="min-h-screen w-full bg-[#0d0f12] select-none relative font-acumin overflow-x-hidden flex flex-col">
+    <div className="min-h-screen w-full bg-[#0d0f12] select-none relative font-acumin flex flex-col">
       {/* Reel Insights Screen Content Container - spans the whole screen */}
       <div
         id="reel-insights-preview-container"

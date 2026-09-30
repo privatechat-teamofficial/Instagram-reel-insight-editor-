@@ -101,9 +101,9 @@ export const OverviewTab: React.FC = () => {
         </div>
 
         {/* 2x2 Grid Cards: Roomier cards with #25292E background and rounded corners */}
-        <div className="grid grid-cols-2 gap-3 w-full">
+        <div className="grid grid-cols-2 gap-2.5 w-full">
           {/* Box 1: Views */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Views
             </span>
@@ -112,14 +112,14 @@ export const OverviewTab: React.FC = () => {
               title="Views"
               type="number"
               value={data.summary.views}
-              className="text-[21px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1.5"
+              className="text-[20px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1"
             >
               {formatNumber(data.summary.views)}
             </EditableValue>
           </div>
 
           {/* Box 2: Viewers */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Viewers
             </span>
@@ -128,14 +128,14 @@ export const OverviewTab: React.FC = () => {
               title="Viewers"
               type="number"
               value={data.summary.viewers}
-              className="text-[21px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1.5"
+              className="text-[20px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1"
             >
               {formatNumber(data.summary.viewers)}
             </EditableValue>
           </div>
 
           {/* Box 3: Average watch time */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Average watch time
             </span>
@@ -144,14 +144,14 @@ export const OverviewTab: React.FC = () => {
               title="Average watch time"
               type="time"
               value={data.summary.averageWatchTime}
-              className="text-[21px] font-bold text-white tracking-tight leading-tight mt-1.5"
+              className="text-[20px] font-bold text-white tracking-tight leading-tight mt-1"
             >
               {data.summary.averageWatchTime}
             </EditableValue>
           </div>
 
           {/* Box 4: Follows */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Follows
             </span>
@@ -160,7 +160,7 @@ export const OverviewTab: React.FC = () => {
               title="Follows"
               type="number"
               value={data.summary.follows}
-              className="text-[21px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1.5"
+              className="text-[20px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1"
             >
               {formatNumber(data.summary.follows)}
             </EditableValue>
