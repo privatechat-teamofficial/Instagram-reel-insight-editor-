@@ -18,7 +18,7 @@ export const TabsNavigation: React.FC = () => {
     <div
       className="sticky z-20 w-full border-b border-[#1c2025] bg-[#0d0f12] select-none shrink-0"
       style={{
-        top: 'calc(4rem + env(safe-area-inset-top, 0px))',
+        top: 'calc(3.75rem + env(safe-area-inset-top, 0px))',
       }}
     >
       <div className="grid grid-cols-3 w-full relative">
