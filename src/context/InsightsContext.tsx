@@ -55,7 +55,7 @@ interface InsightsContextType {
   removeSourceItem: (id: string) => void;
 }
 
-const STORAGE_KEY = 'reel_insights_editor_state_v1';
+const STORAGE_KEY = 'reel_insights_editor_state_v3';
 
 const InsightsContext = createContext<InsightsContextType | undefined>(undefined);
 
