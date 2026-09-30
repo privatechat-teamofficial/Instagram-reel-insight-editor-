@@ -54,14 +54,16 @@ public class MainActivity extends BridgeActivity {
         View decorView = window.getDecorView();
         if (decorView != null) {
             decorView.setBackgroundColor(DARK_BG);
+            decorView.setFitsSystemWindows(false);
+            decorView.setOnApplyWindowInsetsListener((v, insets) -> insets);
         }
 
-        // 4. Ensure system bars draw transparently for true edge-to-edge
+        // 4. Ensure system bars draw #0d0f12 / transparent for true seamless top edge
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        window.setStatusBarColor(Color.TRANSPARENT);
-        window.setNavigationBarColor(Color.TRANSPARENT);
+        window.setStatusBarColor(DARK_BG);
+        window.setNavigationBarColor(DARK_BG);
 
         // 5. Disable Android 10+ contrast scrim overlay so system bars don't get forced white/gray
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -76,10 +78,15 @@ public class MainActivity extends BridgeActivity {
             insetsController.setAppearanceLightNavigationBars(false);   // false = light/white navigation icons
         }
 
-        // 7. Ensure underlying WebView has the same dark background
+        // 7. Ensure underlying WebView and container have the same dark background and no system insets
         if (getBridge() != null && getBridge().getWebView() != null) {
             WebView webView = getBridge().getWebView();
             webView.setBackgroundColor(DARK_BG);
+            webView.setFitsSystemWindows(false);
+            if (webView.getParent() instanceof View) {
+                ((View) webView.getParent()).setBackgroundColor(DARK_BG);
+                ((View) webView.getParent()).setFitsSystemWindows(false);
+            }
         }
     }
 }

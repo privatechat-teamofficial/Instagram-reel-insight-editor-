@@ -36,7 +36,7 @@ export const EngagementTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-3 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-[54px] pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Actions after viewing */}
       <section className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -59,7 +59,7 @@ export const EngagementTab: React.FC = () => {
       </section>
 
       {/* 2. Interactions Breakdown */}
-      <section className="flex flex-col gap-2 pt-1">
+      <section className="flex flex-col gap-2 mt-10">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Interactions</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
@@ -139,7 +139,7 @@ export const EngagementTab: React.FC = () => {
       </section>
 
       {/* 3. When people liked your reel */}
-      <section className="flex flex-col gap-2.5 pt-2">
+      <section className="flex flex-col gap-2 mt-[48px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">When people liked your reel</span>
@@ -160,11 +160,11 @@ export const EngagementTab: React.FC = () => {
           )}
         </div>
 
-        {/* Center Thumbnail with Play Button */}
-        <div className="flex justify-center my-1.5">
+        {/* Center Thumbnail with Play Button matching Instagram reference */}
+        <div className="flex justify-center my-3">
           <div
             onClick={() => isEditMode && setIsMediaModalOpen(true)}
-            className="relative w-24 h-36 rounded-[10px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
+            className="relative w-[78px] h-[112px] rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
           >
             {data.mediaType === 'video' ? (
               <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
@@ -176,8 +176,8 @@ export const EngagementTab: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             )}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/25">
-              <Play className="w-6 h-6 text-white fill-white/80" />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+              <Play className="w-5 h-5 text-white fill-white/80" />
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export const EngagementTab: React.FC = () => {
             <svg
               viewBox={`0 0 ${svgWidth} ${svgHeight}`}
               preserveAspectRatio="none"
-              className="w-full h-[85px] overflow-visible"
+              className="w-full h-[80px] overflow-visible"
               onMouseLeave={() => setHoverPoint(null)}
             >
               <line x1={padLeft} y1={padTop} x2={svgWidth - padRight} y2={padTop} stroke="#20242a" strokeWidth="1" />

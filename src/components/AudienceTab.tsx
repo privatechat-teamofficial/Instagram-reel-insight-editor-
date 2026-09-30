@@ -84,18 +84,18 @@ export const AudienceTab: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-3 pb-14 w-full text-white select-none bg-[#0d0f12]">
-      {/* 1. Who viewed your reel - positioned at exact same place and font size as 'Actions after viewing' in EngagementTab */}
-      <section className="flex flex-col gap-2">
+    <div className="flex flex-col px-4 pt-[56px] pb-14 w-full text-white select-none bg-[#0d0f12]">
+      {/* 1. Who viewed your reel */}
+      <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Who viewed your reel</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* Shifted lower with generous gap below 'Who viewed your reel' */}
-        <div className="flex flex-col gap-4 mt-4">
+        {/* Followers & Non-followers with generous Instagram rhythm */}
+        <div className="flex flex-col gap-6 mt-7">
           {/* Followers */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2.5">
             <span className="text-[16px] font-normal text-white leading-tight">Followers</span>
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
@@ -117,7 +117,7 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* Non-followers */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2.5">
             <span className="text-[16px] font-normal text-white leading-tight">Non-followers</span>
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
@@ -141,14 +141,14 @@ export const AudienceTab: React.FC = () => {
       </section>
 
       {/* 2. Audience details */}
-      <section className="flex flex-col gap-2 pt-2.5">
+      <section className="flex flex-col mt-[52px]">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Audience details</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* Sub-tabs filter pills: Age | Country | Gender (increased height, precisely vertically centered) */}
-        <div className="flex items-center gap-2 mt-2">
+        {/* Sub-tabs filter pills: Age | Country | Gender */}
+        <div className="flex items-center gap-2 mt-5">
           {subTabs.map((tab) => {
             const isActive = audienceSubTab === tab.id;
             return (
@@ -170,12 +170,12 @@ export const AudienceTab: React.FC = () => {
           })}
         </div>
 
-        {/* Dynamic Sub-tab Breakdown - kept mounted with minimum height to eliminate tablet layout shift */}
-        <div className="flex flex-col gap-2 mt-3.5 min-h-[220px]">
-          {/* A. AGE SUBTAB (Default: 13-17, 18-24, 25-34, 35-44, 45-54, 55-64, 65+) */}
-          <div className={audienceSubTab === 'age' ? 'flex flex-col gap-2.5' : 'hidden'}>
+        {/* Dynamic Sub-tab Breakdown */}
+        <div className="flex flex-col mt-7 min-h-[220px]">
+          {/* A. AGE SUBTAB */}
+          <div className={audienceSubTab === 'age' ? 'flex flex-col gap-[22px]' : 'hidden'}>
             {ageList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-1">
+              <div key={item.id} className="flex flex-col gap-2">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.age.${idx}.name`}
@@ -229,9 +229,9 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* B. COUNTRY SUBTAB */}
-          <div className={audienceSubTab === 'country' ? 'flex flex-col gap-2.5' : 'hidden'}>
+          <div className={audienceSubTab === 'country' ? 'flex flex-col gap-[22px]' : 'hidden'}>
             {countryList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-1">
+              <div key={item.id} className="flex flex-col gap-2">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.country.${idx}.name`}
@@ -285,9 +285,9 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* C. GENDER SUBTAB */}
-          <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-2.5' : 'hidden'}>
+          <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-[22px]' : 'hidden'}>
             {genderList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-1">
+              <div key={item.id} className="flex flex-col gap-2">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.gender.${idx}.name`}

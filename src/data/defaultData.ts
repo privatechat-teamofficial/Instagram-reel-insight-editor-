@@ -66,6 +66,20 @@ export const DEFAULT_REEL_DATA: ReelInsightsState = {
       iconType: 'like',
     },
     {
+      id: 'repost',
+      name: 'Repost rate',
+      rate: 1.2,
+      status: 'Lower',
+      iconType: 'repost',
+    },
+    {
+      id: 'comment',
+      name: 'Comment rate',
+      rate: 0.8,
+      status: 'Lower',
+      iconType: 'comment',
+    },
+    {
       id: 'save',
       name: 'Save rate',
       rate: 0.0,

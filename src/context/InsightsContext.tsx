@@ -55,7 +55,7 @@ interface InsightsContextType {
   removeSourceItem: (id: string) => void;
 }
 
-const STORAGE_KEY = 'reel_insights_editor_state_v4';
+const STORAGE_KEY = 'reel_insights_editor_state_v5';
 
 const InsightsContext = createContext<InsightsContextType | undefined>(undefined);
 
@@ -64,6 +64,7 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       const keysToTry = [
         STORAGE_KEY,
+        'reel_insights_editor_state_v4',
         'reel_insights_editor_state_v3',
         'reel_insights_editor_state_v2',
         'reel_insights_editor_state_v1',
@@ -100,10 +101,16 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                   ? parsed.audience.gender
                   : DEFAULT_REEL_DATA.audience.gender,
             },
-            impactFactors:
-              parsed.impactFactors && parsed.impactFactors.length > 0
-                ? parsed.impactFactors
-                : DEFAULT_REEL_DATA.impactFactors,
+            impactFactors: (() => {
+              if (!parsed.impactFactors || parsed.impactFactors.length === 0) {
+                return DEFAULT_REEL_DATA.impactFactors;
+              }
+              const existingIcons = new Set(parsed.impactFactors.map((i: any) => i.iconType));
+              const missingDefaults = DEFAULT_REEL_DATA.impactFactors.filter(
+                (df) => !existingIcons.has(df.iconType)
+              );
+              return [...parsed.impactFactors, ...missingDefaults];
+            })(),
             watchTimeRetention:
               parsed.watchTimeRetention?.points && parsed.watchTimeRetention.points.length > 0
                 ? parsed.watchTimeRetention

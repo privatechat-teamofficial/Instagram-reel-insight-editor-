@@ -3,6 +3,7 @@ import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { ViewsLineChart } from './ViewsLineChart';
 import { DEFAULT_REEL_DATA } from '../data/defaultData';
+import { ImpactFactor } from '../types/insights';
 import {
   InfoCircleIcon,
   SkipRateIcon,
@@ -17,6 +18,7 @@ import { Plus, Trash2, Play, Calendar } from 'lucide-react';
 export const OverviewTab: React.FC = () => {
   const {
     data,
+    setData,
     isEditMode,
     addSourceItem,
     removeSourceItem,
@@ -41,6 +43,41 @@ export const OverviewTab: React.FC = () => {
     data?.topSources && data.topSources.length > 0
       ? data.topSources
       : DEFAULT_REEL_DATA.topSources;
+
+  const removeImpactItem = (id: string) => {
+    setData((prev) => ({
+      ...prev,
+      impactFactors: (prev.impactFactors || []).filter((item) => item.id !== id),
+    }));
+  };
+
+  const addImpactItem = () => {
+    setData((prev) => ({
+      ...prev,
+      impactFactors: [
+        ...(prev.impactFactors || DEFAULT_REEL_DATA.impactFactors),
+        {
+          id: `impact-${Date.now()}`,
+          name: 'Repost rate',
+          rate: 1.2,
+          status: 'Lower',
+          iconType: 'repost',
+        },
+      ],
+    }));
+  };
+
+  const cycleIcon = (idx: number) => {
+    if (!isEditMode) return;
+    const icons: Array<ImpactFactor['iconType']> = ['skip', 'share', 'like', 'save', 'repost', 'comment'];
+    const current = impactList[idx]?.iconType || 'skip';
+    const next = icons[(icons.indexOf(current) + 1) % icons.length];
+    setData((prev) => {
+      const list = [...(prev.impactFactors || DEFAULT_REEL_DATA.impactFactors)];
+      list[idx] = { ...list[idx], iconType: next };
+      return { ...prev, impactFactors: list };
+    });
+  };
 
   // All symbol heights and widths are identical to the like symbol (HeartIcon)
   const getImpactIcon = (iconType?: string) => {
@@ -92,7 +129,7 @@ export const OverviewTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-3 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-[54px] pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Summary Section */}
       <section className="flex flex-col gap-3.5">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -168,8 +205,8 @@ export const OverviewTab: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Views Over Time Section - shifted lower from summary cards */}
-      <section className="flex flex-col gap-2 pt-3.5">
+      {/* 2. Views Over Time Section */}
+      <section className="flex flex-col gap-3 mt-10">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Views over time</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
@@ -178,10 +215,22 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 3. What Impacts Your Views Section */}
-      <section className="flex flex-col gap-1.5 pt-2">
-        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
-          <span className="leading-none">What impacts your views</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+      <section className="flex flex-col gap-1.5 mt-10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
+            <span className="leading-none">What impacts your views</span>
+            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          </div>
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={addImpactItem}
+              className="text-[#ec008c] hover:opacity-80 text-[11px] font-medium flex items-center gap-1"
+            >
+              <Plus className="w-3 h-3" />
+              Add metric
+            </button>
+          )}
         </div>
         <p className="text-[12px] text-[#8e959b] font-normal -mt-0.5">
           Rates are listed in order of importance to reach.
@@ -198,7 +247,13 @@ export const OverviewTab: React.FC = () => {
               <div key={item?.id || idx} className="flex items-center justify-between py-2.5">
                 {/* Left: Vertically aligned circular badge (matching screenshot shade #262c33) & Name */}
                 <div className="flex items-center gap-3.5">
-                  <div className="w-[38px] h-[38px] rounded-full bg-[#262c33] flex items-center justify-center shrink-0">
+                  <div
+                    onClick={() => cycleIcon(idx)}
+                    className={`w-[38px] h-[38px] rounded-full bg-[#262c33] flex items-center justify-center shrink-0 ${
+                      isEditMode ? 'cursor-pointer hover:ring-2 hover:ring-pink-500/50' : ''
+                    }`}
+                    title={isEditMode ? 'Click to change symbol (Skip, Share, Like, Save, Repost, Comment)' : undefined}
+                  >
                     {getImpactIcon(item?.iconType)}
                   </div>
                   <EditableValue
@@ -213,27 +268,40 @@ export const OverviewTab: React.FC = () => {
                 </div>
 
                 {/* Right: Percentage & Status Tag */}
-                <div className="flex flex-col items-end">
-                  <EditableValue
-                    path={`impactFactors.${idx}.rate`}
-                    title={`${item?.name || 'Metric'} percentage`}
-                    type="percentage"
-                    value={item?.rate ?? 0}
-                    className="text-[14.5px] font-bold text-white tabular-numbers"
-                  >
-                    {formatPercent(item?.rate)}
-                  </EditableValue>
-                  <EditableValue
-                    path={`impactFactors.${idx}.status`}
-                    title={`${item?.name || 'Metric'} status indicator`}
-                    type="status_tag"
-                    value={item?.status || 'Lower'}
-                    className={`text-[12px] font-medium mt-0.5 ${
-                      isGreen ? 'text-[#24c360]' : 'text-[#8e959b]'
-                    }`}
-                  >
-                    {item?.status || 'Lower'}
-                  </EditableValue>
+                <div className="flex items-center gap-2">
+                  <div className="flex flex-col items-end">
+                    <EditableValue
+                      path={`impactFactors.${idx}.rate`}
+                      title={`${item?.name || 'Metric'} percentage`}
+                      type="percentage"
+                      value={item?.rate ?? 0}
+                      className="text-[14.5px] font-bold text-white tabular-numbers"
+                    >
+                      {formatPercent(item?.rate)}
+                    </EditableValue>
+                    <EditableValue
+                      path={`impactFactors.${idx}.status`}
+                      title={`${item?.name || 'Metric'} status indicator`}
+                      type="status_tag"
+                      value={item?.status || 'Lower'}
+                      className={`text-[12px] font-medium mt-0.5 ${
+                        isGreen ? 'text-[#24c360]' : 'text-[#8e959b]'
+                      }`}
+                    >
+                      {item?.status || 'Lower'}
+                    </EditableValue>
+                  </div>
+
+                  {isEditMode && impactList.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeImpactItem(item.id)}
+                      className="text-gray-500 hover:text-red-400 p-1 -mr-1"
+                      title="Delete impact factor"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -242,7 +310,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 4. How long people watched your reel */}
-      <section className="flex flex-col gap-2.5 pt-2">
+      <section className="flex flex-col gap-2 mt-[48px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">How long people watched your reel</span>
@@ -263,11 +331,11 @@ export const OverviewTab: React.FC = () => {
           )}
         </div>
 
-        {/* Center Thumbnail with Play indicator */}
-        <div className="flex justify-center my-1.5">
+        {/* Center Thumbnail with Play indicator matching Instagram reference */}
+        <div className="flex justify-center my-3">
           <div
             onClick={() => isEditMode && setIsMediaModalOpen(true)}
-            className="relative w-20 h-28 rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
+            className="relative w-[78px] h-[112px] rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
           >
             {data.mediaType === 'video' ? (
               <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
@@ -279,7 +347,7 @@ export const OverviewTab: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             )}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/25">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
               <Play className="w-5 h-5 text-white fill-white/80" />
             </div>
           </div>
@@ -298,7 +366,7 @@ export const OverviewTab: React.FC = () => {
             <svg
               viewBox={`0 0 ${retSvgWidth} ${retSvgHeight}`}
               preserveAspectRatio="none"
-              className="w-full h-[85px] overflow-visible"
+              className="w-full h-[80px] overflow-visible"
               onMouseLeave={() => setRetentionHover(null)}
             >
               {/* Guidelines */}
@@ -382,7 +450,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 5. Top Sources of Views Section */}
-      <section className="flex flex-col gap-2.5 pt-2">
+      <section className="flex flex-col gap-2.5 mt-[48px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">Top sources of views</span>
@@ -402,17 +470,17 @@ export const OverviewTab: React.FC = () => {
         </div>
 
         {/* Source Progress Bars */}
-        <div className="flex flex-col gap-3 mt-1">
+        <div className="flex flex-col gap-4 mt-2">
           {sourcesList.map((source, idx) => (
             <div key={source.id} className="flex flex-col gap-1.5">
-              <div className="flex items-center justify-between text-[13.5px]">
+              <div className="flex items-center justify-between text-[14px]">
                 <div className="flex items-center gap-2">
                   <EditableValue
                     path={`topSources.${idx}.name`}
                     title="Source name"
                     type="text"
                     value={source.name}
-                    className="font-medium text-white"
+                    className="font-normal text-white"
                   >
                     {source.name}
                   </EditableValue>
@@ -433,14 +501,14 @@ export const OverviewTab: React.FC = () => {
                   title={`${source?.name || 'Source'} percentage`}
                   type="percentage"
                   value={source?.percentage ?? 0}
-                  className="font-medium text-white tabular-numbers"
+                  className="font-normal text-white tabular-numbers"
                 >
                   {formatPercent(source?.percentage)}
                 </EditableValue>
               </div>
 
               {/* Progress Bar (Pink #FE36FF on track #1c2024) */}
-              <div className="w-full h-[6px] bg-[#1c2024] rounded-full overflow-hidden">
+              <div className="w-full h-[5px] bg-[#1c2024] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#FE36FF] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, Number(source?.percentage) || 0))}%` }}

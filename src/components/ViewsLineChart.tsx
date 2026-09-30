@@ -101,15 +101,15 @@ export const ViewsLineChart: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-2 pt-0.5 pb-1 select-none">
+    <div className="w-full flex flex-col pt-1 pb-1 select-none">
       {/* Filter Pills matching exact screenshot styles:
           [ All ] [ Followers ] [ Non-followers ]
       */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mt-3">
         <button
           type="button"
           onClick={() => setViewsChartFilter('all')}
-          className={`h-[36px] sm:h-[40px] px-4 sm:px-5 inline-flex items-center justify-center text-[13px] sm:text-[14px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
             viewsChartFilter === 'all'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
@@ -120,7 +120,7 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('followers')}
-          className={`h-[36px] sm:h-[40px] px-4 sm:px-5 inline-flex items-center justify-center text-[13px] sm:text-[14px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
             viewsChartFilter === 'followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
@@ -131,7 +131,7 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('non_followers')}
-          className={`h-[36px] sm:h-[40px] px-4 sm:px-5 inline-flex items-center justify-center text-[13px] sm:text-[14px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
             viewsChartFilter === 'non_followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
@@ -141,25 +141,25 @@ export const ViewsLineChart: React.FC = () => {
         </button>
       </div>
 
-      {/* Chart Canvas Area on Dark Background - shifted lower to create clean gap below pills */}
-      <div className="relative flex items-stretch mt-9">
-        {/* Y-Axis Labels: 2K, 1K, 0 perfectly aligned with the 3 grid line levels with increased font size */}
-        <div className="relative w-9 h-[70px] shrink-0 text-[12px] text-[#8e959b] font-normal tabular-numbers select-none">
+      {/* Chart Canvas Area on Dark Background */}
+      <div className="relative flex items-stretch mt-5">
+        {/* Y-Axis Labels: 4K, 2K, 0 perfectly aligned with the 3 grid line levels */}
+        <div className="relative w-8 h-[74px] shrink-0 text-[11.5px] text-[#8e959b] font-normal tabular-numbers select-none">
           <div className="absolute top-[5px] -translate-y-1/2 right-2">
             <EditableValue
               path="viewsChart.yMax"
               title="Max Y value"
               type="number"
               value={yMax}
-              className="text-[12px] text-[#8e959b] font-normal"
+              className="text-[11.5px] text-[#8e959b] font-normal"
             >
               {formatYAxis(yMax)}
             </EditableValue>
           </div>
-          <div className="absolute top-[35px] -translate-y-1/2 right-2">
+          <div className="absolute top-[37px] -translate-y-1/2 right-2">
             {formatYAxis(Math.round(yMax / 2))}
           </div>
-          <div className="absolute top-[65px] -translate-y-1/2 right-2">0</div>
+          <div className="absolute top-[69px] -translate-y-1/2 right-2">0</div>
         </div>
 
         {/* SVG Curve & Axis Container */}
@@ -167,7 +167,7 @@ export const ViewsLineChart: React.FC = () => {
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             preserveAspectRatio="none"
-            className="w-full h-[70px] overflow-visible"
+            className="w-full h-[74px] overflow-visible"
             onMouseLeave={() => setHoverIndex(null)}
           >
             {/* Horizontal Grid lines (Top, Mid, Bottom 0) spanning width */}
@@ -265,8 +265,8 @@ export const ViewsLineChart: React.FC = () => {
             </div>
           )}
 
-          {/* Date Markers on X-Axis right below 0 grid line from initial position: 29 Sept, 30 Sept, 1 Oct */}
-          <div className="flex justify-between items-center text-[12px] text-[#8e959b] pt-2 px-0 select-none">
+          {/* Date Markers on X-Axis right below 0 grid line: 29 Sept, 30 Sept, 1 Oct */}
+          <div className="flex justify-between items-center text-[11.5px] text-[#8e959b] pt-1.5 px-0 select-none">
             {dates.map((dateStr, idx) => (
               <EditableValue
                 key={idx}
@@ -274,7 +274,7 @@ export const ViewsLineChart: React.FC = () => {
                 title={`Date label ${idx + 1}`}
                 type="date"
                 value={dateStr}
-                className="text-[12px] text-[#8e959b] font-normal"
+                className="text-[11.5px] text-[#8e959b] font-normal"
               >
                 {dateStr}
               </EditableValue>
