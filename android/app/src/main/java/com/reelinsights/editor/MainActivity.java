@@ -69,10 +69,12 @@ public class MainActivity extends BridgeActivity {
             insetsController.setAppearanceLightNavigationBars(false);   // false = light/white navigation icons
         }
 
-        // 6. Ensure underlying WebView has the same dark background
+        // 6. Ensure underlying WebView has the same dark background and smooth scrolling
         if (getBridge() != null && getBridge().getWebView() != null) {
             WebView webView = getBridge().getWebView();
             webView.setBackgroundColor(DARK_BG);
+            webView.setVerticalScrollBarEnabled(false);
+            webView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
         }
     }
 }

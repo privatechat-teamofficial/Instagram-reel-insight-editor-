@@ -153,7 +153,7 @@ export const AudienceTab: React.FC = () => {
         <div className="flex flex-col gap-2 mt-3.5 min-h-[220px]">
           {/* A. AGE SUBTAB (Default: 13-17, 18-24, 25-34, 35-44, 45-54, 55-64, 65+) */}
           <div className={audienceSubTab === 'age' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {data.audience.age.map((item, idx) => (
+            {(data?.audience?.age || []).map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -209,7 +209,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* B. COUNTRY SUBTAB */}
           <div className={audienceSubTab === 'country' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {data.audience.country.map((item, idx) => (
+            {(data?.audience?.country || []).map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -265,7 +265,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* C. GENDER SUBTAB */}
           <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {data.audience.gender.map((item, idx) => (
+            {(data?.audience?.gender || []).map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue

@@ -48,7 +48,7 @@ export const OverviewTab: React.FC = () => {
   };
 
   // Retention chart coordinates
-  const retentionPoints = data.watchTimeRetention.points;
+  const retentionPoints = data?.watchTimeRetention?.points || [];
   const retSvgWidth = 320;
   const retSvgHeight = 85;
   const retPadLeft = 10;
@@ -380,7 +380,7 @@ export const OverviewTab: React.FC = () => {
 
         {/* Source Progress Bars */}
         <div className="flex flex-col gap-3 mt-1">
-          {data.topSources.map((source, idx) => (
+          {(data?.topSources || []).map((source, idx) => (
             <div key={source.id} className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between text-[13.5px]">
                 <div className="flex items-center gap-2">

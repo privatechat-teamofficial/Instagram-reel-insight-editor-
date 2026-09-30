@@ -10,7 +10,7 @@ export const EngagementTab: React.FC = () => {
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
-  const whenLikedPoints = data.engagement.whenLikedPoints;
+  const whenLikedPoints = data?.engagement?.whenLikedPoints || [];
   const svgWidth = 320;
   const svgHeight = 85;
   const padLeft = 10;

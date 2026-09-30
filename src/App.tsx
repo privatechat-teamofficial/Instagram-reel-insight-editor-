@@ -44,11 +44,11 @@ const ReelInsightsScreen: React.FC = () => {
   } = useInsights();
 
   return (
-    <div className="min-h-screen min-h-[100dvh] w-full bg-[#0d0f12] select-none relative font-acumin overflow-x-hidden flex flex-col">
+    <div className="min-h-screen w-full bg-[#0d0f12] select-none relative font-acumin overflow-x-hidden flex flex-col">
       {/* Reel Insights Screen Content Container - spans the whole screen */}
       <div
         id="reel-insights-preview-container"
-        className="w-full flex-1 bg-[#0d0f12] text-white flex flex-col selection:bg-[#ec008c]/20 font-acumin"
+        className="w-full flex-1 bg-[#0d0f12] text-white flex flex-col font-acumin"
       >
         {/* Header: Back arrow · Reel insights · Insights trend · Options */}
         <Header />
