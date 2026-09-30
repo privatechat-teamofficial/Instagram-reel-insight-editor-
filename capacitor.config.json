@@ -10,5 +10,11 @@
     "allowMixedContent": true,
     "captureInput": true,
     "backgroundColor": "#0d0f12"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0d0f12"
+    }
   }
 }

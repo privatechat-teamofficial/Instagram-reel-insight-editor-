@@ -63,11 +63,17 @@ const ReelInsightsScreen: React.FC = () => {
             {/* Horizontal Tabs: Overview | Engagement | Audience */}
             <TabsNavigation />
 
-            {/* Active Tab Content */}
+            {/* Active Tab Content - kept mounted to prevent DOM unmount flicker and tablet layout collapse */}
             <div className="flex-1 w-full bg-[#0d0f12]">
-              {activeTab === 'overview' && <OverviewTab key="tab-overview" />}
-              {activeTab === 'engagement' && <EngagementTab key="tab-engagement" />}
-              {activeTab === 'audience' && <AudienceTab key="tab-audience" />}
+              <div className={activeTab === 'overview' ? 'block' : 'hidden'}>
+                <OverviewTab />
+              </div>
+              <div className={activeTab === 'engagement' ? 'block' : 'hidden'}>
+                <EngagementTab />
+              </div>
+              <div className={activeTab === 'audience' ? 'block' : 'hidden'}>
+                <AudienceTab />
+              </div>
             </div>
 
             {/* Desktop-only simulated home bar; on real Android devices the OS navigation bar handles this */}

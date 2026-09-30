@@ -29,6 +29,10 @@ export const TabsNavigation: React.FC = () => {
                   if (tab.id === 'audience') {
                     setAudienceSubTab('age');
                   }
+                  const container = document.getElementById('reel-insights-preview-container');
+                  if (container) {
+                    container.scrollTop = 0;
+                  }
                 }
               }}
               className={`pt-2.5 pb-1.5 flex items-center justify-center z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
@@ -44,7 +48,7 @@ export const TabsNavigation: React.FC = () => {
 
         {/* Smoothly sliding horizontal strip indicator */}
         <div
-          className="absolute -bottom-[1px] top-0 left-0 w-1/3 flex items-end justify-center pointer-events-none transition-transform duration-250 ease-out z-0"
+          className="absolute -bottom-[1px] top-0 left-0 w-1/3 flex items-end justify-center pointer-events-none transition-transform duration-200 ease-out z-0 will-change-transform"
           style={{
             transform: `translateX(${safeIndex * 100}%)`,
           }}
