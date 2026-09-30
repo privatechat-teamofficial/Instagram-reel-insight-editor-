@@ -37,11 +37,11 @@ const ReelInsightsScreen: React.FC = () => {
   } = useInsights();
 
   return (
-    <div className="min-h-screen w-screen bg-[#000000] sm:bg-[#05070a] flex items-center justify-center p-0 sm:p-4 select-none relative font-acumin">
+    <div className="min-h-screen min-h-[100dvh] w-full bg-[#0d0f12] lg:bg-[#080a0d] flex items-center justify-center p-0 lg:p-6 select-none relative font-acumin overflow-x-hidden">
       {/* Central Viewport Wrapper */}
-      <div className="relative flex items-center justify-center gap-6 max-h-full w-full max-w-[420px] sm:max-w-none">
-        {/* Authentic Mobile Screen Container (clean border, realistic 390px portrait viewport) */}
-        <div className="relative w-full sm:w-[390px] h-[100dvh] sm:h-[844px] sm:max-h-[96vh] bg-[#0d0f12] sm:rounded-[24px] sm:border sm:border-[#1e2329] sm:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col">
+      <div className="relative flex items-center justify-center gap-6 h-full w-full lg:w-auto">
+        {/* Mobile Screen Container: 100% full width and height on mobile/Android; framed mockup on desktop */}
+        <div className="relative w-full h-[100dvh] min-h-[100dvh] lg:w-[420px] lg:h-[860px] lg:max-h-[96vh] bg-[#0d0f12] lg:rounded-[28px] lg:border lg:border-[#1e2329] lg:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col">
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"
@@ -63,10 +63,13 @@ const ReelInsightsScreen: React.FC = () => {
               {activeTab === 'audience' && <AudienceTab />}
             </div>
 
-            {/* Android Navigation Bar Pill at Bottom */}
-            <div className="w-full pb-2 pt-1 flex justify-center shrink-0 bg-[#0d0f12] pointer-events-none">
+            {/* Desktop-only simulated home bar; on real Android devices the OS navigation bar handles this */}
+            <div className="hidden lg:flex w-full pb-2 pt-1 justify-center shrink-0 bg-[#0d0f12] pointer-events-none">
               <div className="w-32 h-[3px] bg-white/70 rounded-full" />
             </div>
+
+            {/* Bottom spacer for comfortable scrolling above mobile floating bar */}
+            <div className="w-full h-12 lg:h-4 shrink-0 bg-[#0d0f12]" />
           </div>
         </div>
 
@@ -157,7 +160,7 @@ const ReelInsightsScreen: React.FC = () => {
       </div>
 
       {/* Floating Bottom Quick Bar on Mobile */}
-      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex sm:hidden items-center gap-2 bg-[#161a1f]/90 backdrop-blur-md border border-[#2b313a] px-3.5 py-1.5 rounded-full shadow-2xl">
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex lg:hidden items-center gap-2 bg-[#161a1f]/90 backdrop-blur-md border border-[#2b313a] px-3.5 py-1.5 rounded-full shadow-2xl">
         <button
           type="button"
           onClick={toggleEditMode}
