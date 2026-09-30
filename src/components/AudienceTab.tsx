@@ -3,6 +3,7 @@ import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { InfoCircleIcon } from './InstagramIcons';
 import { AudienceSubTab } from '../types/insights';
+import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import { Plus, Trash2 } from 'lucide-react';
 
 export const AudienceTab: React.FC = () => {
@@ -26,6 +27,21 @@ export const AudienceTab: React.FC = () => {
     const num = Number(val);
     return isNaN(num) ? '0.0%' : `${num.toFixed(1)}%`;
   };
+
+  const ageList =
+    data?.audience?.age && data.audience.age.length > 0
+      ? data.audience.age
+      : DEFAULT_REEL_DATA.audience.age;
+
+  const countryList =
+    data?.audience?.country && data.audience.country.length > 0
+      ? data.audience.country
+      : DEFAULT_REEL_DATA.audience.country;
+
+  const genderList =
+    data?.audience?.gender && data.audience.gender.length > 0
+      ? data.audience.gender
+      : DEFAULT_REEL_DATA.audience.gender;
 
   const handleAddAgeBucket = () => {
     setData((prev) => ({
@@ -158,7 +174,7 @@ export const AudienceTab: React.FC = () => {
         <div className="flex flex-col gap-2 mt-3.5 min-h-[220px]">
           {/* A. AGE SUBTAB (Default: 13-17, 18-24, 25-34, 35-44, 45-54, 55-64, 65+) */}
           <div className={audienceSubTab === 'age' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {(data?.audience?.age || []).map((item, idx) => (
+            {ageList.map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -214,7 +230,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* B. COUNTRY SUBTAB */}
           <div className={audienceSubTab === 'country' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {(data?.audience?.country || []).map((item, idx) => (
+            {countryList.map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -270,7 +286,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* C. GENDER SUBTAB */}
           <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {(data?.audience?.gender || []).map((item, idx) => (
+            {genderList.map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue

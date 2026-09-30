@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { InfoCircleIcon } from './InstagramIcons';
+import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import { Play, Calendar } from 'lucide-react';
 
 export const EngagementTab: React.FC = () => {
@@ -10,7 +11,10 @@ export const EngagementTab: React.FC = () => {
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
-  const whenLikedPoints = data?.engagement?.whenLikedPoints || [];
+  const whenLikedPoints =
+    data?.engagement?.whenLikedPoints && data.engagement.whenLikedPoints.length > 0
+      ? data.engagement.whenLikedPoints
+      : DEFAULT_REEL_DATA.engagement.whenLikedPoints;
   const svgWidth = 320;
   const svgHeight = 85;
   const padLeft = 10;

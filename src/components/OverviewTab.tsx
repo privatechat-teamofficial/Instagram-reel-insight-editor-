@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { ViewsLineChart } from './ViewsLineChart';
+import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import {
   InfoCircleIcon,
   SkipRateIcon,
@@ -25,6 +26,21 @@ export const OverviewTab: React.FC = () => {
   const [retentionHover, setRetentionHover] = useState<{ time: string; percentage: number; x: number } | null>(null);
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
+
+  const impactList =
+    data?.impactFactors && data.impactFactors.length > 0
+      ? data.impactFactors
+      : DEFAULT_REEL_DATA.impactFactors;
+
+  const retentionData =
+    data?.watchTimeRetention?.points && data.watchTimeRetention.points.length > 0
+      ? data.watchTimeRetention
+      : DEFAULT_REEL_DATA.watchTimeRetention;
+
+  const sourcesList =
+    data?.topSources && data.topSources.length > 0
+      ? data.topSources
+      : DEFAULT_REEL_DATA.topSources;
 
   // All symbol heights and widths are identical to the like symbol (HeartIcon)
   const getImpactIcon = (iconType?: string) => {
@@ -53,7 +69,7 @@ export const OverviewTab: React.FC = () => {
   };
 
   // Retention chart coordinates
-  const retentionPoints = data?.watchTimeRetention?.points || [];
+  const retentionPoints = retentionData.points || [];
   const retSvgWidth = 320;
   const retSvgHeight = 85;
   const retPadLeft = 10;
@@ -173,7 +189,7 @@ export const OverviewTab: React.FC = () => {
 
         {/* Impact List Rows with no partition horizontal line and vertically aligned lighter circular badges */}
         <div className="flex flex-col mt-1">
-          {(data.impactFactors || []).map((item, idx) => {
+          {impactList.map((item, idx) => {
             const statusStr = String(item?.status || 'Lower');
             const isGreen =
               statusStr.toLowerCase() === 'lower' || statusStr.toLowerCase() === 'higher';
@@ -387,7 +403,7 @@ export const OverviewTab: React.FC = () => {
 
         {/* Source Progress Bars */}
         <div className="flex flex-col gap-3 mt-1">
-          {(data?.topSources || []).map((source, idx) => (
+          {sourcesList.map((source, idx) => (
             <div key={source.id} className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between text-[13.5px]">
                 <div className="flex items-center gap-2">
