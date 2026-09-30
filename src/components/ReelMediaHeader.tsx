@@ -14,7 +14,7 @@ export const ReelMediaHeader: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-1 pb-1.5 px-3 select-none shrink-0 bg-[#0d0f12]">
+    <div className="flex flex-col items-center pt-1.5 pb-1 px-3 select-none shrink-0 bg-[#0d0f12]">
       {/* Reel Preview: ~132 × 235px (9:16) matching Instagram reference scale */}
       <div
         onClick={() => isEditMode && setIsMediaModalOpen(true)}
@@ -51,17 +51,17 @@ export const ReelMediaHeader: React.FC = () => {
         )}
       </div>
 
-      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save (expanded across Overview to Audience) */}
-      <div className="w-full grid grid-cols-5 text-center px-1 mt-0.5 mb-1">
+      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save */}
+      <div className="w-full grid grid-cols-5 text-center px-0.5 mt-0.5 mb-1">
         {/* Likes */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
-          <HeartIcon className="w-[19px] h-[19px] text-white" />
+          <HeartIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.likes"
             title="Likes count"
             type="number"
             value={data.topMetrics.likes}
-            className="text-[15.5px] font-normal text-white tabular-numbers leading-tight mt-0.5"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.likes)}
           </EditableValue>
@@ -69,13 +69,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Comments */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
-          <CommentIcon className="w-[19px] h-[19px] text-white" />
+          <CommentIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.comments"
             title="Comments count"
             type="number"
             value={data.topMetrics.comments}
-            className="text-[15.5px] font-normal text-white tabular-numbers leading-tight mt-0.5"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.comments)}
           </EditableValue>
@@ -83,13 +83,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Reposts */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
-          <RepostIcon className="w-[19px] h-[19px] text-white" />
+          <RepostIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.reposts"
             title="Reposts count"
             type="number"
             value={data.topMetrics.reposts}
-            className="text-[15.5px] font-normal text-white tabular-numbers leading-tight mt-0.5"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.reposts)}
           </EditableValue>
@@ -97,13 +97,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Shares */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
-          <ShareIcon className="w-[19px] h-[19px] text-white" />
+          <ShareIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.shares"
             title="Shares count"
             type="number"
             value={data.topMetrics.shares}
-            className="text-[15.5px] font-normal text-white tabular-numbers leading-tight mt-0.5"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.shares)}
           </EditableValue>
@@ -111,13 +111,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Saves */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
-          <BookmarkIcon className="w-[19px] h-[19px] text-white" />
+          <BookmarkIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.saves"
             title="Saves count"
             type="number"
             value={data.topMetrics.saves}
-            className="text-[15.5px] font-normal text-white tabular-numbers leading-tight mt-0.5"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.saves)}
           </EditableValue>

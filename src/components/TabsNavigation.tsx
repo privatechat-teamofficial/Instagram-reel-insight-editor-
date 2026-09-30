@@ -15,7 +15,12 @@ export const TabsNavigation: React.FC = () => {
   const safeIndex = activeIndex === -1 ? 0 : activeIndex;
 
   return (
-    <div className="relative w-full border-b border-[#1c2025] bg-[#0d0f12] select-none shrink-0">
+    <div
+      className="sticky z-20 w-full border-b border-[#1c2025] bg-[#0d0f12] select-none shrink-0"
+      style={{
+        top: 'calc(4rem + env(safe-area-inset-top, 0px))',
+      }}
+    >
       <div className="grid grid-cols-3 w-full relative">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
@@ -28,10 +33,6 @@ export const TabsNavigation: React.FC = () => {
                   setActiveTab(tab.id);
                   if (tab.id === 'audience') {
                     setAudienceSubTab('age');
-                  }
-                  const container = document.getElementById('reel-insights-preview-container');
-                  if (container) {
-                    container.scrollTop = 0;
                   }
                 }
               }}

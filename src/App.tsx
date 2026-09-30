@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { InsightsProvider, useInsights } from './context/InsightsContext';
 import { Header } from './components/Header';
 import { ReelMediaHeader } from './components/ReelMediaHeader';
@@ -28,7 +28,92 @@ import {
   TrendingUp,
 } from 'lucide-react';
 
+const useOverscrollStretch = (containerRef: React.RefObject<HTMLDivElement | null>) => {
+  const [offset, setOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartY = useRef<number | null>(null);
+  const wheelTimeout = useRef<number | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const calculateDampedOffset = (delta: number) => {
+      const sign = Math.sign(delta);
+      const abs = Math.abs(delta);
+      // Subtle, firm rubber-band tension (max ~18px stretch)
+      return sign * Math.min(18, Math.pow(abs, 0.6) * 0.85);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      touchStartY.current = e.touches[0].clientY;
+      setIsDragging(true);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (touchStartY.current === null) return;
+      const currentY = e.touches[0].clientY;
+      const deltaY = currentY - touchStartY.current;
+      const scrollTop = container.scrollTop;
+      const maxScroll = container.scrollHeight - container.clientHeight;
+
+      if (scrollTop <= 0 && deltaY > 0) {
+        setOffset(calculateDampedOffset(deltaY));
+      } else if (scrollTop >= maxScroll - 1 && deltaY < 0) {
+        setOffset(calculateDampedOffset(deltaY));
+      } else {
+        if (offset !== 0) setOffset(0);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      touchStartY.current = null;
+      setIsDragging(false);
+      setOffset(0);
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const scrollTop = container.scrollTop;
+      const maxScroll = container.scrollHeight - container.clientHeight;
+
+      if ((scrollTop <= 0 && e.deltaY < 0) || (scrollTop >= maxScroll - 1 && e.deltaY > 0)) {
+        setIsDragging(false);
+        setOffset((prev) => {
+          const raw = prev - e.deltaY * 0.08;
+          return Math.max(-14, Math.min(14, raw));
+        });
+
+        if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
+        wheelTimeout.current = window.setTimeout(() => {
+          setOffset(0);
+        }, 120);
+      }
+    };
+
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+    container.addEventListener('wheel', handleWheel, { passive: true });
+
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('touchcancel', handleTouchEnd);
+      container.removeEventListener('wheel', handleWheel);
+      if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
+    };
+  }, [containerRef]);
+
+  return { offset, isDragging };
+};
+
 const ReelInsightsScreen: React.FC = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const { offset: overscrollOffset, isDragging } = useOverscrollStretch(scrollContainerRef);
+
   const {
     activeTab,
     isEditMode,
@@ -52,42 +137,53 @@ const ReelInsightsScreen: React.FC = () => {
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"
+            ref={scrollContainerRef}
             className="w-full h-full bg-[#0d0f12] text-white flex flex-col overflow-y-auto overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
           >
-            {/* Header: Back arrow · Reel insights · Insights trend · Options */}
+            {/* Header: Back arrow · Reel insights · Insights trend · Options (Fixed & never stretches) */}
             <Header />
 
-            {/* Reel Video/Image Preview & Top 5 Metrics (Likes, Comments, Reposts, Shares, Saves) */}
-            <ReelMediaHeader />
-
-            {/* Horizontal Tabs: Overview | Engagement | Audience */}
-            <TabsNavigation />
-
-            {/* Active Tab Content - kept mounted to prevent DOM unmount flicker and tablet layout collapse */}
-            <div className="flex-1 w-full bg-[#0d0f12]">
-              <div className={activeTab === 'overview' ? 'block' : 'hidden'}>
-                <OverviewTab />
-              </div>
-              <div className={activeTab === 'engagement' ? 'block' : 'hidden'}>
-                <EngagementTab />
-              </div>
-              <div className={activeTab === 'audience' ? 'block' : 'hidden'}>
-                <AudienceTab />
-              </div>
-            </div>
-
-            {/* Desktop-only simulated home bar; on real Android devices the OS navigation bar handles this */}
-            <div className="hidden lg:flex w-full pb-2 pt-1 justify-center shrink-0 bg-[#0d0f12] pointer-events-none">
-              <div className="w-32 h-[3px] bg-white/70 rounded-full" />
-            </div>
-
-            {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar */}
+            {/* Elastic Overscroll Stretchable Content Layer */}
             <div
-              className="w-full h-12 lg:h-4 shrink-0 bg-[#0d0f12]"
+              className="flex-1 flex flex-col w-full"
               style={{
-                paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+                transform: overscrollOffset !== 0 ? `translate3d(0, ${overscrollOffset}px, 0)` : undefined,
+                transition: isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+                willChange: isDragging || overscrollOffset !== 0 ? 'transform' : 'auto',
               }}
-            />
+            >
+              {/* Reel Video/Image Preview & Top 5 Metrics (Likes, Comments, Reposts, Shares, Saves) */}
+              <ReelMediaHeader />
+
+              {/* Horizontal Tabs: Overview | Engagement | Audience */}
+              <TabsNavigation />
+
+              {/* Active Tab Content - kept mounted to prevent DOM unmount flicker and tablet layout collapse */}
+              <div className="flex-1 w-full bg-[#0d0f12]">
+                <div className={activeTab === 'overview' ? 'block' : 'hidden'}>
+                  <OverviewTab />
+                </div>
+                <div className={activeTab === 'engagement' ? 'block' : 'hidden'}>
+                  <EngagementTab />
+                </div>
+                <div className={activeTab === 'audience' ? 'block' : 'hidden'}>
+                  <AudienceTab />
+                </div>
+              </div>
+
+              {/* Desktop-only simulated home bar; on real Android devices the OS navigation bar handles this */}
+              <div className="hidden lg:flex w-full pb-2 pt-1 justify-center shrink-0 bg-[#0d0f12] pointer-events-none">
+                <div className="w-32 h-[3px] bg-white/70 rounded-full" />
+              </div>
+
+              {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar */}
+              <div
+                className="w-full h-12 lg:h-4 shrink-0 bg-[#0d0f12]"
+                style={{
+                  paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+                }}
+              />
+            </div>
           </div>
         </div>
 

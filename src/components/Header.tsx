@@ -13,20 +13,25 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <div className="relative bg-[#0d0f12] select-none shrink-0 px-4 pt-3 pb-2">
+    <div
+      className="sticky top-0 z-30 bg-[#0d0f12] select-none shrink-0 px-4 pb-2"
+      style={{
+        paddingTop: 'calc(0.75rem + env(safe-area-inset-top, 0px))',
+      }}
+    >
       {/* Header bar matching Instagram Reel insights:
           Left back arrow + Left-aligned "Reel insights" title
           Right analytics trend line + Vertical three dots menu
       */}
       <div className="flex items-center justify-between h-[44px]">
         {/* Left: Back arrow + Left-aligned "Reel insights" title */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
           <button
             type="button"
             aria-label="Back"
             className="text-white hover:opacity-80 active:scale-95 transition-opacity -ml-0.5 flex items-center justify-center shrink-0"
           >
-            <HeaderBackIcon className="w-[19px] h-[17px]" />
+            <HeaderBackIcon className="w-[20px] h-[18px]" />
           </button>
 
           <div
@@ -54,7 +59,7 @@ export const Header: React.FC = () => {
             className="hover:opacity-80 active:scale-95 transition-opacity p-1 flex items-center justify-center"
             title="Edit Views Chart"
           >
-            <HeaderInsightsIcon className="w-[21px] h-[21px]" />
+            <HeaderInsightsIcon className="w-[22px] h-[22px]" />
           </button>
           <button
             type="button"
@@ -70,7 +75,12 @@ export const Header: React.FC = () => {
 
       {/* Temporary toast notification when toggling edit mode */}
       {showToast && (
-        <div className="absolute top-[52px] left-1/2 -translate-x-1/2 bg-[#1c2024] text-white text-[11px] font-medium px-3.5 py-1.5 rounded-full shadow-xl border border-[#2d333b] pointer-events-none z-50 animate-in fade-in duration-150">
+        <div
+          className="absolute left-1/2 -translate-x-1/2 bg-[#1c2024] text-white text-[11px] font-medium px-3.5 py-1.5 rounded-full shadow-xl border border-[#2d333b] pointer-events-none z-50 animate-in fade-in duration-150"
+          style={{
+            top: 'calc(3.25rem + env(safe-area-inset-top, 0px))',
+          }}
+        >
           {isEditMode ? 'Edit Mode ON · Tap any value to edit' : 'Edit Mode OFF · Clean Preview'}
         </div>
       )}

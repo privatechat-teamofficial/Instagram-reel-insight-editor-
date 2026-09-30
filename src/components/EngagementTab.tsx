@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { InfoCircleIcon } from './InstagramIcons';
+import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import { Play, Calendar } from 'lucide-react';
 
 export const EngagementTab: React.FC = () => {
@@ -10,7 +11,10 @@ export const EngagementTab: React.FC = () => {
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
-  const whenLikedPoints = data.engagement.whenLikedPoints;
+  const whenLikedPoints =
+    data?.engagement?.whenLikedPoints && data.engagement.whenLikedPoints.length > 0
+      ? data.engagement.whenLikedPoints
+      : DEFAULT_REEL_DATA.engagement.whenLikedPoints;
   const svgWidth = 320;
   const svgHeight = 85;
   const padLeft = 10;
@@ -32,7 +36,7 @@ export const EngagementTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col gap-5 px-4 pt-[27px] pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col gap-4 px-4 pt-3 pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Actions after viewing */}
       <section className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
