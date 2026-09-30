@@ -18,29 +18,29 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applyEdgeToEdgeDarkBars();
+        applyDarkSystemBars();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        applyEdgeToEdgeDarkBars();
+        applyDarkSystemBars();
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            applyEdgeToEdgeDarkBars();
+            applyDarkSystemBars();
         }
     }
 
-    private void applyEdgeToEdgeDarkBars() {
+    private void applyDarkSystemBars() {
         Window window = getWindow();
         if (window == null) return;
 
-        // 1. Enable true edge-to-edge layout so app background extends to physical top and bottom
-        WindowCompat.setDecorFitsSystemWindows(window, false);
+        // 1. Maintain standard system window bounds so app content is NOT resized, shifted, or stretched
+        WindowCompat.setDecorFitsSystemWindows(window, true);
 
         // 2. Set window and decor view background to app dark color (#0d0f12)
         window.setBackgroundDrawable(new ColorDrawable(DARK_BG));
@@ -49,14 +49,14 @@ public class MainActivity extends BridgeActivity {
             decorView.setBackgroundColor(DARK_BG);
         }
 
-        // 3. Ensure system bars draw over the window background with full transparency (no gray/white strip)
+        // 3. Ensure system bars draw with the solid dark color (#0d0f12) - eliminating any gray/white strip
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        window.setStatusBarColor(Color.TRANSPARENT);
-        window.setNavigationBarColor(Color.TRANSPARENT);
+        window.setStatusBarColor(DARK_BG);
+        window.setNavigationBarColor(DARK_BG);
 
-        // 4. Disable Android 10+ contrast scrim overlay so system bars don't get forced gray/white
+        // 4. Disable Android 10+ contrast scrim overlay so system bars are not forced gray/translucent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setNavigationBarContrastEnforced(false);
             window.setStatusBarContrastEnforced(false);
