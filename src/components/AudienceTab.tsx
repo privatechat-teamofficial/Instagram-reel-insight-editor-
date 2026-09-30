@@ -22,6 +22,11 @@ export const AudienceTab: React.FC = () => {
     { id: 'gender', label: 'Gender' },
   ];
 
+  const formatPercent = (val: any) => {
+    const num = Number(val);
+    return isNaN(num) ? '0.0%' : `${num.toFixed(1)}%`;
+  };
+
   const handleAddAgeBucket = () => {
     setData((prev) => ({
       ...prev,
@@ -90,7 +95,7 @@ export const AudienceTab: React.FC = () => {
                 value={data.audience.followersPercentage}
                 className="text-[16px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
               >
-                {data.audience.followersPercentage.toFixed(1)}%
+                {formatPercent(data?.audience?.followersPercentage)}
               </EditableValue>
             </div>
           </div>
@@ -102,7 +107,7 @@ export const AudienceTab: React.FC = () => {
               <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#804cf0] rounded-full"
-                  style={{ width: `${Math.min(100, Math.max(0, data.audience.nonFollowersPercentage))}%` }}
+                  style={{ width: `${Math.min(100, Math.max(0, Number(data?.audience?.nonFollowersPercentage) || 0))}%` }}
                 />
               </div>
               <EditableValue
@@ -112,7 +117,7 @@ export const AudienceTab: React.FC = () => {
                 value={data.audience.nonFollowersPercentage}
                 className="text-[16px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
               >
-                {data.audience.nonFollowersPercentage.toFixed(1)}%
+                {formatPercent(data?.audience?.nonFollowersPercentage)}
               </EditableValue>
             </div>
           </div>
@@ -190,7 +195,7 @@ export const AudienceTab: React.FC = () => {
                     value={item.percentage}
                     className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
-                    {item.percentage.toFixed(1)}%
+                    {formatPercent(item.percentage)}
                   </EditableValue>
                 </div>
               </div>
@@ -246,7 +251,7 @@ export const AudienceTab: React.FC = () => {
                     value={item.percentage}
                     className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
-                    {item.percentage.toFixed(1)}%
+                    {formatPercent(item.percentage)}
                   </EditableValue>
                 </div>
               </div>
@@ -302,7 +307,7 @@ export const AudienceTab: React.FC = () => {
                     value={item.percentage}
                     className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
-                    {item.percentage.toFixed(1)}%
+                    {formatPercent(item.percentage)}
                   </EditableValue>
                 </div>
               </div>

@@ -55,28 +55,59 @@ interface InsightsContextType {
   removeSourceItem: (id: string) => void;
 }
 
-const STORAGE_KEY = 'reel_insights_editor_state_v3';
+const STORAGE_KEY = 'reel_insights_editor_state_v4';
 
 const InsightsContext = createContext<InsightsContextType | undefined>(undefined);
 
 export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<ReelInsightsState>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const keysToTry = [
+        STORAGE_KEY,
+        'reel_insights_editor_state_v3',
+        'reel_insights_editor_state_v2',
+        'reel_insights_editor_state_v1',
+      ];
+      let saved: string | null = null;
+      for (const k of keysToTry) {
+        const val = localStorage.getItem(k);
+        if (val) {
+          saved = val;
+          break;
+        }
+      }
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.topMetrics && parsed.summary && parsed.audience) {
+        if (parsed && typeof parsed === 'object') {
           const merged: ReelInsightsState = {
             ...DEFAULT_REEL_DATA,
             ...parsed,
-            topMetrics: { ...DEFAULT_REEL_DATA.topMetrics, ...parsed.topMetrics },
-            summary: { ...DEFAULT_REEL_DATA.summary, ...parsed.summary },
-            audience: { ...DEFAULT_REEL_DATA.audience, ...parsed.audience },
+            topMetrics: { ...DEFAULT_REEL_DATA.topMetrics, ...(parsed.topMetrics || {}) },
+            summary: { ...DEFAULT_REEL_DATA.summary, ...(parsed.summary || {}) },
+            audience: {
+              ...DEFAULT_REEL_DATA.audience,
+              ...(parsed.audience || {}),
+              age:
+                parsed.audience?.age && parsed.audience.age.length > 0
+                  ? parsed.audience.age
+                  : DEFAULT_REEL_DATA.audience.age,
+              country:
+                parsed.audience?.country && parsed.audience.country.length > 0
+                  ? parsed.audience.country
+                  : DEFAULT_REEL_DATA.audience.country,
+              gender:
+                parsed.audience?.gender && parsed.audience.gender.length > 0
+                  ? parsed.audience.gender
+                  : DEFAULT_REEL_DATA.audience.gender,
+            },
             impactFactors:
               parsed.impactFactors && parsed.impactFactors.length > 0
                 ? parsed.impactFactors
                 : DEFAULT_REEL_DATA.impactFactors,
-            watchTimeRetention: parsed.watchTimeRetention || DEFAULT_REEL_DATA.watchTimeRetention,
+            watchTimeRetention:
+              parsed.watchTimeRetention?.points && parsed.watchTimeRetention.points.length > 0
+                ? parsed.watchTimeRetention
+                : DEFAULT_REEL_DATA.watchTimeRetention,
             topSources:
               parsed.topSources && parsed.topSources.length > 0
                 ? parsed.topSources

@@ -27,7 +27,7 @@ export const OverviewTab: React.FC = () => {
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
   // All symbol heights and widths are identical to the like symbol (HeartIcon)
-  const getImpactIcon = (iconType: string) => {
+  const getImpactIcon = (iconType?: string) => {
     const symbolClass = 'w-[19px] h-[19px] text-white';
     switch (iconType) {
       case 'skip':
@@ -47,6 +47,11 @@ export const OverviewTab: React.FC = () => {
     }
   };
 
+  const formatPercent = (val: any) => {
+    const num = Number(val);
+    return isNaN(num) ? '0.0%' : `${num.toFixed(1)}%`;
+  };
+
   // Retention chart coordinates
   const retentionPoints = data?.watchTimeRetention?.points || [];
   const retSvgWidth = 320;
@@ -59,8 +64,9 @@ export const OverviewTab: React.FC = () => {
   const retHeight = retSvgHeight - retPadTop - retPadBottom;
 
   const retCoords = retentionPoints.map((pt, i) => {
+    const pct = Number(pt?.percentage) || 0;
     const x = retPadLeft + (i / (retentionPoints.length - 1 || 1)) * retWidth;
-    const y = retPadTop + retHeight - (pt.percentage / 100) * retHeight;
+    const y = retPadTop + retHeight - (pct / 100) * retHeight;
     return { x, y, pt };
   });
 
@@ -168,24 +174,25 @@ export const OverviewTab: React.FC = () => {
         {/* Impact List Rows with no partition horizontal line and vertically aligned lighter circular badges */}
         <div className="flex flex-col mt-1">
           {(data.impactFactors || []).map((item, idx) => {
+            const statusStr = String(item?.status || 'Lower');
             const isGreen =
-              item.status.toLowerCase() === 'lower' || item.status.toLowerCase() === 'higher';
+              statusStr.toLowerCase() === 'lower' || statusStr.toLowerCase() === 'higher';
 
             return (
-              <div key={item.id} className="flex items-center justify-between py-2.5">
+              <div key={item?.id || idx} className="flex items-center justify-between py-2.5">
                 {/* Left: Vertically aligned circular badge (matching screenshot shade #262c33) & Name */}
                 <div className="flex items-center gap-3.5">
                   <div className="w-[38px] h-[38px] rounded-full bg-[#262c33] flex items-center justify-center shrink-0">
-                    {getImpactIcon(item.iconType)}
+                    {getImpactIcon(item?.iconType)}
                   </div>
                   <EditableValue
                     path={`impactFactors.${idx}.name`}
                     title="Impact metric name"
                     type="text"
-                    value={item.name}
+                    value={item?.name || ''}
                     className="text-[14.5px] font-medium text-white"
                   >
-                    {item.name}
+                    {item?.name || ''}
                   </EditableValue>
                 </div>
 
@@ -193,23 +200,23 @@ export const OverviewTab: React.FC = () => {
                 <div className="flex flex-col items-end">
                   <EditableValue
                     path={`impactFactors.${idx}.rate`}
-                    title={`${item.name} percentage`}
+                    title={`${item?.name || 'Metric'} percentage`}
                     type="percentage"
-                    value={item.rate}
+                    value={item?.rate ?? 0}
                     className="text-[14.5px] font-bold text-white tabular-numbers"
                   >
-                    {item.rate.toFixed(1)}%
+                    {formatPercent(item?.rate)}
                   </EditableValue>
                   <EditableValue
                     path={`impactFactors.${idx}.status`}
-                    title={`${item.name} status indicator`}
+                    title={`${item?.name || 'Metric'} status indicator`}
                     type="status_tag"
-                    value={item.status}
+                    value={item?.status || 'Lower'}
                     className={`text-[12px] font-medium mt-0.5 ${
                       isGreen ? 'text-[#24c360]' : 'text-[#8e959b]'
                     }`}
                   >
-                    {item.status}
+                    {item?.status || 'Lower'}
                   </EditableValue>
                 </div>
               </div>
@@ -407,12 +414,12 @@ export const OverviewTab: React.FC = () => {
 
                 <EditableValue
                   path={`topSources.${idx}.percentage`}
-                  title={`${source.name} percentage`}
+                  title={`${source?.name || 'Source'} percentage`}
                   type="percentage"
-                  value={source.percentage}
+                  value={source?.percentage ?? 0}
                   className="font-medium text-white tabular-numbers"
                 >
-                  {source.percentage.toFixed(1)}%
+                  {formatPercent(source?.percentage)}
                 </EditableValue>
               </div>
 
@@ -420,7 +427,7 @@ export const OverviewTab: React.FC = () => {
               <div className="w-full h-[6px] bg-[#1c2024] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#FE36FF] rounded-full"
-                  style={{ width: `${Math.min(100, Math.max(0, source.percentage))}%` }}
+                  style={{ width: `${Math.min(100, Math.max(0, Number(source?.percentage) || 0))}%` }}
                 />
               </div>
             </div>
