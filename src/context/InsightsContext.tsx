@@ -66,15 +66,31 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && parsed.topMetrics && parsed.summary && parsed.audience) {
+          const merged: ReelInsightsState = {
+            ...DEFAULT_REEL_DATA,
+            ...parsed,
+            topMetrics: { ...DEFAULT_REEL_DATA.topMetrics, ...parsed.topMetrics },
+            summary: { ...DEFAULT_REEL_DATA.summary, ...parsed.summary },
+            audience: { ...DEFAULT_REEL_DATA.audience, ...parsed.audience },
+            impactFactors:
+              parsed.impactFactors && parsed.impactFactors.length > 0
+                ? parsed.impactFactors
+                : DEFAULT_REEL_DATA.impactFactors,
+            watchTimeRetention: parsed.watchTimeRetention || DEFAULT_REEL_DATA.watchTimeRetention,
+            topSources:
+              parsed.topSources && parsed.topSources.length > 0
+                ? parsed.topSources
+                : DEFAULT_REEL_DATA.topSources,
+          };
           // Ensure viewsChart points extend properly to the last date
           if (
-            !parsed.viewsChart?.points ||
-            parsed.viewsChart.points.length < 18 ||
-            !parsed.viewsChart.points.some((p: any) => p.hasData === false)
+            !merged.viewsChart?.points ||
+            merged.viewsChart.points.length < 18 ||
+            !merged.viewsChart.points.some((p: any) => p.hasData === false)
           ) {
-            parsed.viewsChart = DEFAULT_REEL_DATA.viewsChart;
+            merged.viewsChart = DEFAULT_REEL_DATA.viewsChart;
           }
-          return parsed;
+          return merged;
         }
       }
     } catch (e) {

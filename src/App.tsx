@@ -48,7 +48,7 @@ const ReelInsightsScreen: React.FC = () => {
       {/* Reel Insights Screen Content Container - spans the whole screen */}
       <div
         id="reel-insights-preview-container"
-        className="w-full flex-1 min-h-[100dvh] bg-[#0d0f12] text-white flex flex-col overflow-y-auto overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
+        className="w-full flex-1 bg-[#0d0f12] text-white flex flex-col selection:bg-[#ec008c]/20 font-acumin"
       >
         {/* Header: Back arrow · Reel insights · Insights trend · Options */}
         <Header />

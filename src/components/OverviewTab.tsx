@@ -167,7 +167,7 @@ export const OverviewTab: React.FC = () => {
 
         {/* Impact List Rows with no partition horizontal line and vertically aligned lighter circular badges */}
         <div className="flex flex-col mt-1">
-          {data.impactFactors.map((item, idx) => {
+          {(data.impactFactors || []).map((item, idx) => {
             const isGreen =
               item.status.toLowerCase() === 'lower' || item.status.toLowerCase() === 'higher';
 
