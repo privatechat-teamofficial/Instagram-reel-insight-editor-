@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
     <div
       className="relative bg-[#0d0f12] select-none shrink-0 px-4 pb-2"
       style={{
-        paddingTop: 'calc(2.75rem + env(safe-area-inset-top, 0px))',
+        paddingTop: 'calc(0.75rem + env(safe-area-inset-top, 0px))',
       }}
     >
       {/* Header bar matching Instagram Reel insights:

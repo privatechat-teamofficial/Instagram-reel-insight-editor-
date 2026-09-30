@@ -72,9 +72,9 @@ const ReelInsightsScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar and floating actions */}
+        {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar */}
         <div
-          className="w-full h-16 shrink-0 bg-[#0d0f12]"
+          className="w-full h-4 shrink-0 bg-[#0d0f12]"
           style={{
             paddingBottom: 'env(safe-area-inset-bottom, 0px)',
           }}
