@@ -51,8 +51,8 @@ export const ReelMediaHeader: React.FC = () => {
         )}
       </div>
 
-      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save (comfortably inset within Overview and Audience) */}
-      <div className="w-full max-w-[348px] grid grid-cols-5 text-center px-3 mt-0.5 mb-1.5">
+      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save (expanded across Overview to Audience) */}
+      <div className="w-full grid grid-cols-5 text-center px-2 mt-0.5 mb-1.5">
         {/* Likes */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <HeartIcon className="w-[19px] h-[19px] text-white" />

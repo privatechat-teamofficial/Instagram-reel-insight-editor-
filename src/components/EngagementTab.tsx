@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { InfoCircleIcon } from './InstagramIcons';
-import { Play } from 'lucide-react';
+import { Play, Calendar } from 'lucide-react';
 
 export const EngagementTab: React.FC = () => {
-  const { data, isEditMode, setIsMediaModalOpen } = useInsights();
+  const { data, isEditMode, setIsMediaModalOpen, setIsDateShiftModalOpen } = useInsights();
   const [hoverPoint, setHoverPoint] = useState<{ time: string; percentage: number; x: number } | null>(null);
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
@@ -40,14 +40,14 @@ export const EngagementTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        <div className="flex items-center justify-between py-1.5">
-          <span className="text-[14px] font-normal text-white">Follows</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-[17.5px] font-normal text-white">Follows</span>
           <EditableValue
             path="engagement.followsAfterViewing"
             title="Follows after viewing"
             type="number"
             value={data.engagement.followsAfterViewing}
-            className="text-[14px] font-normal text-white tabular-numbers"
+            className="text-[17.5px] font-normal text-white tabular-numbers"
           >
             {formatNumber(data.engagement.followsAfterViewing)}
           </EditableValue>
@@ -61,16 +61,16 @@ export const EngagementTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        <div className="flex flex-col gap-3 py-1">
+        <div className="flex flex-col gap-4 py-1.5">
           {/* Likes */}
           <div className="flex items-center justify-between">
-            <span className="text-[14px] font-normal text-white">Likes</span>
+            <span className="text-[17.5px] font-normal text-white">Likes</span>
             <EditableValue
               path="topMetrics.likes"
               title="Likes count"
               type="number"
               value={data.topMetrics.likes}
-              className="text-[14px] font-normal text-white tabular-numbers"
+              className="text-[17.5px] font-normal text-white tabular-numbers"
             >
               {formatNumber(data.topMetrics.likes)}
             </EditableValue>
@@ -78,13 +78,13 @@ export const EngagementTab: React.FC = () => {
 
           {/* Comments */}
           <div className="flex items-center justify-between">
-            <span className="text-[14px] font-normal text-white">Comments</span>
+            <span className="text-[17.5px] font-normal text-white">Comments</span>
             <EditableValue
               path="topMetrics.comments"
               title="Comments count"
               type="number"
               value={data.topMetrics.comments}
-              className="text-[14px] font-normal text-white tabular-numbers"
+              className="text-[17.5px] font-normal text-white tabular-numbers"
             >
               {formatNumber(data.topMetrics.comments)}
             </EditableValue>
@@ -92,13 +92,13 @@ export const EngagementTab: React.FC = () => {
 
           {/* Reposts */}
           <div className="flex items-center justify-between">
-            <span className="text-[14px] font-normal text-white">Reposts</span>
+            <span className="text-[17.5px] font-normal text-white">Reposts</span>
             <EditableValue
               path="topMetrics.reposts"
               title="Reposts count"
               type="number"
               value={data.topMetrics.reposts}
-              className="text-[14px] font-normal text-white tabular-numbers"
+              className="text-[17.5px] font-normal text-white tabular-numbers"
             >
               {formatNumber(data.topMetrics.reposts)}
             </EditableValue>
@@ -106,13 +106,13 @@ export const EngagementTab: React.FC = () => {
 
           {/* Shares */}
           <div className="flex items-center justify-between">
-            <span className="text-[14px] font-normal text-white">Shares</span>
+            <span className="text-[17.5px] font-normal text-white">Shares</span>
             <EditableValue
               path="topMetrics.shares"
               title="Shares count"
               type="number"
               value={data.topMetrics.shares}
-              className="text-[14px] font-normal text-white tabular-numbers"
+              className="text-[17.5px] font-normal text-white tabular-numbers"
             >
               {formatNumber(data.topMetrics.shares)}
             </EditableValue>
@@ -120,13 +120,13 @@ export const EngagementTab: React.FC = () => {
 
           {/* Saves */}
           <div className="flex items-center justify-between">
-            <span className="text-[14px] font-normal text-white">Saves</span>
+            <span className="text-[17.5px] font-normal text-white">Saves</span>
             <EditableValue
               path="topMetrics.saves"
               title="Saves count"
               type="number"
               value={data.topMetrics.saves}
-              className="text-[14px] font-normal text-white tabular-numbers"
+              className="text-[17.5px] font-normal text-white tabular-numbers"
             >
               {formatNumber(data.topMetrics.saves)}
             </EditableValue>
@@ -136,9 +136,24 @@ export const EngagementTab: React.FC = () => {
 
       {/* 3. When people liked your reel */}
       <section className="flex flex-col gap-2.5 pt-2">
-        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
-          <span className="leading-none">When people liked your reel</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
+            <span className="leading-none">When people liked your reel</span>
+            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          </div>
+
+          {/* Shift date button: ONLY shown in edit mode */}
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={() => setIsDateShiftModalOpen(true)}
+              className="flex items-center gap-1 text-[11px] text-[#FE36FF] hover:underline transition-colors py-0.5 px-1.5 rounded-md hover:bg-[#1a1e24]"
+              title="Shift reel graph date"
+            >
+              <Calendar className="w-3 h-3 text-[#FE36FF]" />
+              <span>Shift date</span>
+            </button>
+          )}
         </div>
 
         {/* Center Thumbnail with Play Button */}
@@ -175,6 +190,7 @@ export const EngagementTab: React.FC = () => {
           <div className="relative flex-1">
             <svg
               viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+              preserveAspectRatio="none"
               className="w-full h-[85px] overflow-visible"
               onMouseLeave={() => setHoverPoint(null)}
             >

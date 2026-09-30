@@ -7,10 +7,10 @@ export const DEFAULT_REEL_DATA: ReelInsightsState = {
   mediaType: 'image',
   mediaAspectRatio: '9/16',
   topMetrics: {
-    likes: 196,
+    likes: 20,
     comments: 0,
     reposts: 0,
-    shares: 82,
+    shares: 24,
     saves: 0,
   },
   summary: {

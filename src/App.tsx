@@ -16,12 +16,16 @@ import { MediaUploaderModal } from './components/MediaUploaderModal';
 import { ChartEditorModal } from './components/ChartEditorModal';
 import { PresetsModal } from './components/PresetsModal';
 import { ExportModal } from './components/ExportModal';
+import { ShiftGraphDateModal } from './components/ShiftGraphDateModal';
+import { TypicalGraphModal } from './components/TypicalGraphModal';
 import {
   Download,
   Sparkles,
   Camera,
   RotateCcw,
   Sliders,
+  Calendar,
+  TrendingUp,
 } from 'lucide-react';
 
 const ReelInsightsScreen: React.FC = () => {
@@ -33,6 +37,9 @@ const ReelInsightsScreen: React.FC = () => {
     setIsPresetsModalOpen,
     setIsMediaModalOpen,
     setIsChartModalOpen,
+    isDateShiftModalOpen,
+    setIsDateShiftModalOpen,
+    setIsTypicalModalOpen,
     resetToDefaults,
   } = useInsights();
 
@@ -104,6 +111,30 @@ const ReelInsightsScreen: React.FC = () => {
           </button>
 
           {/* Quick Actions */}
+          <button
+            type="button"
+            onClick={() => setIsDateShiftModalOpen(true)}
+            className="w-full py-2 px-3 bg-[#1a1e23] hover:bg-[#252b32] text-gray-200 rounded-xl text-[12px] font-medium flex items-center justify-between transition-colors group"
+          >
+            <div className="flex items-center gap-2">
+              <Calendar className="w-3.5 h-3.5 text-[#FE36FF]" />
+              <span>Shift Graph Date</span>
+            </div>
+            <span className="text-[10px] text-gray-400 group-hover:text-white">Rewind</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsTypicalModalOpen(true)}
+            className="w-full py-2 px-3 bg-[#1a1e23] hover:bg-[#252b32] text-gray-200 rounded-xl text-[12px] font-medium flex items-center justify-between transition-colors group"
+          >
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-3.5 h-3.5 text-blue-400" />
+              <span>Edit Typical Graph</span>
+            </div>
+            <span className="text-[10px] text-gray-400 group-hover:text-white">Baseline</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setIsChartModalOpen(true)}
@@ -195,6 +226,11 @@ const ReelInsightsScreen: React.FC = () => {
       <ChartEditorModal />
       <PresetsModal />
       <ExportModal />
+      <ShiftGraphDateModal
+        isOpen={isDateShiftModalOpen}
+        onClose={() => setIsDateShiftModalOpen(false)}
+      />
+      <TypicalGraphModal />
     </div>
   );
 };

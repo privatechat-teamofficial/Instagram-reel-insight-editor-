@@ -11,10 +11,17 @@ import {
   RepostIcon,
   CommentIcon,
 } from './InstagramIcons';
-import { Plus, Trash2, Play } from 'lucide-react';
+import { Plus, Trash2, Play, Calendar } from 'lucide-react';
 
 export const OverviewTab: React.FC = () => {
-  const { data, isEditMode, addSourceItem, removeSourceItem, setIsMediaModalOpen } = useInsights();
+  const {
+    data,
+    isEditMode,
+    addSourceItem,
+    removeSourceItem,
+    setIsMediaModalOpen,
+    setIsDateShiftModalOpen,
+  } = useInsights();
   const [retentionHover, setRetentionHover] = useState<{ time: string; percentage: number; x: number } | null>(null);
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
@@ -71,10 +78,10 @@ export const OverviewTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* 2x2 Grid Cards: Roomier cards with #1c2024 background and rounded corners */}
+        {/* 2x2 Grid Cards: Roomier cards with #25292E background and rounded corners */}
         <div className="grid grid-cols-2 gap-3 w-full">
           {/* Box 1: Views */}
-          <div className="bg-[#1c2024] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Views
             </span>
@@ -90,7 +97,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 2: Viewers */}
-          <div className="bg-[#1c2024] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Viewers
             </span>
@@ -106,7 +113,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 3: Average watch time */}
-          <div className="bg-[#1c2024] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Average watch time
             </span>
@@ -122,7 +129,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 4: Follows */}
-          <div className="bg-[#1c2024] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Follows
             </span>
@@ -139,8 +146,8 @@ export const OverviewTab: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Views Over Time Section */}
-      <section className="flex flex-col gap-2 pt-0.5">
+      {/* 2. Views Over Time Section - shifted lower from summary cards */}
+      <section className="flex flex-col gap-2 pt-3.5">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Views over time</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
@@ -213,9 +220,24 @@ export const OverviewTab: React.FC = () => {
 
       {/* 4. How long people watched your reel */}
       <section className="flex flex-col gap-2.5 pt-2">
-        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
-          <span className="leading-none">How long people watched your reel</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
+            <span className="leading-none">How long people watched your reel</span>
+            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          </div>
+
+          {/* Shift date button: ONLY shown in edit mode */}
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={() => setIsDateShiftModalOpen(true)}
+              className="flex items-center gap-1 text-[11px] text-[#FE36FF] hover:underline transition-colors py-0.5 px-1.5 rounded-md hover:bg-[#1a1e24]"
+              title="Shift reel graph date"
+            >
+              <Calendar className="w-3 h-3 text-[#FE36FF]" />
+              <span>Shift date</span>
+            </button>
+          )}
         </div>
 
         {/* Center Thumbnail with Play indicator */}
@@ -252,6 +274,7 @@ export const OverviewTab: React.FC = () => {
           <div className="relative flex-1">
             <svg
               viewBox={`0 0 ${retSvgWidth} ${retSvgHeight}`}
+              preserveAspectRatio="none"
               className="w-full h-[85px] overflow-visible"
               onMouseLeave={() => setRetentionHover(null)}
             >
@@ -284,26 +307,36 @@ export const OverviewTab: React.FC = () => {
                 />
               ))}
 
-              {/* Highlight node at 58% 0:03 */}
-              {retCoords[3] && (
+              {/* Highlight node - only displayed when touched / hovered */}
+              {retentionHover && (
                 <>
-                  <circle cx={retCoords[3].x} cy={retCoords[3].y} r="4" fill="#FE36FF" />
-                  <circle cx={retCoords[3].x} cy={retCoords[3].y} r="2" fill="#ffffff" />
+                  <circle
+                    cx={retentionHover.x}
+                    cy={retPadTop + retHeight - (retentionHover.percentage / 100) * retHeight}
+                    r="4"
+                    fill="#FE36FF"
+                  />
+                  <circle
+                    cx={retentionHover.x}
+                    cy={retPadTop + retHeight - (retentionHover.percentage / 100) * retHeight}
+                    r="2"
+                    fill="#ffffff"
+                  />
                 </>
               )}
             </svg>
 
-            {/* Retention Floating Tooltip */}
-            {(retentionHover || retCoords[3]) && (
+            {/* Retention Floating Tooltip - only displayed when touched / hovered */}
+            {retentionHover && (
               <div
                 className="absolute -top-3.5 bg-[#1c2024] text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-[#2d333b] -translate-x-1/2 pointer-events-none z-10 whitespace-nowrap"
                 style={{
-                  left: `${((retentionHover ? retentionHover.x : retCoords[3].x) / retSvgWidth) * 100}%`,
+                  left: `${(retentionHover.x / retSvgWidth) * 100}%`,
                 }}
               >
-                {retentionHover ? `${retentionHover.percentage}%` : '58%'}
+                {retentionHover.percentage}%
                 <span className="block text-[8.5px] text-[#8e959b] font-normal">
-                  {retentionHover ? retentionHover.time : '0:03'}
+                  {retentionHover.time}
                 </span>
               </div>
             )}

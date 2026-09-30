@@ -41,6 +41,10 @@ interface InsightsContextType {
   setIsPresetsModalOpen: (open: boolean) => void;
   isExportModalOpen: boolean;
   setIsExportModalOpen: (open: boolean) => void;
+  isDateShiftModalOpen: boolean;
+  setIsDateShiftModalOpen: (open: boolean) => void;
+  isTypicalModalOpen: boolean;
+  setIsTypicalModalOpen: (open: boolean) => void;
   resetToDefaults: () => void;
   loadPreset: (presetData: ReelInsightsState) => void;
   exportProjectJson: () => void;
@@ -62,6 +66,14 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && parsed.topMetrics && parsed.summary && parsed.audience) {
+          // Ensure viewsChart points extend properly to the last date
+          if (
+            !parsed.viewsChart?.points ||
+            parsed.viewsChart.points.length < 18 ||
+            !parsed.viewsChart.points.some((p: any) => p.hasData === false)
+          ) {
+            parsed.viewsChart = DEFAULT_REEL_DATA.viewsChart;
+          }
           return parsed;
         }
       }
@@ -81,6 +93,8 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [isChartModalOpen, setIsChartModalOpen] = useState<boolean>(false);
   const [isPresetsModalOpen, setIsPresetsModalOpen] = useState<boolean>(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+  const [isDateShiftModalOpen, setIsDateShiftModalOpen] = useState<boolean>(false);
+  const [isTypicalModalOpen, setIsTypicalModalOpen] = useState<boolean>(false);
 
   // Auto-sync to localStorage
   useEffect(() => {
@@ -234,6 +248,10 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setIsPresetsModalOpen,
         isExportModalOpen,
         setIsExportModalOpen,
+        isDateShiftModalOpen,
+        setIsDateShiftModalOpen,
+        isTypicalModalOpen,
+        setIsTypicalModalOpen,
         resetToDefaults,
         loadPreset,
         exportProjectJson,

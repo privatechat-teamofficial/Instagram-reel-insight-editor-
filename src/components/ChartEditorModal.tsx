@@ -16,10 +16,17 @@ import {
   Sliders,
   Eye,
   RefreshCw,
+  Calendar,
 } from 'lucide-react';
 
 export const ChartEditorModal: React.FC = () => {
-  const { isChartModalOpen, setIsChartModalOpen, data, setData } = useInsights();
+  const {
+    isChartModalOpen,
+    setIsChartModalOpen,
+    data,
+    setData,
+    setIsDateShiftModalOpen,
+  } = useInsights();
   const [points, setPoints] = useState<ChartDataPoint[]>(data.viewsChart.points);
   const [dates, setDates] = useState<string[]>(data.viewsChart.dates);
   const [yMax, setYMax] = useState<number>(data.viewsChart.yMax);
@@ -261,13 +268,27 @@ export const ChartEditorModal: React.FC = () => {
               <p className="text-[11px] text-[#8e959b]">Upload graph screenshot to auto-trace or fine-tune coordinates</p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setIsChartModalOpen(false)}
-            className="p-1.5 text-gray-400 hover:text-white rounded-full bg-[#1c2024]"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setIsChartModalOpen(false);
+                setIsDateShiftModalOpen(true);
+              }}
+              className="py-1 px-2.5 bg-[#1f242c] hover:bg-[#282f3a] text-gray-200 rounded-lg text-[11px] font-medium flex items-center gap-1.5 transition-colors border border-[#2d3440]"
+              title="Shift graph timeline back or rewind date progress"
+            >
+              <Calendar className="w-3.5 h-3.5 text-[#FE36FF]" />
+              <span>Shift Dates</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsChartModalOpen(false)}
+              className="p-1.5 text-gray-400 hover:text-white rounded-full bg-[#1c2024]"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* 1. UPLOAD IMAGE & AUTO-RENDER FEATURE */}
@@ -375,6 +396,35 @@ export const ChartEditorModal: React.FC = () => {
             >
               Steady Linear (10K)
             </button>
+            <span className="text-[10px] text-[#8e959b] ml-1">Typical:</span>
+            <button
+              type="button"
+              onClick={() => {
+                setPoints((prev) =>
+                  prev.map((pt, idx) => ({
+                    ...pt,
+                    typical: idx === 0 ? 0 : Math.round(400 * (idx / (prev.length - 1 || 1))),
+                  }))
+                );
+              }}
+              className="px-2 py-1 text-[10px] font-medium bg-[#1a1e23] hover:bg-[#252b32] text-gray-300 rounded-md border border-[#2b313b]"
+            >
+              Match Screenshot (400)
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setPoints((prev) =>
+                  prev.map((pt, idx) => ({
+                    ...pt,
+                    typical: idx === 0 ? 0 : Math.round(pt.all * 0.15),
+                  }))
+                );
+              }}
+              className="px-2 py-1 text-[10px] font-medium bg-[#1a1e23] hover:bg-[#252b32] text-gray-300 rounded-md border border-[#2b313b]"
+            >
+              15% of Reel
+            </button>
           </div>
         </div>
 
@@ -406,12 +456,35 @@ export const ChartEditorModal: React.FC = () => {
               <path
                 d={typicalPathD}
                 fill="none"
-                stroke="#5c6370"
+                stroke="#8e959b"
                 strokeWidth="2.0"
                 strokeDasharray="4 4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
+
+              {/* Typical Curve Interactive Nodes */}
+              {points.map((pt, idx) => {
+                const x = pad + (idx / (points.length - 1 || 1)) * (svgW - pad * 2);
+                const typ = pt.typical ?? Math.round(pt.all * 0.12);
+                const y = pad + (svgH - pad * 2) - (typ / maxVal) * (svgH - pad * 2);
+                const isSelected = selectedPointIndex === idx;
+                return (
+                  <circle
+                    key={`typ-${idx}`}
+                    cx={x}
+                    cy={y}
+                    r={isSelected ? 4.5 : 2.5}
+                    fill={isSelected ? '#ffffff' : '#5c6370'}
+                    stroke={isSelected ? '#5c6370' : 'none'}
+                    strokeWidth="1.5"
+                    className="cursor-pointer transition-all hover:scale-150"
+                    onClick={() => setSelectedPointIndex(idx)}
+                  >
+                    <title>{`Typical Node #${idx + 1}: ${typ} views`}</title>
+                  </circle>
+                );
+              })}
 
               {/* Exact Magenta line (active points only) */}
               <path
@@ -423,7 +496,7 @@ export const ChartEditorModal: React.FC = () => {
                 strokeLinejoin="round"
               />
 
-              {/* Interactive nodes along curve */}
+              {/* Interactive nodes along reel curve */}
               {points.map((pt, idx) => {
                 const x = pad + (idx / (points.length - 1 || 1)) * (svgW - pad * 2);
                 const hasData = pt.hasData !== false;
@@ -440,41 +513,74 @@ export const ChartEditorModal: React.FC = () => {
                     strokeWidth="1.5"
                     className="cursor-pointer transition-all hover:scale-150"
                     onClick={() => setSelectedPointIndex(idx)}
-                  />
+                  >
+                    <title>{`Reel Node #${idx + 1}: ${pt.all} views`}</title>
+                  </circle>
                 );
               })}
             </svg>
           </div>
 
-          {/* Quick Slider for Selected Node */}
+          {/* Quick Dual Sliders for Selected Node (This Reel & Typical Video) */}
           {selectedPointIndex !== null && points[selectedPointIndex] && (
-            <div className="bg-[#1c2024] p-2.5 rounded-lg border border-[#2e353e] flex items-center justify-between gap-3 text-[11px]">
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className="font-semibold text-white">Node #{selectedPointIndex + 1} ({points[selectedPointIndex].label}):</span>
-                <span className="text-[#FE36FF] font-mono">{points[selectedPointIndex].all.toLocaleString()}</span>
+            <div className="bg-[#1c2024] p-2.5 rounded-lg border border-[#2e353e] flex flex-col gap-2 text-[11px]">
+              {/* Row 1: This Reel (Solid Pink) */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-1.5 shrink-0 w-36">
+                  <span className="w-2 h-2 rounded-full bg-[#FE36FF]" />
+                  <span className="font-semibold text-white">This Reel:</span>
+                  <span className="text-[#FE36FF] font-mono">{points[selectedPointIndex].all.toLocaleString()}</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max={yMax}
+                  step={50}
+                  value={points[selectedPointIndex].all}
+                  onChange={(e) => handlePointChange(selectedPointIndex, 'all', Number(e.target.value))}
+                  className="flex-1 accent-[#FE36FF] h-1.5 bg-[#2a2f36] rounded-full cursor-pointer"
+                />
+                <button
+                  type="button"
+                  onClick={() =>
+                    handlePointChange(selectedPointIndex, 'hasData', !(points[selectedPointIndex].hasData !== false))
+                  }
+                  className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                    points[selectedPointIndex].hasData !== false
+                      ? 'bg-[#FE36FF]/20 text-[#FE36FF] border border-[#FE36FF]/40'
+                      : 'bg-[#2a2f36] text-gray-400'
+                  }`}
+                >
+                  {points[selectedPointIndex].hasData !== false ? 'Active Line' : 'Line Stops Here'}
+                </button>
               </div>
-              <input
-                type="range"
-                min="0"
-                max={yMax}
-                step={50}
-                value={points[selectedPointIndex].all}
-                onChange={(e) => handlePointChange(selectedPointIndex, 'all', Number(e.target.value))}
-                className="flex-1 accent-[#FE36FF] h-1.5 bg-[#2a2f36] rounded-full cursor-pointer"
-              />
-              <button
-                type="button"
-                onClick={() =>
-                  handlePointChange(selectedPointIndex, 'hasData', !(points[selectedPointIndex].hasData !== false))
-                }
-                className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                  points[selectedPointIndex].hasData !== false
-                    ? 'bg-[#FE36FF]/20 text-[#FE36FF] border border-[#FE36FF]/40'
-                    : 'bg-[#2a2f36] text-gray-400'
-                }`}
-              >
-                {points[selectedPointIndex].hasData !== false ? 'Active Line' : 'Line Stops Here'}
-              </button>
+
+              {/* Row 2: Typical Video (Dashed Gray) */}
+              <div className="flex items-center justify-between gap-3 pt-1 border-t border-[#252a32]">
+                <div className="flex items-center gap-1.5 shrink-0 w-36">
+                  <span className="w-2 h-2 rounded-full bg-[#5c6370]" />
+                  <span className="font-semibold text-white">Typical Video:</span>
+                  <span className="text-[#8e959b] font-mono">
+                    {(points[selectedPointIndex].typical ?? Math.round(points[selectedPointIndex].all * 0.12)).toLocaleString()}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max={Math.max(1000, yMax / 2)}
+                  step={10}
+                  value={points[selectedPointIndex].typical ?? Math.round(points[selectedPointIndex].all * 0.12)}
+                  onChange={(e) => handlePointChange(selectedPointIndex, 'typical', Number(e.target.value))}
+                  className="flex-1 accent-[#8e959b] h-1.5 bg-[#2a2f36] rounded-full cursor-pointer"
+                />
+                <input
+                  type="number"
+                  min="0"
+                  value={points[selectedPointIndex].typical ?? Math.round(points[selectedPointIndex].all * 0.12)}
+                  onChange={(e) => handlePointChange(selectedPointIndex, 'typical', Number(e.target.value))}
+                  className="w-16 bg-[#090b0d] border border-[#2d333b] rounded px-1.5 py-0.5 text-right font-mono text-[10.5px] text-white"
+                />
+              </div>
             </div>
           )}
 

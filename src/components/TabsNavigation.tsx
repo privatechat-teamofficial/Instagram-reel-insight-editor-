@@ -29,11 +29,11 @@ export const TabsNavigation: React.FC = () => {
                   setAudienceSubTab('age');
                 }
               }}
-              className={`py-2.5 flex items-center justify-center transition-colors duration-200 z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+              className={`pt-2.5 pb-1.5 flex items-center justify-center transition-colors duration-200 z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
                 isActive ? 'text-white font-medium' : 'text-[#8a9199] hover:text-[#d0d4d9]'
               }`}
             >
-              <span className="text-[14px] tracking-[0.02em] font-medium">
+              <span className="text-[15.5px] tracking-[0.015em] font-medium">
                 {tab.label}
               </span>
             </button>
@@ -47,7 +47,7 @@ export const TabsNavigation: React.FC = () => {
             transform: `translateX(${safeIndex * 100}%)`,
           }}
         >
-          <div className="w-[76px] h-[2px] bg-white rounded-full" />
+          <div className="w-[84px] h-[2px] bg-white rounded-full" />
         </div>
       </div>
     </div>
