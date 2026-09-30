@@ -88,23 +88,69 @@ jobs:
       - name: Build Web Application
         run: npm run build
 
-      - name: Sync Capacitor Android
+      - name: Verify Capacitor & App Configuration
         run: |
+          echo "=== Checking Capacitor CLI & Configuration ==="
+          npx cap --version
+          if [ -f "capacitor.config.json" ]; then
+            cat capacitor.config.json
+          elif [ -f "capacitor.config.ts" ]; then
+            cat capacitor.config.ts
+          fi
+
+      - name: Setup & Sync Capacitor Android Project
+        run: |
+          echo "=== Preparing Android Project ==="
+          # If android directory exists but android/gradlew is missing, clean incomplete directory
+          if [ -d "android" ] && [ ! -f "android/gradlew" ]; then
+            echo "android directory exists but android/gradlew is missing. Cleaning incomplete android folder..."
+            rm -rf android
+          fi
+
+          # Generate Android native project if it does not exist
           if [ ! -d "android" ]; then
+            echo "Generating Android project using npx cap add android..."
             npx cap add android
           fi
+
+          # Synchronize web assets and plugins into Android project
+          echo "Synchronizing web build into Android with npx cap sync android..."
           npx cap sync android
+
+          # Rigorously verify android directory and gradlew existence
+          echo "=== Verifying Android Project Structure ==="
+          if [ ! -d "android" ] || [ ! -f "android/gradlew" ]; then
+            echo "::error::android/gradlew does not exist after npx cap add android and npx cap sync android!"
+            echo "================ DIAGNOSTIC INFORMATION ================"
+            echo "Current working directory: $(pwd)"
+            echo "--- Root directory listing (ls -la) ---"
+            ls -la
+            if [ -d "android" ]; then
+              echo "--- Android directory listing (ls -la android) ---"
+              ls -la android
+            else
+              echo "Android directory does NOT exist."
+            fi
+            echo "--- Capacitor CLI version ---"
+            npx cap --version || true
+            echo "--- Capacitor packages in package.json ---"
+            node -e "
+              const pkg = require('./package.json');
+              console.log('@capacitor/android:', (pkg.dependencies && pkg.dependencies['@capacitor/android']) || 'not found');
+              console.log('@capacitor/cli:', (pkg.dependencies && pkg.dependencies['@capacitor/cli']) || 'not found');
+              console.log('@capacitor/core:', (pkg.dependencies && pkg.dependencies['@capacitor/core']) || 'not found');
+            "
+            echo "========================================================="
+            exit 1
+          fi
+
+          echo "✅ android and android/gradlew verified successfully."
 
       - name: Build Signed Android Debug APK
         run: |
-          if test -f android/gradlew; then
-            chmod +x android/gradlew
-            cd android
-            ./gradlew assembleDebug --no-daemon --stacktrace
-          else
-            echo "::error::android/gradlew does not exist!"
-            exit 1
-          fi
+          chmod +x android/gradlew
+          cd android
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Verify & Prepare Installable APK Assets
         id: prepare_apk
