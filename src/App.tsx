@@ -75,8 +75,13 @@ const ReelInsightsScreen: React.FC = () => {
               <div className="w-32 h-[3px] bg-white/70 rounded-full" />
             </div>
 
-            {/* Bottom spacer for comfortable scrolling above mobile floating bar */}
-            <div className="w-full h-12 lg:h-4 shrink-0 bg-[#0d0f12]" />
+            {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar */}
+            <div
+              className="w-full h-12 lg:h-4 shrink-0 bg-[#0d0f12]"
+              style={{
+                paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+              }}
+            />
           </div>
         </div>
 
@@ -192,7 +197,12 @@ const ReelInsightsScreen: React.FC = () => {
 
       {/* Floating Bottom Quick Bar on Mobile (only shown in editing mode, keeping clean view in preview mode) */}
       {isEditMode && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex lg:hidden items-center gap-2 bg-[#161a1f]/95 backdrop-blur-md border border-[#2b313a] px-3.5 py-1.5 rounded-full shadow-2xl animate-in fade-in duration-200">
+        <div
+          className="fixed left-1/2 -translate-x-1/2 z-40 flex lg:hidden items-center gap-2 bg-[#161a1f]/95 backdrop-blur-md border border-[#2b313a] px-3.5 py-1.5 rounded-full shadow-2xl animate-in fade-in duration-200"
+          style={{
+            bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
+          }}
+        >
           <button
             type="button"
             onClick={toggleEditMode}

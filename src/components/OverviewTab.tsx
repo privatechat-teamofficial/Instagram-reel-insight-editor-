@@ -70,9 +70,9 @@ export const OverviewTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col gap-4.5 px-4 pt-3.5 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col gap-4.5 px-4 pt-[27px] pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Summary Section */}
-      <section className="flex flex-col gap-2.5">
+      <section className="flex flex-col gap-3.5">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Summary</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
