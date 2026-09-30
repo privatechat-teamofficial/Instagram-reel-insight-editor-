@@ -17,6 +17,7 @@
   *::before,
   *::after {
     -webkit-tap-highlight-color: transparent !important;
+    user-select: none;
     box-sizing: border-box;
   }
   *:focus,
@@ -42,18 +43,15 @@
     -webkit-tap-highlight-color: transparent !important;
   }
   html,
-  body {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #0d0f12;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
+  body,
   #root {
     width: 100%;
     min-height: 100%;
+    width: 100vw;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
     background-color: #0d0f12;
   }
   input, textarea {
@@ -64,7 +62,6 @@
     color: #ffffff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    touch-action: pan-y pinch-zoom;
   }
 }
 

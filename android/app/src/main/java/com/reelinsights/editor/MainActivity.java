@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -39,42 +38,38 @@ public class MainActivity extends BridgeActivity {
         Window window = getWindow();
         if (window == null) return;
 
-        // 1. Maintain standard system window bounds so app content is NOT resized, shifted, or stretched
-        WindowCompat.setDecorFitsSystemWindows(window, true);
-
-        // 2. Set window and decor view background to app dark color (#0d0f12)
+        // 1. Set window and decor view background to app dark color
         window.setBackgroundDrawable(new ColorDrawable(DARK_BG));
-        View decorView = window.getDecorView();
-        if (decorView != null) {
-            decorView.setBackgroundColor(DARK_BG);
+        if (window.getDecorView() != null) {
+            window.getDecorView().setBackgroundColor(DARK_BG);
         }
 
-        // 3. Ensure system bars draw with the solid dark color (#0d0f12) - eliminating any gray/white strip
+        // 2. Ensure system bars draw with the custom background
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+        // 3. Set status bar and navigation bar background to app dark color (#0d0f12)
         window.setStatusBarColor(DARK_BG);
         window.setNavigationBarColor(DARK_BG);
 
-        // 4. Disable Android 10+ contrast scrim overlay so system bars are not forced gray/translucent
+        // 4. Disable Android 10+ contrast scrim overlay so system bars don't get forced white/gray
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setNavigationBarContrastEnforced(false);
             window.setStatusBarContrastEnforced(false);
         }
 
         // 5. Ensure system icons (clock, battery, Wi-Fi, navigation gesture pill / buttons) are white
-        WindowInsetsControllerCompat insetsController = WindowCompat.getInsetsController(window, decorView != null ? decorView : window.getDecorView());
+        WindowInsetsControllerCompat insetsController = WindowCompat.getInsetsController(window, window.getDecorView());
         if (insetsController != null) {
-            insetsController.setAppearanceLightStatusBars(false);       // false = light/white text & icons on dark status bar
+            insetsController.setAppearanceLightStatusBars(false);       // false = light/white icons
             insetsController.setAppearanceLightNavigationBars(false);   // false = light/white navigation icons
         }
 
-        // 6. Ensure underlying WebView has the same dark background and smooth scrolling
+        // 6. Ensure underlying WebView has the same dark background
         if (getBridge() != null && getBridge().getWebView() != null) {
             WebView webView = getBridge().getWebView();
             webView.setBackgroundColor(DARK_BG);
-            webView.setVerticalScrollBarEnabled(false);
-            webView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
         }
     }
 }

@@ -3,7 +3,6 @@ import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { InfoCircleIcon } from './InstagramIcons';
 import { AudienceSubTab } from '../types/insights';
-import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import { Plus, Trash2 } from 'lucide-react';
 
 export const AudienceTab: React.FC = () => {
@@ -22,26 +21,6 @@ export const AudienceTab: React.FC = () => {
     { id: 'country', label: 'Country' },
     { id: 'gender', label: 'Gender' },
   ];
-
-  const formatPercent = (val: any) => {
-    const num = Number(val);
-    return isNaN(num) ? '0.0%' : `${num.toFixed(1)}%`;
-  };
-
-  const ageList =
-    data?.audience?.age && data.audience.age.length > 0
-      ? data.audience.age
-      : DEFAULT_REEL_DATA.audience.age;
-
-  const countryList =
-    data?.audience?.country && data.audience.country.length > 0
-      ? data.audience.country
-      : DEFAULT_REEL_DATA.audience.country;
-
-  const genderList =
-    data?.audience?.gender && data.audience.gender.length > 0
-      ? data.audience.gender
-      : DEFAULT_REEL_DATA.audience.gender;
 
   const handleAddAgeBucket = () => {
     setData((prev) => ({
@@ -84,7 +63,7 @@ export const AudienceTab: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-3 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col gap-4 px-4 pt-[27px] pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Who viewed your reel - positioned at exact same place and font size as 'Actions after viewing' in EngagementTab */}
       <section className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -111,7 +90,7 @@ export const AudienceTab: React.FC = () => {
                 value={data.audience.followersPercentage}
                 className="text-[16px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
               >
-                {formatPercent(data?.audience?.followersPercentage)}
+                {data.audience.followersPercentage.toFixed(1)}%
               </EditableValue>
             </div>
           </div>
@@ -123,7 +102,7 @@ export const AudienceTab: React.FC = () => {
               <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#804cf0] rounded-full"
-                  style={{ width: `${Math.min(100, Math.max(0, Number(data?.audience?.nonFollowersPercentage) || 0))}%` }}
+                  style={{ width: `${Math.min(100, Math.max(0, data.audience.nonFollowersPercentage))}%` }}
                 />
               </div>
               <EditableValue
@@ -133,7 +112,7 @@ export const AudienceTab: React.FC = () => {
                 value={data.audience.nonFollowersPercentage}
                 className="text-[16px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
               >
-                {formatPercent(data?.audience?.nonFollowersPercentage)}
+                {data.audience.nonFollowersPercentage.toFixed(1)}%
               </EditableValue>
             </div>
           </div>
@@ -174,7 +153,7 @@ export const AudienceTab: React.FC = () => {
         <div className="flex flex-col gap-2 mt-3.5 min-h-[220px]">
           {/* A. AGE SUBTAB (Default: 13-17, 18-24, 25-34, 35-44, 45-54, 55-64, 65+) */}
           <div className={audienceSubTab === 'age' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {ageList.map((item, idx) => (
+            {data.audience.age.map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -211,7 +190,7 @@ export const AudienceTab: React.FC = () => {
                     value={item.percentage}
                     className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
-                    {formatPercent(item.percentage)}
+                    {item.percentage.toFixed(1)}%
                   </EditableValue>
                 </div>
               </div>
@@ -230,7 +209,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* B. COUNTRY SUBTAB */}
           <div className={audienceSubTab === 'country' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {countryList.map((item, idx) => (
+            {data.audience.country.map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -267,7 +246,7 @@ export const AudienceTab: React.FC = () => {
                     value={item.percentage}
                     className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
-                    {formatPercent(item.percentage)}
+                    {item.percentage.toFixed(1)}%
                   </EditableValue>
                 </div>
               </div>
@@ -286,7 +265,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* C. GENDER SUBTAB */}
           <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-2.5' : 'hidden'}>
-            {genderList.map((item, idx) => (
+            {data.audience.gender.map((item, idx) => (
               <div key={item.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
@@ -323,7 +302,7 @@ export const AudienceTab: React.FC = () => {
                     value={item.percentage}
                     className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
-                    {formatPercent(item.percentage)}
+                    {item.percentage.toFixed(1)}%
                   </EditableValue>
                 </div>
               </div>

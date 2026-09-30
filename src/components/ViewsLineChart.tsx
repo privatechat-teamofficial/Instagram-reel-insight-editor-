@@ -15,9 +15,9 @@ export const ViewsLineChart: React.FC = () => {
   } = useInsights();
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  const points = data?.viewsChart?.points || [];
-  const dates = data?.viewsChart?.dates || [];
-  const yMax = data?.viewsChart?.yMax || 4000;
+  const points = data.viewsChart.points;
+  const dates = data.viewsChart.dates;
+  const yMax = data.viewsChart.yMax || 4000;
 
   // Extract values based on active filter
   const values = points.map((p) => {

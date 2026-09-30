@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { ViewsLineChart } from './ViewsLineChart';
-import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import {
   InfoCircleIcon,
   SkipRateIcon,
@@ -27,23 +26,8 @@ export const OverviewTab: React.FC = () => {
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
-  const impactList =
-    data?.impactFactors && data.impactFactors.length > 0
-      ? data.impactFactors
-      : DEFAULT_REEL_DATA.impactFactors;
-
-  const retentionData =
-    data?.watchTimeRetention?.points && data.watchTimeRetention.points.length > 0
-      ? data.watchTimeRetention
-      : DEFAULT_REEL_DATA.watchTimeRetention;
-
-  const sourcesList =
-    data?.topSources && data.topSources.length > 0
-      ? data.topSources
-      : DEFAULT_REEL_DATA.topSources;
-
   // All symbol heights and widths are identical to the like symbol (HeartIcon)
-  const getImpactIcon = (iconType?: string) => {
+  const getImpactIcon = (iconType: string) => {
     const symbolClass = 'w-[19px] h-[19px] text-white';
     switch (iconType) {
       case 'skip':
@@ -63,13 +47,8 @@ export const OverviewTab: React.FC = () => {
     }
   };
 
-  const formatPercent = (val: any) => {
-    const num = Number(val);
-    return isNaN(num) ? '0.0%' : `${num.toFixed(1)}%`;
-  };
-
   // Retention chart coordinates
-  const retentionPoints = retentionData.points || [];
+  const retentionPoints = data.watchTimeRetention.points;
   const retSvgWidth = 320;
   const retSvgHeight = 85;
   const retPadLeft = 10;
@@ -80,9 +59,8 @@ export const OverviewTab: React.FC = () => {
   const retHeight = retSvgHeight - retPadTop - retPadBottom;
 
   const retCoords = retentionPoints.map((pt, i) => {
-    const pct = Number(pt?.percentage) || 0;
     const x = retPadLeft + (i / (retentionPoints.length - 1 || 1)) * retWidth;
-    const y = retPadTop + retHeight - (pct / 100) * retHeight;
+    const y = retPadTop + retHeight - (pt.percentage / 100) * retHeight;
     return { x, y, pt };
   });
 
@@ -92,7 +70,7 @@ export const OverviewTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-3 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col gap-4.5 px-4 pt-[27px] pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Summary Section */}
       <section className="flex flex-col gap-3.5">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -101,9 +79,9 @@ export const OverviewTab: React.FC = () => {
         </div>
 
         {/* 2x2 Grid Cards: Roomier cards with #25292E background and rounded corners */}
-        <div className="grid grid-cols-2 gap-2.5 w-full">
+        <div className="grid grid-cols-2 gap-3 w-full">
           {/* Box 1: Views */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Views
             </span>
@@ -112,14 +90,14 @@ export const OverviewTab: React.FC = () => {
               title="Views"
               type="number"
               value={data.summary.views}
-              className="text-[20px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1"
+              className="text-[21px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1.5"
             >
               {formatNumber(data.summary.views)}
             </EditableValue>
           </div>
 
           {/* Box 2: Viewers */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Viewers
             </span>
@@ -128,14 +106,14 @@ export const OverviewTab: React.FC = () => {
               title="Viewers"
               type="number"
               value={data.summary.viewers}
-              className="text-[20px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1"
+              className="text-[21px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1.5"
             >
               {formatNumber(data.summary.viewers)}
             </EditableValue>
           </div>
 
           {/* Box 3: Average watch time */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Average watch time
             </span>
@@ -144,14 +122,14 @@ export const OverviewTab: React.FC = () => {
               title="Average watch time"
               type="time"
               value={data.summary.averageWatchTime}
-              className="text-[20px] font-bold text-white tracking-tight leading-tight mt-1"
+              className="text-[21px] font-bold text-white tracking-tight leading-tight mt-1.5"
             >
               {data.summary.averageWatchTime}
             </EditableValue>
           </div>
 
           {/* Box 4: Follows */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Follows
             </span>
@@ -160,7 +138,7 @@ export const OverviewTab: React.FC = () => {
               title="Follows"
               type="number"
               value={data.summary.follows}
-              className="text-[20px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1"
+              className="text-[21px] font-bold text-white tracking-tight tabular-numbers leading-tight mt-1.5"
             >
               {formatNumber(data.summary.follows)}
             </EditableValue>
@@ -189,26 +167,25 @@ export const OverviewTab: React.FC = () => {
 
         {/* Impact List Rows with no partition horizontal line and vertically aligned lighter circular badges */}
         <div className="flex flex-col mt-1">
-          {impactList.map((item, idx) => {
-            const statusStr = String(item?.status || 'Lower');
+          {data.impactFactors.map((item, idx) => {
             const isGreen =
-              statusStr.toLowerCase() === 'lower' || statusStr.toLowerCase() === 'higher';
+              item.status.toLowerCase() === 'lower' || item.status.toLowerCase() === 'higher';
 
             return (
-              <div key={item?.id || idx} className="flex items-center justify-between py-2.5">
+              <div key={item.id} className="flex items-center justify-between py-2.5">
                 {/* Left: Vertically aligned circular badge (matching screenshot shade #262c33) & Name */}
                 <div className="flex items-center gap-3.5">
                   <div className="w-[38px] h-[38px] rounded-full bg-[#262c33] flex items-center justify-center shrink-0">
-                    {getImpactIcon(item?.iconType)}
+                    {getImpactIcon(item.iconType)}
                   </div>
                   <EditableValue
                     path={`impactFactors.${idx}.name`}
                     title="Impact metric name"
                     type="text"
-                    value={item?.name || ''}
+                    value={item.name}
                     className="text-[14.5px] font-medium text-white"
                   >
-                    {item?.name || ''}
+                    {item.name}
                   </EditableValue>
                 </div>
 
@@ -216,23 +193,23 @@ export const OverviewTab: React.FC = () => {
                 <div className="flex flex-col items-end">
                   <EditableValue
                     path={`impactFactors.${idx}.rate`}
-                    title={`${item?.name || 'Metric'} percentage`}
+                    title={`${item.name} percentage`}
                     type="percentage"
-                    value={item?.rate ?? 0}
+                    value={item.rate}
                     className="text-[14.5px] font-bold text-white tabular-numbers"
                   >
-                    {formatPercent(item?.rate)}
+                    {item.rate.toFixed(1)}%
                   </EditableValue>
                   <EditableValue
                     path={`impactFactors.${idx}.status`}
-                    title={`${item?.name || 'Metric'} status indicator`}
+                    title={`${item.name} status indicator`}
                     type="status_tag"
-                    value={item?.status || 'Lower'}
+                    value={item.status}
                     className={`text-[12px] font-medium mt-0.5 ${
                       isGreen ? 'text-[#24c360]' : 'text-[#8e959b]'
                     }`}
                   >
-                    {item?.status || 'Lower'}
+                    {item.status}
                   </EditableValue>
                 </div>
               </div>
@@ -403,7 +380,7 @@ export const OverviewTab: React.FC = () => {
 
         {/* Source Progress Bars */}
         <div className="flex flex-col gap-3 mt-1">
-          {sourcesList.map((source, idx) => (
+          {data.topSources.map((source, idx) => (
             <div key={source.id} className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between text-[13.5px]">
                 <div className="flex items-center gap-2">
@@ -430,12 +407,12 @@ export const OverviewTab: React.FC = () => {
 
                 <EditableValue
                   path={`topSources.${idx}.percentage`}
-                  title={`${source?.name || 'Source'} percentage`}
+                  title={`${source.name} percentage`}
                   type="percentage"
-                  value={source?.percentage ?? 0}
+                  value={source.percentage}
                   className="font-medium text-white tabular-numbers"
                 >
-                  {formatPercent(source?.percentage)}
+                  {source.percentage.toFixed(1)}%
                 </EditableValue>
               </div>
 
@@ -443,7 +420,7 @@ export const OverviewTab: React.FC = () => {
               <div className="w-full h-[6px] bg-[#1c2024] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#FE36FF] rounded-full"
-                  style={{ width: `${Math.min(100, Math.max(0, Number(source?.percentage) || 0))}%` }}
+                  style={{ width: `${Math.min(100, Math.max(0, source.percentage))}%` }}
                 />
               </div>
             </div>
