@@ -96,10 +96,15 @@ jobs:
           npx cap sync android
 
       - name: Build Signed Android Debug APK
-        working-directory: ./android
         run: |
-          chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          if test -f android/gradlew; then
+            chmod +x android/gradlew
+            cd android
+            ./gradlew assembleDebug --no-daemon --stacktrace
+          else
+            echo "::error::android/gradlew does not exist!"
+            exit 1
+          fi
 
       - name: Verify & Prepare Installable APK Assets
         id: prepare_apk
