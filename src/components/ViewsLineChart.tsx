@@ -17,6 +17,12 @@ export const ViewsLineChart: React.FC = () => {
     return p.all;
   });
 
+  // Extract "Your typical reel" baseline values
+  const typicalValues = points.map((p) => {
+    if (p.typical !== undefined) return p.typical;
+    return Math.round((p.all || 100) * 0.12);
+  });
+
   const svgWidth = 330;
   const svgHeight = 110;
   const padLeft = 8;
@@ -27,20 +33,27 @@ export const ViewsLineChart: React.FC = () => {
   const chartWidth = svgWidth - padLeft - padRight;
   const chartHeight = svgHeight - padTop - padBottom;
 
-  const maxVal = Math.max(...values, yMax);
+  const maxVal = Math.max(...values, ...typicalValues, yMax);
 
-  // Generate coordinates
+  // Generate coordinates for "This reel"
   const coords = points.map((_, i) => {
     const x = padLeft + (i / (points.length - 1 || 1)) * chartWidth;
     const val = values[i];
     const y = padTop + chartHeight - (val / (maxVal || 1)) * chartHeight;
-    return { x, y, val, label: points[i].label };
+    const typVal = typicalValues[i];
+    const typY = padTop + chartHeight - (typVal / (maxVal || 1)) * chartHeight;
+    return { x, y, val, typVal, typY, label: points[i].label };
   });
 
-  // Build SVG path
+  // Build SVG paths
   const pathData = coords.reduce((acc, curr, index) => {
     if (index === 0) return `M ${curr.x} ${curr.y}`;
     return `${acc} L ${curr.x} ${curr.y}`;
+  }, '');
+
+  const typicalPathData = coords.reduce((acc, curr, index) => {
+    if (index === 0) return `M ${curr.x} ${curr.typY}`;
+    return `${acc} L ${curr.x} ${curr.typY}`;
   }, '');
 
   // Format numbers for Y-axis (e.g. 4K, 2K, 0)
@@ -59,35 +72,35 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('all')}
-          className={`px-3.5 py-1 text-[12.5px] font-medium rounded-full transition-all border ${
+          className={`h-[28px] p-0 px-3.5 flex items-center justify-center text-[12.5px] font-medium rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
             viewsChartFilter === 'all'
-              ? 'bg-[#2e3339] text-white border-[#3d444d]'
-              : 'bg-[#14171a] text-[#d0d4d9] border-[#2d333b] hover:text-white'
+              ? 'bg-[#282d35] text-white border-[#38404c]'
+              : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
         >
-          All
+          <span className="leading-none text-center block translate-y-[1px]">All</span>
         </button>
         <button
           type="button"
           onClick={() => setViewsChartFilter('followers')}
-          className={`px-3.5 py-1 text-[12.5px] font-medium rounded-full transition-all border ${
+          className={`h-[28px] p-0 px-3.5 flex items-center justify-center text-[12.5px] font-medium rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
             viewsChartFilter === 'followers'
-              ? 'bg-[#2e3339] text-white border-[#3d444d]'
-              : 'bg-[#14171a] text-[#d0d4d9] border-[#2d333b] hover:text-white'
+              ? 'bg-[#282d35] text-white border-[#38404c]'
+              : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
         >
-          Followers
+          <span className="leading-none text-center block translate-y-[1px]">Followers</span>
         </button>
         <button
           type="button"
           onClick={() => setViewsChartFilter('non_followers')}
-          className={`px-3.5 py-1 text-[12.5px] font-medium rounded-full transition-all border ${
+          className={`h-[28px] p-0 px-3.5 flex items-center justify-center text-[12.5px] font-medium rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
             viewsChartFilter === 'non_followers'
-              ? 'bg-[#2e3339] text-white border-[#3d444d]'
-              : 'bg-[#14171a] text-[#d0d4d9] border-[#2d333b] hover:text-white'
+              ? 'bg-[#282d35] text-white border-[#38404c]'
+              : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
         >
-          Non-followers
+          <span className="leading-none text-center block translate-y-[1px]">Non-followers</span>
         </button>
       </div>
 
@@ -141,7 +154,18 @@ export const ViewsLineChart: React.FC = () => {
               strokeWidth="1"
             />
 
-            {/* Pure Vibrant Pink/Magenta Line (no shaded gradient underneath, matching screenshot!) */}
+            {/* "Your typical reel" Dashed Gray Baseline */}
+            <path
+              d={typicalPathData}
+              fill="none"
+              stroke="#5c6370"
+              strokeWidth="2.2"
+              strokeDasharray="4 4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {/* "This reel" Vibrant Pink/Magenta Solid Line */}
             <path
               d={pathData}
               fill="none"
@@ -171,6 +195,7 @@ export const ViewsLineChart: React.FC = () => {
                     <>
                       <circle cx={c.x} cy={c.y} r="4" fill="#FE36FF" />
                       <circle cx={c.x} cy={c.y} r="1.8" fill="#ffffff" />
+                      <circle cx={c.x} cy={c.typY} r="3" fill="#5c6370" />
                     </>
                   )}
                 </g>
@@ -181,13 +206,20 @@ export const ViewsLineChart: React.FC = () => {
           {/* Interactive Tooltip on hover/touch */}
           {hoverIndex !== null && coords[hoverIndex] && (
             <div
-              className="absolute pointer-events-none -top-4 -translate-x-1/2 bg-[#1c2024] text-white text-[10.5px] font-semibold px-2 py-0.5 rounded shadow-lg border border-[#2d333b] whitespace-nowrap z-20"
+              className="absolute pointer-events-none -top-6 -translate-x-1/2 bg-[#1c2024] text-white text-[10.5px] font-semibold px-2 py-1 rounded shadow-lg border border-[#2d333b] whitespace-nowrap z-20"
               style={{
                 left: `${(coords[hoverIndex].x / svgWidth) * 100}%`,
               }}
             >
-              {new Intl.NumberFormat('en-US').format(coords[hoverIndex].val)} views
-              <span className="block text-[9px] font-normal text-[#8a9199]">{coords[hoverIndex].label}</span>
+              <div className="flex items-center gap-1.5 text-[#FE36FF]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FE36FF]" />
+                <span>{new Intl.NumberFormat('en-US').format(coords[hoverIndex].val)} views</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[#8e959b] text-[9.5px]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#5c6370]" />
+                <span>Typical: {new Intl.NumberFormat('en-US').format(coords[hoverIndex].typVal)}</span>
+              </div>
+              <span className="block text-[9px] font-normal text-[#8a9199] mt-0.5">{coords[hoverIndex].label}</span>
             </div>
           )}
 
@@ -205,6 +237,18 @@ export const ViewsLineChart: React.FC = () => {
                 {dateStr}
               </EditableValue>
             ))}
+          </div>
+
+          {/* Dual series legend matching Instagram: ● This reel   ● Your typical reel */}
+          <div className="flex items-center gap-5 pt-3 pb-0.5 px-0.5 select-none text-[11px] text-[#8e959b]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-[6.5px] h-[6.5px] rounded-full bg-[#FE36FF] shrink-0" />
+              <span className="text-[#8e959b] font-normal">This reel</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-[6.5px] h-[6.5px] rounded-full bg-[#5c6370] shrink-0" />
+              <span className="text-[#8e959b] font-normal">Your typical reel</span>
+            </div>
           </div>
         </div>
 

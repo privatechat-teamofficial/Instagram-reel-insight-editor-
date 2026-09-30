@@ -13,10 +13,34 @@
 }
 
 @layer base {
-  * {
-    -webkit-tap-highlight-color: transparent;
+  *,
+  *::before,
+  *::after {
+    -webkit-tap-highlight-color: transparent !important;
     user-select: none;
     box-sizing: border-box;
+  }
+  *:focus,
+  *:focus-visible,
+  *:active {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    outline: none !important;
+  }
+  button:focus,
+  button:focus-visible,
+  button:active {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
   html,
   body,

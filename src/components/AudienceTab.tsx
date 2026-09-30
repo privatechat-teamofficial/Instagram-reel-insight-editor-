@@ -125,8 +125,8 @@ export const AudienceTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* Sub-tabs filter pills: Age | Country | Gender */}
-        <div className="flex items-center gap-1.5 mt-0.5">
+        {/* Sub-tabs filter pills: Age | Country | Gender (left-aligned row, centered text inside each pill) */}
+        <div className="flex items-center gap-2 mt-2">
           {subTabs.map((tab) => {
             const isActive = audienceSubTab === tab.id;
             return (
@@ -134,13 +134,15 @@ export const AudienceTab: React.FC = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setAudienceSubTab(tab.id)}
-                className={`px-3 py-1 text-[12px] font-medium rounded-full transition-all ${
+                className={`h-[28px] p-0 px-3.5 flex items-center justify-center text-[12.5px] font-medium rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
                   isActive
-                    ? 'bg-[#252932] text-white'
-                    : 'bg-transparent text-[#8e959b] border border-[#2b3039] hover:text-white'
+                    ? 'bg-[#282d35] text-white border-[#38404c]'
+                    : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-white hover:border-[#323842]'
                 }`}
               >
-                {tab.label}
+                <span className="leading-none text-center block translate-y-[1px]">
+                  {tab.label}
+                </span>
               </button>
             );
           })}

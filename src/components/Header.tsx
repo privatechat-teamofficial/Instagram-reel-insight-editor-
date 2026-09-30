@@ -20,13 +20,13 @@ export const Header: React.FC = () => {
       */}
       <div className="flex items-center justify-between h-[44px]">
         {/* Left: Back arrow + Left-aligned "Reel insights" title */}
-        <div className="flex items-center gap-3.5">
+        <div className="flex items-center gap-6">
           <button
             type="button"
             aria-label="Back"
-            className="text-white hover:opacity-80 active:scale-95 transition-opacity -ml-0.5 -translate-y-[2px] flex items-center justify-center shrink-0"
+            className="text-white hover:opacity-80 active:scale-95 transition-opacity -ml-0.5 flex items-center justify-center shrink-0"
           >
-            <HeaderBackIcon className="w-[18px] h-[16px]" />
+            <HeaderBackIcon className="w-[19px] h-[17px]" />
           </button>
 
           <div
@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
             title="Tap to toggle Edit Mode"
             className="flex items-center gap-1.5 cursor-pointer select-none"
           >
-            <h1 className="text-[19px] font-bold text-white tracking-tight leading-none">
+            <h1 className="text-[20px] font-bold text-white tracking-tight leading-none">
               Reel insights
             </h1>
             {isEditMode && (

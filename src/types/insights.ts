@@ -23,6 +23,7 @@ export interface ChartDataPoint {
   all: number;
   followers: number;
   nonFollowers: number;
+  typical?: number; // "Your typical reel" baseline value
 }
 
 export interface ImpactFactor {

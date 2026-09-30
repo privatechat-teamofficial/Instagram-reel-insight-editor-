@@ -14,11 +14,11 @@ export const ReelMediaHeader: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-1 pb-2.5 px-4 select-none shrink-0 bg-[#0d0f12]">
-      {/* Compact Reel Preview: ~102 × 182px matching reference screenshot scale */}
+    <div className="flex flex-col items-center pt-1 pb-3 px-4 select-none shrink-0 bg-[#0d0f12]">
+      {/* Reel Preview: ~180 × 320px (9:16) matching Instagram reference scale */}
       <div
         onClick={() => isEditMode && setIsMediaModalOpen(true)}
-        className={`relative w-[102px] h-[182px] rounded-[8px] overflow-hidden bg-[#030405] mb-3 shadow-md transition-all duration-150 ${
+        className={`relative w-[180px] h-[320px] aspect-[9/16] rounded-[14px] overflow-hidden bg-[#030405] mb-4 shadow-lg transition-all duration-150 shrink-0 ${
           isEditMode ? 'cursor-pointer ring-2 ring-[#ec008c]' : ''
         }`}
         title={isEditMode ? 'Click to change media' : undefined}
@@ -35,7 +35,7 @@ export const ReelMediaHeader: React.FC = () => {
               autoPlay
             />
             <div className="absolute inset-0 flex items-center justify-center bg-black/15 pointer-events-none">
-              <Play className="w-5 h-5 text-white/90 fill-white/70 drop-shadow" />
+              <Play className="w-6 h-6 text-white/90 fill-white/70 drop-shadow" />
             </div>
           </div>
         ) : (
@@ -52,9 +52,9 @@ export const ReelMediaHeader: React.FC = () => {
       </div>
 
       {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save */}
-      <div className="w-full max-w-[360px] grid grid-cols-5 text-center mb-1">
+      <div className="w-full max-w-[360px] grid grid-cols-5 text-center mt-0.5 mb-1">
         {/* Likes */}
-        <div className="flex flex-col items-center justify-center gap-1.5 py-1">
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <HeartIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.likes"
@@ -68,7 +68,7 @@ export const ReelMediaHeader: React.FC = () => {
         </div>
 
         {/* Comments */}
-        <div className="flex flex-col items-center justify-center gap-1.5 py-1">
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <CommentIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.comments"
@@ -82,7 +82,7 @@ export const ReelMediaHeader: React.FC = () => {
         </div>
 
         {/* Reposts */}
-        <div className="flex flex-col items-center justify-center gap-1.5 py-1">
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <RepostIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.reposts"
@@ -96,7 +96,7 @@ export const ReelMediaHeader: React.FC = () => {
         </div>
 
         {/* Shares */}
-        <div className="flex flex-col items-center justify-center gap-1.5 py-1">
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <ShareIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.shares"
@@ -110,7 +110,7 @@ export const ReelMediaHeader: React.FC = () => {
         </div>
 
         {/* Saves */}
-        <div className="flex flex-col items-center justify-center gap-1.5 py-1">
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <BookmarkIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.saves"

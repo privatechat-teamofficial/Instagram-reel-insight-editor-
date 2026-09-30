@@ -468,7 +468,7 @@ export const ChartEditorModal: React.FC = () => {
               >
                 <div className="w-5 text-[10.5px] text-[#8e959b] font-mono text-center">#{idx + 1}</div>
 
-                <div className="flex-1 grid grid-cols-2 gap-2">
+                <div className="flex-1 grid grid-cols-3 gap-1.5">
                   <div>
                     <span className="block text-[8.5px] text-[#8e959b]">Label</span>
                     <input
@@ -479,12 +479,21 @@ export const ChartEditorModal: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <span className="block text-[8.5px] text-[#8e959b]">Views Value</span>
+                    <span className="block text-[8.5px] text-[#FE36FF]">This Reel</span>
                     <input
                       type="number"
                       value={pt.all}
                       onChange={(e) => handlePointChange(idx, 'all', Number(e.target.value))}
                       className="w-full bg-[#090b0d] border border-[#2d333b] rounded px-2 py-0.5 text-[11px] text-white tabular-numbers"
+                    />
+                  </div>
+                  <div>
+                    <span className="block text-[8.5px] text-[#8e959b]">Typical</span>
+                    <input
+                      type="number"
+                      value={pt.typical ?? Math.round(pt.all * 0.12)}
+                      onChange={(e) => handlePointChange(idx, 'typical', Number(e.target.value))}
+                      className="w-full bg-[#090b0d] border border-[#2d333b] rounded px-2 py-0.5 text-[11px] text-[#8e959b] tabular-numbers"
                     />
                   </div>
                 </div>

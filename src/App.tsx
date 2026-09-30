@@ -159,35 +159,35 @@ const ReelInsightsScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Floating Bottom Quick Bar on Mobile */}
-      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex lg:hidden items-center gap-2 bg-[#161a1f]/90 backdrop-blur-md border border-[#2b313a] px-3.5 py-1.5 rounded-full shadow-2xl">
-        <button
-          type="button"
-          onClick={toggleEditMode}
-          className={`px-3 py-1 text-[11px] font-medium rounded-full transition-all ${
-            isEditMode ? 'bg-[#ec008c] text-white' : 'text-gray-300'
-          }`}
-        >
-          {isEditMode ? 'Editing' : 'Edit'}
-        </button>
-        <span className="text-gray-600">·</span>
-        <button
-          type="button"
-          onClick={() => setIsPresetsModalOpen(true)}
-          className="text-gray-300 text-[11px] font-medium px-1"
-        >
-          Presets
-        </button>
-        <span className="text-gray-600">·</span>
-        <button
-          type="button"
-          onClick={() => setIsExportModalOpen(true)}
-          className="text-[#ec008c] text-[11px] font-semibold flex items-center gap-1 px-1"
-        >
-          <Download className="w-3 h-3" />
-          Export
-        </button>
-      </div>
+      {/* Floating Bottom Quick Bar on Mobile (only shown in editing mode, keeping clean view in preview mode) */}
+      {isEditMode && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex lg:hidden items-center gap-2 bg-[#161a1f]/95 backdrop-blur-md border border-[#2b313a] px-3.5 py-1.5 rounded-full shadow-2xl animate-in fade-in duration-200">
+          <button
+            type="button"
+            onClick={toggleEditMode}
+            className="px-3 py-1 text-[11px] font-medium rounded-full bg-[#ec008c] text-white shadow-sm"
+          >
+            Done
+          </button>
+          <span className="text-gray-600">·</span>
+          <button
+            type="button"
+            onClick={() => setIsPresetsModalOpen(true)}
+            className="text-gray-300 text-[11px] font-medium px-1"
+          >
+            Presets
+          </button>
+          <span className="text-gray-600">·</span>
+          <button
+            type="button"
+            onClick={() => setIsExportModalOpen(true)}
+            className="text-[#ec008c] text-[11px] font-semibold flex items-center gap-1 px-1"
+          >
+            <Download className="w-3 h-3" />
+            Export
+          </button>
+        </div>
+      )}
 
       {/* Modals & Dialogs */}
       <EditModal />
