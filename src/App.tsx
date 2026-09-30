@@ -65,9 +65,9 @@ const ReelInsightsScreen: React.FC = () => {
 
             {/* Active Tab Content */}
             <div className="flex-1 w-full bg-[#0d0f12]">
-              {activeTab === 'overview' && <OverviewTab />}
-              {activeTab === 'engagement' && <EngagementTab />}
-              {activeTab === 'audience' && <AudienceTab />}
+              {activeTab === 'overview' && <OverviewTab key="tab-overview" />}
+              {activeTab === 'engagement' && <EngagementTab key="tab-engagement" />}
+              {activeTab === 'audience' && <AudienceTab key="tab-audience" />}
             </div>
 
             {/* Desktop-only simulated home bar; on real Android devices the OS navigation bar handles this */}

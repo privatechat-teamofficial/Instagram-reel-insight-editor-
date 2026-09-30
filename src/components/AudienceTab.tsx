@@ -79,7 +79,7 @@ export const AudienceTab: React.FC = () => {
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#804cf0] rounded-full transition-all duration-300"
+                  className="h-full bg-[#804cf0] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, data.audience.followersPercentage))}%` }}
                 />
               </div>
@@ -101,7 +101,7 @@ export const AudienceTab: React.FC = () => {
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#804cf0] rounded-full transition-all duration-300"
+                  className="h-full bg-[#804cf0] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, data.audience.nonFollowersPercentage))}%` }}
                 />
               </div>
@@ -135,13 +135,13 @@ export const AudienceTab: React.FC = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setAudienceSubTab(tab.id)}
-                className={`h-[34px] p-0 px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+                className={`h-[34px] px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
                   isActive
                     ? 'bg-[#282d35] text-white border-[#38404c]'
                     : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-white hover:border-[#323842]'
                 }`}
               >
-                <span className="leading-none text-center font-medium">
+                <span className="leading-none text-center font-medium translate-y-[1px]">
                   {tab.label}
                 </span>
               </button>
@@ -153,7 +153,7 @@ export const AudienceTab: React.FC = () => {
         <div className="flex flex-col gap-2 mt-3.5">
           {/* A. AGE SUBTAB (Default: 13-17, 18-24, 25-34, 35-44, 45-54, 55-64, 65+) */}
           {audienceSubTab === 'age' && (
-            <div className="flex flex-col gap-2.5">
+            <div key="subtab-age" className="flex flex-col gap-2.5">
               {data.audience.age.map((item, idx) => (
                 <div key={item.id} className="flex flex-col gap-1">
                   <div className="flex items-center gap-1.5">
@@ -180,7 +180,7 @@ export const AudienceTab: React.FC = () => {
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#FE36FF] rounded-full transition-all duration-300"
+                        className="h-full bg-[#FE36FF] rounded-full"
                         style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
                       />
                     </div>
@@ -211,7 +211,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* B. COUNTRY SUBTAB */}
           {audienceSubTab === 'country' && (
-            <div className="flex flex-col gap-2.5">
+            <div key="subtab-country" className="flex flex-col gap-2.5">
               {data.audience.country.map((item, idx) => (
                 <div key={item.id} className="flex flex-col gap-1">
                   <div className="flex items-center gap-1.5">
@@ -238,7 +238,7 @@ export const AudienceTab: React.FC = () => {
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#FE36FF] rounded-full transition-all duration-300"
+                        className="h-full bg-[#FE36FF] rounded-full"
                         style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
                       />
                     </div>
@@ -269,7 +269,7 @@ export const AudienceTab: React.FC = () => {
 
           {/* C. GENDER SUBTAB */}
           {audienceSubTab === 'gender' && (
-            <div className="flex flex-col gap-2.5">
+            <div key="subtab-gender" className="flex flex-col gap-2.5">
               {data.audience.gender.map((item, idx) => (
                 <div key={item.id} className="flex flex-col gap-1">
                   <div className="flex items-center gap-1.5">
@@ -296,7 +296,7 @@ export const AudienceTab: React.FC = () => {
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#FE36FF] rounded-full transition-all duration-300"
+                        className="h-full bg-[#FE36FF] rounded-full"
                         style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
                       />
                     </div>

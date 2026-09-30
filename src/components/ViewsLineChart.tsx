@@ -109,35 +109,35 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('all')}
-          className={`h-[34px] p-0 px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
             viewsChartFilter === 'all'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
         >
-          <span className="leading-none text-center font-medium">All</span>
+          <span className="leading-none text-center font-medium translate-y-[1px]">All</span>
         </button>
         <button
           type="button"
           onClick={() => setViewsChartFilter('followers')}
-          className={`h-[34px] p-0 px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
             viewsChartFilter === 'followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
         >
-          <span className="leading-none text-center font-medium">Followers</span>
+          <span className="leading-none text-center font-medium translate-y-[1px]">Followers</span>
         </button>
         <button
           type="button"
           onClick={() => setViewsChartFilter('non_followers')}
-          className={`h-[34px] p-0 px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full transition-colors duration-150 border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
             viewsChartFilter === 'non_followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
         >
-          <span className="leading-none text-center font-medium">Non-followers</span>
+          <span className="leading-none text-center font-medium translate-y-[1px]">Non-followers</span>
         </button>
       </div>
 

@@ -24,12 +24,14 @@ export const TabsNavigation: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => {
-                setActiveTab(tab.id);
-                if (tab.id === 'audience') {
-                  setAudienceSubTab('age');
+                if (activeTab !== tab.id) {
+                  setActiveTab(tab.id);
+                  if (tab.id === 'audience') {
+                    setAudienceSubTab('age');
+                  }
                 }
               }}
-              className={`pt-2.5 pb-1.5 flex items-center justify-center transition-colors duration-200 z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+              className={`pt-2.5 pb-1.5 flex items-center justify-center z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
                 isActive ? 'text-white font-medium' : 'text-[#8a9199] hover:text-[#d0d4d9]'
               }`}
             >

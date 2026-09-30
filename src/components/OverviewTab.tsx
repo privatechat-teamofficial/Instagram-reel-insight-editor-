@@ -81,7 +81,7 @@ export const OverviewTab: React.FC = () => {
         {/* 2x2 Grid Cards: Roomier cards with #25292E background and rounded corners */}
         <div className="grid grid-cols-2 gap-3 w-full">
           {/* Box 1: Views */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Views
             </span>
@@ -97,7 +97,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 2: Viewers */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Viewers
             </span>
@@ -113,7 +113,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 3: Average watch time */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Average watch time
             </span>
@@ -129,7 +129,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 4: Follows */}
-          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-center shadow-sm">
+          <div className="bg-[#25292E] rounded-[16px] px-4 py-3.5 min-h-[82px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Follows
             </span>
@@ -247,7 +247,7 @@ export const OverviewTab: React.FC = () => {
             className="relative w-20 h-28 rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
           >
             {data.mediaType === 'video' ? (
-              <video src={data.mediaUrl} className="w-full h-full object-cover" muted />
+              <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
             ) : (
               <img
                 src={data.mediaUrl}
@@ -419,7 +419,7 @@ export const OverviewTab: React.FC = () => {
               {/* Progress Bar (Pink #FE36FF on track #1c2024) */}
               <div className="w-full h-[6px] bg-[#1c2024] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#FE36FF] rounded-full transition-all duration-300"
+                  className="h-full bg-[#FE36FF] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, source.percentage))}%` }}
                 />
               </div>

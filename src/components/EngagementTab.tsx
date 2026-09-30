@@ -163,7 +163,7 @@ export const EngagementTab: React.FC = () => {
             className="relative w-24 h-36 rounded-[10px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
           >
             {data.mediaType === 'video' ? (
-              <video src={data.mediaUrl} className="w-full h-full object-cover" muted />
+              <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
             ) : (
               <img
                 src={data.mediaUrl}

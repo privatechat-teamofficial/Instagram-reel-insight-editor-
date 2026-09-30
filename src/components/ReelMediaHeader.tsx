@@ -18,7 +18,7 @@ export const ReelMediaHeader: React.FC = () => {
       {/* Reel Preview: ~132 × 235px (9:16) matching Instagram reference scale */}
       <div
         onClick={() => isEditMode && setIsMediaModalOpen(true)}
-        className={`relative w-[132px] h-[235px] aspect-[9/16] rounded-[10px] overflow-hidden bg-[#030405] mb-3.5 shadow-md transition-all duration-150 shrink-0 ${
+        className={`relative w-[132px] h-[235px] aspect-[9/16] rounded-[10px] overflow-hidden bg-[#030405] mb-3.5 shadow-md transition-shadow duration-150 shrink-0 ${
           isEditMode ? 'cursor-pointer ring-2 ring-[#ec008c]' : ''
         }`}
         title={isEditMode ? 'Click to change media' : undefined}
