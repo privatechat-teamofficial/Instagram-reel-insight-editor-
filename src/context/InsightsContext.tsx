@@ -73,7 +73,7 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<TabType>('overview');
-  const [audienceSubTab, setAudienceSubTab] = useState<AudienceSubTab>('country');
+  const [audienceSubTab, setAudienceSubTab] = useState<AudienceSubTab>('age');
   const [viewsChartFilter, setViewsChartFilter] = useState<ViewsChartFilter>('all');
   const [activeEditTarget, setActiveEditTarget] = useState<ActiveEditTarget | null>(null);
 

@@ -3,7 +3,7 @@ import { useInsights } from '../context/InsightsContext';
 import { TabType } from '../types/insights';
 
 export const TabsNavigation: React.FC = () => {
-  const { activeTab, setActiveTab } = useInsights();
+  const { activeTab, setActiveTab, setAudienceSubTab } = useInsights();
 
   const tabs: { id: TabType; label: string }[] = [
     { id: 'overview', label: 'Overview' },
@@ -11,28 +11,44 @@ export const TabsNavigation: React.FC = () => {
     { id: 'audience', label: 'Audience' },
   ];
 
+  const activeIndex = tabs.findIndex((t) => t.id === activeTab);
+  const safeIndex = activeIndex === -1 ? 0 : activeIndex;
+
   return (
-    <div className="w-full border-b border-[#262626] bg-[#000000] select-none">
-      <div className="grid grid-cols-3 max-w-md mx-auto">
+    <div className="relative w-full border-b border-[#1c2025] bg-[#0d0f12] select-none shrink-0">
+      <div className="grid grid-cols-3 w-full relative">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`relative py-3.5 text-center text-[14px] font-medium transition-colors ${
-                isActive ? 'text-[#ffffff] font-semibold' : 'text-[#8e8e8e] hover:text-[#cccccc]'
+              onClick={() => {
+                setActiveTab(tab.id);
+                if (tab.id === 'audience') {
+                  setAudienceSubTab('age');
+                }
+              }}
+              className={`py-2.5 flex items-center justify-center transition-colors duration-200 z-10 ${
+                isActive ? 'text-white font-medium' : 'text-[#8a9199] hover:text-[#d0d4d9]'
               }`}
             >
-              <span>{tab.label}</span>
-              {/* Instagram style white underline indicator */}
-              {isActive && (
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#ffffff] rounded-t-sm" />
-              )}
+              <span className="text-[14px] tracking-[0.02em] font-medium">
+                {tab.label}
+              </span>
             </button>
           );
         })}
+
+        {/* Smoothly sliding horizontal strip indicator */}
+        <div
+          className="absolute -bottom-[1px] top-0 left-0 w-1/3 flex items-end justify-center pointer-events-none transition-transform duration-250 ease-out z-0"
+          style={{
+            transform: `translateX(${safeIndex * 100}%)`,
+          }}
+        >
+          <div className="w-[76px] h-[2px] bg-white rounded-full" />
+        </div>
       </div>
     </div>
   );

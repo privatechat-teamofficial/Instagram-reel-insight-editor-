@@ -1,8 +1,9 @@
 import { ReelInsightsState } from '../types/insights';
+import { DEFAULT_PODCAST_THUMBNAIL } from '../assets/defaultReelThumbnail';
 
 export const DEFAULT_REEL_DATA: ReelInsightsState = {
   title: 'Reel insights',
-  mediaUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+  mediaUrl: DEFAULT_PODCAST_THUMBNAIL,
   mediaType: 'image',
   mediaAspectRatio: '9/16',
   topMetrics: {
@@ -22,14 +23,24 @@ export const DEFAULT_REEL_DATA: ReelInsightsState = {
     dates: ['12 Sept', '21 Sept', '29 Sept'],
     yMax: 4000,
     points: [
-      { id: '1', label: '12 Sept', all: 450, followers: 0, nonFollowers: 450 },
-      { id: '2', label: '14 Sept', all: 1200, followers: 0, nonFollowers: 1200 },
-      { id: '3', label: '16 Sept', all: 3600, followers: 0, nonFollowers: 3600 },
-      { id: '4', label: '19 Sept', all: 3550, followers: 0, nonFollowers: 3550 },
-      { id: '5', label: '21 Sept', all: 4200, followers: 0, nonFollowers: 4200 },
-      { id: '6', label: '24 Sept', all: 4350, followers: 0, nonFollowers: 4350 },
-      { id: '7', label: '27 Sept', all: 4500, followers: 0, nonFollowers: 4500 },
-      { id: '8', label: '29 Sept', all: 4650, followers: 0, nonFollowers: 4650 },
+      { id: '1', label: '12 Sept', all: 180, followers: 0, nonFollowers: 180 },
+      { id: '2', label: '13 Sept', all: 360, followers: 0, nonFollowers: 360 },
+      { id: '3', label: '13 Sept', all: 480, followers: 0, nonFollowers: 480 },
+      { id: '4', label: '14 Sept', all: 430, followers: 0, nonFollowers: 430 },
+      { id: '5', label: '14 Sept', all: 450, followers: 0, nonFollowers: 450 },
+      { id: '6', label: '15 Sept', all: 1400, followers: 0, nonFollowers: 1400 },
+      { id: '7', label: '15 Sept', all: 2400, followers: 0, nonFollowers: 2400 },
+      { id: '8', label: '16 Sept', all: 3180, followers: 0, nonFollowers: 3180 },
+      { id: '9', label: '17 Sept', all: 3160, followers: 0, nonFollowers: 3160 },
+      { id: '10', label: '18 Sept', all: 3140, followers: 0, nonFollowers: 3140 },
+      { id: '11', label: '19 Sept', all: 3150, followers: 0, nonFollowers: 3150 },
+      { id: '12', label: '20 Sept', all: 3350, followers: 0, nonFollowers: 3350 },
+      { id: '13', label: '21 Sept', all: 3550, followers: 0, nonFollowers: 3550 },
+      { id: '14', label: '22 Sept', all: 3680, followers: 0, nonFollowers: 3680 },
+      { id: '15', label: '23 Sept', all: 3750, followers: 0, nonFollowers: 3750 },
+      { id: '16', label: '25 Sept', all: 3800, followers: 0, nonFollowers: 3800 },
+      { id: '17', label: '27 Sept', all: 3830, followers: 0, nonFollowers: 3830 },
+      { id: '18', label: '29 Sept', all: 3850, followers: 0, nonFollowers: 3850 },
     ],
   },
   impactFactors: [

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditFieldType } from '../types/insights';
-import { Pencil } from 'lucide-react';
 
 interface EditableValueProps {
   path: string;
@@ -51,13 +50,12 @@ export const EditableValue: React.FC<EditableValueProps> = ({
   return (
     <span
       onClick={handleClick}
+      role="button"
+      tabIndex={0}
       title={`Click to edit ${title}`}
-      className={`group/edit inline-flex items-center gap-1 cursor-pointer transition-all duration-150 rounded px-1 -mx-1 py-0.5 -my-0.5 hover:bg-pink-500/15 hover:ring-1 hover:ring-pink-500/40 relative ${className}`}
+      className={`cursor-pointer transition-colors duration-150 hover:text-pink-400 active:scale-98 rounded px-0.5 -mx-0.5 hover:bg-pink-500/10 ${className}`}
     >
-      <span>{children ?? displayValue ?? String(value)}</span>
-      <span className="opacity-0 group-hover/edit:opacity-100 transition-opacity text-pink-400 shrink-0">
-        <Pencil className="w-2.5 h-2.5" />
-      </span>
+      {children ?? displayValue ?? String(value)}
     </span>
   );
 };

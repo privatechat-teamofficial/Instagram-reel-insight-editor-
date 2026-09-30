@@ -40,13 +40,16 @@ export const EditModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-xs animate-in fade-in duration-200">
       <div
-        className="w-full max-w-md bg-[#181818] border-t sm:border border-[#2e2e2e] rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4 text-white animate-in slide-in-from-bottom-5 duration-200"
+        className="w-full max-w-md bg-[#161618] border-t sm:border border-[#28282c] rounded-t-[28px] sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4 text-white animate-in slide-in-from-bottom-5 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Bottom sheet drag handle affordance */}
+        <div className="w-10 h-1 bg-[#333338] rounded-full mx-auto -mt-2 mb-1 sm:hidden" />
+
         {/* Header with Title and Close Button */}
-        <div className="flex items-center justify-between pb-2 border-b border-[#262626]">
+        <div className="flex items-center justify-between pb-2 border-b border-[#242428]">
           <div className="flex flex-col">
             <span className="text-[11px] text-pink-400 font-semibold uppercase tracking-wider">
               Editing Value

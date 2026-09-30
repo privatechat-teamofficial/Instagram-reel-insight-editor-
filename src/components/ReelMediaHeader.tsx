@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { HeartIcon, CommentIcon, RepostIcon, ShareIcon, BookmarkIcon } from './InstagramIcons';
-import { Upload, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
+import { DEFAULT_PODCAST_THUMBNAIL } from '../assets/defaultReelThumbnail';
 
 export const ReelMediaHeader: React.FC = () => {
   const { data, isEditMode, setIsMediaModalOpen } = useInsights();
@@ -13,77 +14,54 @@ export const ReelMediaHeader: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-2 pb-4 px-4 select-none">
-      {/* Centered Reel Media Preview */}
-      <div className="relative group/media mb-4">
-        <div
-          onClick={() => isEditMode && setIsMediaModalOpen(true)}
-          className={`relative w-[130px] h-[190px] rounded-lg overflow-hidden bg-[#181818] border border-[#262626] shadow-md transition-all duration-200 ${
-            isEditMode ? 'cursor-pointer ring-2 ring-pink-500/50 hover:ring-pink-500 hover:scale-[1.02]' : ''
-          }`}
-        >
-          {data.mediaType === 'video' ? (
-            <div className="relative w-full h-full">
-              <video
-                ref={videoRef}
-                src={data.mediaUrl}
-                className="w-full h-full object-cover"
-                playsInline
-                muted
-                loop
-                autoPlay
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/20 pointer-events-none">
-                <Play className="w-8 h-8 text-white/90 fill-white/60 drop-shadow-md" />
-              </div>
-            </div>
-          ) : (
-            <img
+    <div className="flex flex-col items-center pt-1 pb-2.5 px-4 select-none shrink-0 bg-[#0d0f12]">
+      {/* Compact Reel Preview: ~102 × 182px matching reference screenshot scale */}
+      <div
+        onClick={() => isEditMode && setIsMediaModalOpen(true)}
+        className={`relative w-[102px] h-[182px] rounded-[8px] overflow-hidden bg-[#030405] mb-3 shadow-md transition-all duration-150 ${
+          isEditMode ? 'cursor-pointer ring-2 ring-[#ec008c]' : ''
+        }`}
+        title={isEditMode ? 'Click to change media' : undefined}
+      >
+        {data.mediaType === 'video' ? (
+          <div className="relative w-full h-full">
+            <video
+              ref={videoRef}
               src={data.mediaUrl}
-              alt="Reel Preview"
-              referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                // Fallback styled visual if image url fails
-                (e.target as HTMLImageElement).src =
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';
-              }}
+              playsInline
+              muted
+              loop
+              autoPlay
             />
-          )}
-
-          {/* Edit overlay trigger in edit mode */}
-          {isEditMode && (
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/media:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 p-2 text-center">
-              <Upload className="w-5 h-5 text-white animate-bounce" />
-              <span className="text-[11px] font-medium text-white leading-tight">Change Media</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/15 pointer-events-none">
+              <Play className="w-5 h-5 text-white/90 fill-white/70 drop-shadow" />
             </div>
-          )}
-        </div>
-
-        {/* Change media pill in edit mode */}
-        {isEditMode && (
-          <button
-            type="button"
-            onClick={() => setIsMediaModalOpen(true)}
-            className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-pink-600 hover:bg-pink-500 text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1 transition-all z-10 whitespace-nowrap"
-          >
-            <Upload className="w-3 h-3" />
-            Upload Media
-          </button>
+          </div>
+        ) : (
+          <img
+            src={data.mediaUrl || DEFAULT_PODCAST_THUMBNAIL}
+            alt="Reel Preview"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = DEFAULT_PODCAST_THUMBNAIL;
+            }}
+          />
         )}
       </div>
 
-      {/* 5 Metric Icons Row */}
-      <div className="w-full max-w-[360px] grid grid-cols-5 gap-1 text-center mt-1">
+      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save */}
+      <div className="w-full max-w-[360px] grid grid-cols-5 text-center mb-1">
         {/* Likes */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-1">
-          <HeartIcon className="w-[22px] h-[22px] text-[#ffffff]" />
+          <HeartIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.likes"
             title="Likes count"
             type="number"
             value={data.topMetrics.likes}
-            className="text-[13px] font-medium text-[#ffffff] tabular-numbers"
+            className="text-[13px] font-normal text-white tabular-numbers leading-tight mt-0.5"
           >
             {formatCount(data.topMetrics.likes)}
           </EditableValue>
@@ -91,13 +69,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Comments */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-1">
-          <CommentIcon className="w-[22px] h-[22px] text-[#ffffff]" />
+          <CommentIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.comments"
             title="Comments count"
             type="number"
             value={data.topMetrics.comments}
-            className="text-[13px] font-medium text-[#ffffff] tabular-numbers"
+            className="text-[13px] font-normal text-white tabular-numbers leading-tight mt-0.5"
           >
             {formatCount(data.topMetrics.comments)}
           </EditableValue>
@@ -105,13 +83,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Reposts */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-1">
-          <RepostIcon className="w-[22px] h-[22px] text-[#ffffff]" />
+          <RepostIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.reposts"
             title="Reposts count"
             type="number"
             value={data.topMetrics.reposts}
-            className="text-[13px] font-medium text-[#ffffff] tabular-numbers"
+            className="text-[13px] font-normal text-white tabular-numbers leading-tight mt-0.5"
           >
             {formatCount(data.topMetrics.reposts)}
           </EditableValue>
@@ -119,13 +97,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Shares */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-1">
-          <ShareIcon className="w-[22px] h-[22px] text-[#ffffff]" />
+          <ShareIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.shares"
             title="Shares count"
             type="number"
             value={data.topMetrics.shares}
-            className="text-[13px] font-medium text-[#ffffff] tabular-numbers"
+            className="text-[13px] font-normal text-white tabular-numbers leading-tight mt-0.5"
           >
             {formatCount(data.topMetrics.shares)}
           </EditableValue>
@@ -133,13 +111,13 @@ export const ReelMediaHeader: React.FC = () => {
 
         {/* Saves */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-1">
-          <BookmarkIcon className="w-[22px] h-[22px] text-[#ffffff]" />
+          <BookmarkIcon className="w-[19px] h-[19px] text-white" />
           <EditableValue
             path="topMetrics.saves"
             title="Saves count"
             type="number"
             value={data.topMetrics.saves}
-            className="text-[13px] font-medium text-[#ffffff] tabular-numbers"
+            className="text-[13px] font-normal text-white tabular-numbers leading-tight mt-0.5"
           >
             {formatCount(data.topMetrics.saves)}
           </EditableValue>
