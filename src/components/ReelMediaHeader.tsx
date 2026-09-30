@@ -15,10 +15,10 @@ export const ReelMediaHeader: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center pt-1 pb-1.5 px-3 select-none shrink-0 bg-[#0d0f12]">
-      {/* Reel Preview: ~132 × 235px (9:16) matching Instagram reference scale */}
+      {/* Reel Preview: ~110 × 195px (9:16) matching Instagram reference scale */}
       <div
         onClick={() => isEditMode && setIsMediaModalOpen(true)}
-        className={`relative w-[132px] h-[235px] aspect-[9/16] rounded-[10px] overflow-hidden bg-[#030405] mb-3.5 shadow-md transition-shadow duration-150 shrink-0 ${
+        className={`relative w-[110px] h-[195px] aspect-[9/16] rounded-[10px] overflow-hidden bg-[#030405] mb-2.5 shadow-md transition-shadow duration-150 shrink-0 ${
           isEditMode ? 'cursor-pointer ring-2 ring-[#ec008c]' : ''
         }`}
         title={isEditMode ? 'Click to change media' : undefined}
