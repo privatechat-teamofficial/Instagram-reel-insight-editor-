@@ -24,6 +24,7 @@ export interface ChartDataPoint {
   followers: number;
   nonFollowers: number;
   typical?: number; // "Your typical reel" baseline value
+  hasData?: boolean; // If false (future time), "This reel" line stops before this point
 }
 
 export interface ImpactFactor {

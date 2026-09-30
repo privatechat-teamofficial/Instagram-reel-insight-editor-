@@ -14,11 +14,11 @@ export const ReelMediaHeader: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-1 pb-3 px-4 select-none shrink-0 bg-[#0d0f12]">
-      {/* Reel Preview: ~180 × 320px (9:16) matching Instagram reference scale */}
+    <div className="flex flex-col items-center pt-1 pb-2.5 px-3 select-none shrink-0 bg-[#0d0f12]">
+      {/* Reel Preview: ~132 × 235px (9:16) matching Instagram reference scale */}
       <div
         onClick={() => isEditMode && setIsMediaModalOpen(true)}
-        className={`relative w-[180px] h-[320px] aspect-[9/16] rounded-[14px] overflow-hidden bg-[#030405] mb-4 shadow-lg transition-all duration-150 shrink-0 ${
+        className={`relative w-[132px] h-[235px] aspect-[9/16] rounded-[10px] overflow-hidden bg-[#030405] mb-3.5 shadow-md transition-all duration-150 shrink-0 ${
           isEditMode ? 'cursor-pointer ring-2 ring-[#ec008c]' : ''
         }`}
         title={isEditMode ? 'Click to change media' : undefined}
@@ -51,8 +51,8 @@ export const ReelMediaHeader: React.FC = () => {
         )}
       </div>
 
-      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save */}
-      <div className="w-full max-w-[360px] grid grid-cols-5 text-center mt-0.5 mb-1">
+      {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save (comfortably inset within Overview and Audience) */}
+      <div className="w-full max-w-[348px] grid grid-cols-5 text-center px-3 mt-0.5 mb-1.5">
         {/* Likes */}
         <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
           <HeartIcon className="w-[19px] h-[19px] text-white" />

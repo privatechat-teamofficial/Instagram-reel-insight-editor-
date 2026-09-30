@@ -69,52 +69,76 @@ export const ChartEditorModal: React.FC = () => {
   };
 
   // Quick Preset Trajectories
-  const applyPreset = (presetType: 'reference' | 'viral' | 'steady' | 'flat') => {
-    if (presetType === 'reference') {
-      // 1:1 exact matching trajectory from Screenshot_20260929-223511.png
+  const applyPreset = (presetType: 'screenshot_plateau' | 'reference' | 'viral' | 'steady' | 'flat') => {
+    if (presetType === 'screenshot_plateau') {
+      // 1:1 exact matching trajectory from Screenshot_20260930-113835.png
+      setYMax(2000);
+      setDates(['29 Sept', '30 Sept', '1 Oct']);
+      setPoints([
+        { id: '1', label: '29 Sept', all: 0, followers: 0, nonFollowers: 0, typical: 0, hasData: true },
+        { id: '2', label: '29 Sept', all: 180, followers: 0, nonFollowers: 180, typical: 120, hasData: true },
+        { id: '3', label: '29 Sept', all: 320, followers: 0, nonFollowers: 320, typical: 140, hasData: true },
+        { id: '4', label: '29 Sept', all: 850, followers: 0, nonFollowers: 850, typical: 160, hasData: true },
+        { id: '5', label: '29 Sept', all: 1550, followers: 0, nonFollowers: 1550, typical: 180, hasData: true },
+        { id: '6', label: '29 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 200, hasData: true },
+        { id: '7', label: '30 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 230, hasData: true },
+        { id: '8', label: '30 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 260, hasData: true },
+        { id: '9', label: '30 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 300, hasData: true },
+        { id: '10', label: '30 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 320, hasData: true },
+        { id: '11', label: '30 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 340, hasData: true },
+        { id: '12', label: '30 Sept', all: 2000, followers: 0, nonFollowers: 2000, typical: 350, hasData: false },
+        { id: '13', label: '1 Oct', all: 2000, followers: 0, nonFollowers: 2000, typical: 360, hasData: false },
+        { id: '14', label: '1 Oct', all: 2000, followers: 0, nonFollowers: 2000, typical: 370, hasData: false },
+        { id: '15', label: '1 Oct', all: 2000, followers: 0, nonFollowers: 2000, typical: 380, hasData: false },
+        { id: '16', label: '1 Oct', all: 2000, followers: 0, nonFollowers: 2000, typical: 390, hasData: false },
+        { id: '17', label: '1 Oct', all: 2000, followers: 0, nonFollowers: 2000, typical: 400, hasData: false },
+        { id: '18', label: '1 Oct', all: 2000, followers: 0, nonFollowers: 2000, typical: 400, hasData: false },
+      ]);
+    } else if (presetType === 'reference') {
+      // 1:1 exact matching trajectory from 12-29 Sept reference
       setYMax(4000);
       setDates(['12 Sept', '21 Sept', '29 Sept']);
       setPoints([
-        { id: '1', label: '12 Sept', all: 180, followers: 0, nonFollowers: 180 },
-        { id: '2', label: '13 Sept', all: 360, followers: 0, nonFollowers: 360 },
-        { id: '3', label: '13 Sept', all: 480, followers: 0, nonFollowers: 480 },
-        { id: '4', label: '14 Sept', all: 430, followers: 0, nonFollowers: 430 },
-        { id: '5', label: '14 Sept', all: 450, followers: 0, nonFollowers: 450 },
-        { id: '6', label: '15 Sept', all: 1400, followers: 0, nonFollowers: 1400 },
-        { id: '7', label: '15 Sept', all: 2400, followers: 0, nonFollowers: 2400 },
-        { id: '8', label: '16 Sept', all: 3180, followers: 0, nonFollowers: 3180 },
-        { id: '9', label: '17 Sept', all: 3160, followers: 0, nonFollowers: 3160 },
-        { id: '10', label: '18 Sept', all: 3140, followers: 0, nonFollowers: 3140 },
-        { id: '11', label: '19 Sept', all: 3150, followers: 0, nonFollowers: 3150 },
-        { id: '12', label: '20 Sept', all: 3350, followers: 0, nonFollowers: 3350 },
-        { id: '13', label: '21 Sept', all: 3550, followers: 0, nonFollowers: 3550 },
-        { id: '14', label: '22 Sept', all: 3680, followers: 0, nonFollowers: 3680 },
-        { id: '15', label: '23 Sept', all: 3750, followers: 0, nonFollowers: 3750 },
-        { id: '16', label: '25 Sept', all: 3800, followers: 0, nonFollowers: 3800 },
-        { id: '17', label: '27 Sept', all: 3830, followers: 0, nonFollowers: 3830 },
-        { id: '18', label: '29 Sept', all: 3850, followers: 0, nonFollowers: 3850 },
+        { id: '1', label: '12 Sept', all: 180, followers: 0, nonFollowers: 180, typical: 40, hasData: true },
+        { id: '2', label: '13 Sept', all: 360, followers: 0, nonFollowers: 360, typical: 60, hasData: true },
+        { id: '3', label: '13 Sept', all: 480, followers: 0, nonFollowers: 480, typical: 80, hasData: true },
+        { id: '4', label: '14 Sept', all: 430, followers: 0, nonFollowers: 430, typical: 100, hasData: true },
+        { id: '5', label: '14 Sept', all: 450, followers: 0, nonFollowers: 450, typical: 120, hasData: true },
+        { id: '6', label: '15 Sept', all: 1400, followers: 0, nonFollowers: 1400, typical: 150, hasData: true },
+        { id: '7', label: '15 Sept', all: 2400, followers: 0, nonFollowers: 2400, typical: 180, hasData: true },
+        { id: '8', label: '16 Sept', all: 3180, followers: 0, nonFollowers: 3180, typical: 200, hasData: true },
+        { id: '9', label: '17 Sept', all: 3160, followers: 0, nonFollowers: 3160, typical: 220, hasData: true },
+        { id: '10', label: '18 Sept', all: 3140, followers: 0, nonFollowers: 3140, typical: 230, hasData: true },
+        { id: '11', label: '19 Sept', all: 3150, followers: 0, nonFollowers: 3150, typical: 240, hasData: true },
+        { id: '12', label: '20 Sept', all: 3350, followers: 0, nonFollowers: 3350, typical: 250, hasData: true },
+        { id: '13', label: '21 Sept', all: 3550, followers: 0, nonFollowers: 3550, typical: 260, hasData: true },
+        { id: '14', label: '22 Sept', all: 3680, followers: 0, nonFollowers: 3680, typical: 270, hasData: true },
+        { id: '15', label: '23 Sept', all: 3750, followers: 0, nonFollowers: 3750, typical: 280, hasData: true },
+        { id: '16', label: '25 Sept', all: 3800, followers: 0, nonFollowers: 3800, typical: 290, hasData: true },
+        { id: '17', label: '27 Sept', all: 3830, followers: 0, nonFollowers: 3830, typical: 300, hasData: true },
+        { id: '18', label: '29 Sept', all: 3850, followers: 0, nonFollowers: 3850, typical: 310, hasData: true },
       ]);
     } else if (presetType === 'viral') {
       setYMax(50000);
       setDates(['1 Oct', '15 Oct', '30 Oct']);
       setPoints([
-        { id: '1', label: '1 Oct', all: 500, followers: 0, nonFollowers: 500 },
-        { id: '2', label: '5 Oct', all: 1200, followers: 0, nonFollowers: 1200 },
-        { id: '3', label: '10 Oct', all: 4500, followers: 0, nonFollowers: 4500 },
-        { id: '4', label: '12 Oct', all: 18000, followers: 0, nonFollowers: 18000 },
-        { id: '5', label: '15 Oct', all: 38000, followers: 0, nonFollowers: 38000 },
-        { id: '6', label: '20 Oct', all: 46000, followers: 0, nonFollowers: 46000 },
-        { id: '7', label: '30 Oct', all: 49500, followers: 0, nonFollowers: 49500 },
+        { id: '1', label: '1 Oct', all: 500, followers: 0, nonFollowers: 500, typical: 100, hasData: true },
+        { id: '2', label: '5 Oct', all: 1200, followers: 0, nonFollowers: 1200, typical: 300, hasData: true },
+        { id: '3', label: '10 Oct', all: 4500, followers: 0, nonFollowers: 4500, typical: 600, hasData: true },
+        { id: '4', label: '12 Oct', all: 18000, followers: 0, nonFollowers: 18000, typical: 900, hasData: true },
+        { id: '5', label: '15 Oct', all: 38000, followers: 0, nonFollowers: 38000, typical: 1200, hasData: true },
+        { id: '6', label: '20 Oct', all: 46000, followers: 0, nonFollowers: 46000, typical: 1500, hasData: true },
+        { id: '7', label: '30 Oct', all: 49500, followers: 0, nonFollowers: 49500, typical: 1800, hasData: true },
       ]);
     } else if (presetType === 'steady') {
       setYMax(10000);
       setDates(['1 Jun', '15 Jun', '30 Jun']);
       setPoints([
-        { id: '1', label: '1 Jun', all: 1000, followers: 0, nonFollowers: 1000 },
-        { id: '2', label: '8 Jun', all: 3200, followers: 0, nonFollowers: 3200 },
-        { id: '3', label: '15 Jun', all: 5600, followers: 0, nonFollowers: 5600 },
-        { id: '4', label: '22 Jun', all: 7800, followers: 0, nonFollowers: 7800 },
-        { id: '5', label: '30 Jun', all: 9600, followers: 0, nonFollowers: 9600 },
+        { id: '1', label: '1 Jun', all: 1000, followers: 0, nonFollowers: 1000, typical: 200, hasData: true },
+        { id: '2', label: '8 Jun', all: 3200, followers: 0, nonFollowers: 3200, typical: 500, hasData: true },
+        { id: '3', label: '15 Jun', all: 5600, followers: 0, nonFollowers: 5600, typical: 800, hasData: true },
+        { id: '4', label: '22 Jun', all: 7800, followers: 0, nonFollowers: 7800, typical: 1100, hasData: true },
+        { id: '5', label: '30 Jun', all: 9600, followers: 0, nonFollowers: 9600, typical: 1400, hasData: true },
       ]);
     }
   };
@@ -204,10 +228,21 @@ export const ChartEditorModal: React.FC = () => {
   const svgW = 340;
   const svgH = 110;
   const pad = 10;
-  const maxVal = Math.max(...points.map((p) => p.all), yMax || 1);
-  const pathD = points.reduce((acc, curr, idx) => {
-    const x = pad + (idx / (points.length - 1 || 1)) * (svgW - pad * 2);
+  const maxVal = Math.max(...points.map((p) => p.all), ...points.map((p) => p.typical || 0), yMax || 1);
+
+  // Filter active points for "This reel"
+  const activePoints = points.map((p, idx) => ({ ...p, origIdx: idx })).filter((p) => p.hasData !== false);
+
+  const pathD = activePoints.reduce((acc, curr, idx) => {
+    const x = pad + (curr.origIdx / (points.length - 1 || 1)) * (svgW - pad * 2);
     const y = pad + (svgH - pad * 2) - (curr.all / maxVal) * (svgH - pad * 2);
+    return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
+  }, '');
+
+  const typicalPathD = points.reduce((acc, curr, idx) => {
+    const x = pad + (idx / (points.length - 1 || 1)) * (svgW - pad * 2);
+    const typ = curr.typical ?? Math.round(curr.all * 0.12);
+    const y = pad + (svgH - pad * 2) - (typ / maxVal) * (svgH - pad * 2);
     return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
   }, '');
 
@@ -313,10 +348,18 @@ export const ChartEditorModal: React.FC = () => {
             <span className="text-[10.5px] text-[#8e959b]">Quick Presets:</span>
             <button
               type="button"
+              onClick={() => applyPreset('screenshot_plateau')}
+              className="px-2.5 py-1 text-[10.5px] font-bold bg-[#ec008c] hover:bg-[#d80070] text-white rounded-md transition-colors shadow-sm flex items-center gap-1"
+            >
+              <Sparkles className="w-3 h-3" />
+              Screenshot Match (29 Sept - 1 Oct, 3,043 Views)
+            </button>
+            <button
+              type="button"
               onClick={() => applyPreset('reference')}
               className="px-2.5 py-1 text-[10.5px] font-semibold bg-[#2a2f35] hover:bg-[#343a42] text-pink-400 rounded-md transition-colors border border-pink-500/20"
             >
-              Exact Match Reference
+              12-29 Sept Full Span
             </button>
             <button
               type="button"
@@ -359,7 +402,18 @@ export const ChartEditorModal: React.FC = () => {
               <line x1={pad} y1={svgH / 2} x2={svgW - pad} y2={svgH / 2} stroke="#20242a" strokeWidth="1" />
               <line x1={pad} y1={svgH - pad} x2={svgW - pad} y2={svgH - pad} stroke="#20242a" strokeWidth="1" />
 
-              {/* Exact Magenta line */}
+              {/* Typical Baseline Dashed line */}
+              <path
+                d={typicalPathD}
+                fill="none"
+                stroke="#5c6370"
+                strokeWidth="2.0"
+                strokeDasharray="4 4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              {/* Exact Magenta line (active points only) */}
               <path
                 d={pathD}
                 fill="none"
@@ -372,6 +426,7 @@ export const ChartEditorModal: React.FC = () => {
               {/* Interactive nodes along curve */}
               {points.map((pt, idx) => {
                 const x = pad + (idx / (points.length - 1 || 1)) * (svgW - pad * 2);
+                const hasData = pt.hasData !== false;
                 const y = pad + (svgH - pad * 2) - (pt.all / maxVal) * (svgH - pad * 2);
                 const isSelected = selectedPointIndex === idx;
                 return (
@@ -379,8 +434,8 @@ export const ChartEditorModal: React.FC = () => {
                     key={idx}
                     cx={x}
                     cy={y}
-                    r={isSelected ? 4.5 : 2.5}
-                    fill={isSelected ? '#ffffff' : '#FE36FF'}
+                    r={isSelected ? 5 : hasData ? 2.8 : 2}
+                    fill={isSelected ? '#ffffff' : hasData ? '#FE36FF' : '#5c6370'}
                     stroke={isSelected ? '#FE36FF' : 'none'}
                     strokeWidth="1.5"
                     className="cursor-pointer transition-all hover:scale-150"
@@ -390,6 +445,38 @@ export const ChartEditorModal: React.FC = () => {
               })}
             </svg>
           </div>
+
+          {/* Quick Slider for Selected Node */}
+          {selectedPointIndex !== null && points[selectedPointIndex] && (
+            <div className="bg-[#1c2024] p-2.5 rounded-lg border border-[#2e353e] flex items-center justify-between gap-3 text-[11px]">
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="font-semibold text-white">Node #{selectedPointIndex + 1} ({points[selectedPointIndex].label}):</span>
+                <span className="text-[#FE36FF] font-mono">{points[selectedPointIndex].all.toLocaleString()}</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max={yMax}
+                step={50}
+                value={points[selectedPointIndex].all}
+                onChange={(e) => handlePointChange(selectedPointIndex, 'all', Number(e.target.value))}
+                className="flex-1 accent-[#FE36FF] h-1.5 bg-[#2a2f36] rounded-full cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  handlePointChange(selectedPointIndex, 'hasData', !(points[selectedPointIndex].hasData !== false))
+                }
+                className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                  points[selectedPointIndex].hasData !== false
+                    ? 'bg-[#FE36FF]/20 text-[#FE36FF] border border-[#FE36FF]/40'
+                    : 'bg-[#2a2f36] text-gray-400'
+                }`}
+              >
+                {points[selectedPointIndex].hasData !== false ? 'Active Line' : 'Line Stops Here'}
+              </button>
+            </div>
+          )}
 
           {/* Overlay Opacity Controls if Image was uploaded */}
           {uploadedImagePreview && (
@@ -468,7 +555,7 @@ export const ChartEditorModal: React.FC = () => {
               >
                 <div className="w-5 text-[10.5px] text-[#8e959b] font-mono text-center">#{idx + 1}</div>
 
-                <div className="flex-1 grid grid-cols-3 gap-1.5">
+                <div className="flex-1 grid grid-cols-4 gap-1.5 items-center">
                   <div>
                     <span className="block text-[8.5px] text-[#8e959b]">Label</span>
                     <input
@@ -495,6 +582,23 @@ export const ChartEditorModal: React.FC = () => {
                       onChange={(e) => handlePointChange(idx, 'typical', Number(e.target.value))}
                       className="w-full bg-[#090b0d] border border-[#2d333b] rounded px-2 py-0.5 text-[11px] text-[#8e959b] tabular-numbers"
                     />
+                  </div>
+                  <div>
+                    <span className="block text-[8.5px] text-[#8e959b]">Status</span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePointChange(idx, 'hasData', !(pt.hasData !== false));
+                      }}
+                      className={`w-full py-0.5 rounded text-[10px] font-medium border text-center ${
+                        pt.hasData !== false
+                          ? 'bg-[#FE36FF]/15 text-[#FE36FF] border-[#FE36FF]/30'
+                          : 'bg-[#14171a] text-[#8e959b] border-[#2d333b]'
+                      }`}
+                    >
+                      {pt.hasData !== false ? 'Active' : 'Future'}
+                    </button>
                   </div>
                 </div>
 

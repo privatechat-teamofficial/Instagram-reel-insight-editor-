@@ -17,36 +17,39 @@ export const ViewsLineChart: React.FC = () => {
     return p.all;
   });
 
-  // Extract "Your typical reel" baseline values
-  const typicalValues = points.map((p) => {
+  // Extract "Your typical reel" baseline values (starting at 0 for point 1)
+  const typicalValues = points.map((p, idx) => {
+    if (idx === 0) return 0;
     if (p.typical !== undefined) return p.typical;
     return Math.round((p.all || 100) * 0.12);
   });
 
-  const svgWidth = 330;
-  const svgHeight = 110;
-  const padLeft = 8;
-  const padRight = 8;
-  const padTop = 12;
-  const padBottom = 20;
+  const svgWidth = 300;
+  const svgHeight = 70;
+  const padTop = 5;
+  const padBottom = 5;
 
-  const chartWidth = svgWidth - padLeft - padRight;
+  const chartWidth = svgWidth;
   const chartHeight = svgHeight - padTop - padBottom;
 
   const maxVal = Math.max(...values, ...typicalValues, yMax);
 
-  // Generate coordinates for "This reel"
-  const coords = points.map((_, i) => {
-    const x = padLeft + (i / (points.length - 1 || 1)) * chartWidth;
-    const val = values[i];
+  // Generate coordinates for "This reel" & "Your typical reel" starting directly at 0 point
+  const coords = points.map((p, i) => {
+    const x = (i / (points.length - 1 || 1)) * chartWidth;
+    const hasData = p.hasData !== false;
+    const val = i === 0 ? 0 : values[i];
     const y = padTop + chartHeight - (val / (maxVal || 1)) * chartHeight;
-    const typVal = typicalValues[i];
+    const typVal = i === 0 ? 0 : typicalValues[i];
     const typY = padTop + chartHeight - (typVal / (maxVal || 1)) * chartHeight;
-    return { x, y, val, typVal, typY, label: points[i].label };
+    return { x, y, val, typVal, typY, label: p.label, hasData };
   });
 
+  // Filter coordinates for "This reel" where data exists (stops at current date)
+  const activeCoords = coords.filter((c) => c.hasData);
+
   // Build SVG paths
-  const pathData = coords.reduce((acc, curr, index) => {
+  const pathData = activeCoords.reduce((acc, curr, index) => {
     if (index === 0) return `M ${curr.x} ${curr.y}`;
     return `${acc} L ${curr.x} ${curr.y}`;
   }, '');
@@ -56,7 +59,7 @@ export const ViewsLineChart: React.FC = () => {
     return `${acc} L ${curr.x} ${curr.typY}`;
   }, '');
 
-  // Format numbers for Y-axis (e.g. 4K, 2K, 0)
+  // Format numbers for Y-axis (e.g. 2K, 1K, 0)
   const formatYAxis = (num: number) => {
     if (num >= 1000000) return `${(num / 1000000).toFixed(0)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
@@ -64,7 +67,7 @@ export const ViewsLineChart: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-3 pt-1 pb-1 select-none">
+    <div className="w-full flex flex-col gap-2 pt-0.5 pb-1 select-none">
       {/* Filter Pills matching exact screenshot styles:
           [ All ] [ Followers ] [ Non-followers ]
       */}
@@ -104,51 +107,55 @@ export const ViewsLineChart: React.FC = () => {
         </button>
       </div>
 
-      {/* Chart Canvas Area on Dark Background */}
-      <div className="relative flex items-stretch mt-1">
-        {/* Y-Axis Labels: 4K, 2K, 0 */}
-        <div className="flex flex-col justify-between items-end pr-2 text-[10.5px] text-[#8a9199] font-normal w-8 pb-5 tabular-numbers select-none">
-          <EditableValue
-            path="viewsChart.yMax"
-            title="Max Y value"
-            type="number"
-            value={yMax}
-            className="text-[10.5px] text-[#8a9199]"
-          >
-            {formatYAxis(yMax)}
-          </EditableValue>
-          <span className="text-[10.5px] text-[#8a9199]">{formatYAxis(Math.round(yMax / 2))}</span>
-          <span className="text-[10.5px] text-[#8a9199]">0</span>
+      {/* Chart Canvas Area on Dark Background - shifted lower to create clean gap below pills */}
+      <div className="relative flex items-stretch mt-4.5">
+        {/* Y-Axis Labels: 2K, 1K, 0 perfectly aligned with the 3 grid line levels */}
+        <div className="relative w-7 h-[70px] shrink-0 text-[10.5px] text-[#8a9199] font-normal tabular-numbers select-none">
+          <div className="absolute top-[5px] -translate-y-1/2 right-2">
+            <EditableValue
+              path="viewsChart.yMax"
+              title="Max Y value"
+              type="number"
+              value={yMax}
+              className="text-[10.5px] text-[#8a9199]"
+            >
+              {formatYAxis(yMax)}
+            </EditableValue>
+          </div>
+          <div className="absolute top-[35px] -translate-y-1/2 right-2">
+            {formatYAxis(Math.round(yMax / 2))}
+          </div>
+          <div className="absolute top-[65px] -translate-y-1/2 right-2">0</div>
         </div>
 
-        {/* SVG Curve Container */}
-        <div className="relative flex-1">
+        {/* SVG Curve & Axis Container */}
+        <div className="relative flex-1 flex flex-col">
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            className="w-full h-[110px] overflow-visible"
+            className="w-full h-[70px] overflow-visible"
             onMouseLeave={() => setHoverIndex(null)}
           >
-            {/* Horizontal Grid lines matching screenshot (solid subtle thin lines) */}
+            {/* Horizontal Grid lines (Top, Mid, Bottom 0) */}
             <line
-              x1={padLeft}
+              x1="0"
               y1={padTop}
-              x2={svgWidth - padRight}
+              x2={svgWidth}
               y2={padTop}
               stroke="#20242a"
               strokeWidth="1"
             />
             <line
-              x1={padLeft}
+              x1="0"
               y1={padTop + chartHeight / 2}
-              x2={svgWidth - padRight}
+              x2={svgWidth}
               y2={padTop + chartHeight / 2}
               stroke="#20242a"
               strokeWidth="1"
             />
             <line
-              x1={padLeft}
+              x1="0"
               y1={padTop + chartHeight}
-              x2={svgWidth - padRight}
+              x2={svgWidth}
               y2={padTop + chartHeight}
               stroke="#20242a"
               strokeWidth="1"
@@ -165,7 +172,7 @@ export const ViewsLineChart: React.FC = () => {
               strokeLinejoin="round"
             />
 
-            {/* "This reel" Vibrant Pink/Magenta Solid Line */}
+            {/* "This reel" Vibrant Pink/Magenta Solid Line starting from 0 */}
             <path
               d={pathData}
               fill="none"
@@ -223,8 +230,8 @@ export const ViewsLineChart: React.FC = () => {
             </div>
           )}
 
-          {/* Date Markers on X-Axis: 12 Sept, 21 Sept, 29 Sept */}
-          <div className="flex justify-between items-center text-[10.5px] text-[#8a9199] pt-1 px-1 select-none">
+          {/* Date Markers on X-Axis right below 0 grid line: 29 Sept, 30 Sept, 1 Oct */}
+          <div className="flex justify-between items-center text-[10.5px] text-[#8a9199] pt-1.5 px-0 select-none">
             {dates.map((dateStr, idx) => (
               <EditableValue
                 key={idx}
@@ -240,13 +247,13 @@ export const ViewsLineChart: React.FC = () => {
           </div>
 
           {/* Dual series legend matching Instagram: ● This reel   ● Your typical reel */}
-          <div className="flex items-center gap-5 pt-3 pb-0.5 px-0.5 select-none text-[11px] text-[#8e959b]">
+          <div className="flex items-center gap-5 pt-2.5 pb-0.5 px-0 select-none text-[11px] text-[#8e959b]">
             <div className="flex items-center gap-1.5">
-              <span className="w-[6.5px] h-[6.5px] rounded-full bg-[#FE36FF] shrink-0" />
+              <span className="w-[6px] h-[6px] rounded-full bg-[#FE36FF] shrink-0" />
               <span className="text-[#8e959b] font-normal">This reel</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-[6.5px] h-[6.5px] rounded-full bg-[#5c6370] shrink-0" />
+              <span className="w-[6px] h-[6px] rounded-full bg-[#5c6370] shrink-0" />
               <span className="text-[#8e959b] font-normal">Your typical reel</span>
             </div>
           </div>
@@ -257,9 +264,9 @@ export const ViewsLineChart: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsChartModalOpen(true)}
-            className="absolute -top-6 right-0 text-[10.5px] text-[#ec008c] hover:underline font-semibold flex items-center gap-1 bg-[#1c2024] px-2 py-0.5 rounded-md border border-[#2d333b]"
+            className="absolute -top-7 right-0 text-[10.5px] text-[#ec008c] hover:underline font-semibold flex items-center gap-1 bg-[#1c2024] px-2 py-0.5 rounded-md border border-[#2d333b]"
           >
-            <span>📷 Upload graph image / Edit</span>
+            <span>📷 Edit Chart / Presets</span>
           </button>
         )}
       </div>
