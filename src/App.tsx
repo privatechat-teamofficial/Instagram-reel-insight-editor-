@@ -56,6 +56,10 @@ const ReelInsightsScreen: React.FC = () => {
             id="reel-insights-preview-container"
             ref={scrollContainerRef}
             className="w-full h-full bg-[#0d0f12] text-white flex flex-col overflow-y-auto overscroll-y-contain overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
           >
             {/* Header: Back arrow · Reel insights · Insights trend · Options (Fixed & never stretches) */}
             <Header />
