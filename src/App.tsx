@@ -28,91 +28,8 @@ import {
   TrendingUp,
 } from 'lucide-react';
 
-const useOverscrollStretch = (containerRef: React.RefObject<HTMLDivElement | null>) => {
-  const [offset, setOffset] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const touchStartY = useRef<number | null>(null);
-  const wheelTimeout = useRef<number | null>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const calculateDampedOffset = (delta: number) => {
-      const sign = Math.sign(delta);
-      const abs = Math.abs(delta);
-      // Subtle, firm rubber-band tension (max ~18px stretch)
-      return sign * Math.min(18, Math.pow(abs, 0.6) * 0.85);
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length !== 1) return;
-      touchStartY.current = e.touches[0].clientY;
-      setIsDragging(true);
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (touchStartY.current === null) return;
-      const currentY = e.touches[0].clientY;
-      const deltaY = currentY - touchStartY.current;
-      const scrollTop = container.scrollTop;
-      const maxScroll = container.scrollHeight - container.clientHeight;
-
-      if (scrollTop <= 0 && deltaY > 0) {
-        setOffset(calculateDampedOffset(deltaY));
-      } else if (scrollTop >= maxScroll - 1 && deltaY < 0) {
-        setOffset(calculateDampedOffset(deltaY));
-      } else {
-        if (offset !== 0) setOffset(0);
-      }
-    };
-
-    const handleTouchEnd = () => {
-      touchStartY.current = null;
-      setIsDragging(false);
-      setOffset(0);
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      const scrollTop = container.scrollTop;
-      const maxScroll = container.scrollHeight - container.clientHeight;
-
-      if ((scrollTop <= 0 && e.deltaY < 0) || (scrollTop >= maxScroll - 1 && e.deltaY > 0)) {
-        setIsDragging(false);
-        setOffset((prev) => {
-          const raw = prev - e.deltaY * 0.08;
-          return Math.max(-14, Math.min(14, raw));
-        });
-
-        if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
-        wheelTimeout.current = window.setTimeout(() => {
-          setOffset(0);
-        }, 120);
-      }
-    };
-
-    container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    container.addEventListener('touchmove', handleTouchMove, { passive: true });
-    container.addEventListener('touchend', handleTouchEnd, { passive: true });
-    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
-    container.addEventListener('wheel', handleWheel, { passive: true });
-
-    return () => {
-      container.removeEventListener('touchstart', handleTouchStart);
-      container.removeEventListener('touchmove', handleTouchMove);
-      container.removeEventListener('touchend', handleTouchEnd);
-      container.removeEventListener('touchcancel', handleTouchEnd);
-      container.removeEventListener('wheel', handleWheel);
-      if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
-    };
-  }, [containerRef]);
-
-  return { offset, isDragging };
-};
-
 const ReelInsightsScreen: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { offset: overscrollOffset, isDragging } = useOverscrollStretch(scrollContainerRef);
 
   const {
     activeTab,
@@ -129,29 +46,22 @@ const ReelInsightsScreen: React.FC = () => {
   } = useInsights();
 
   return (
-    <div className="min-h-screen min-h-[100dvh] h-[100dvh] w-full bg-[#0d0f12] sm:bg-[#080a0d] flex items-center justify-center p-0 sm:p-4 select-none relative font-acumin overflow-hidden">
+    <div className="min-h-screen min-h-[100dvh] h-[100dvh] w-full bg-[#0d0f12] flex items-center justify-center p-0 select-none relative font-acumin overflow-hidden">
       {/* Central Viewport Wrapper */}
       <div className="relative flex items-center justify-center gap-6 h-full w-full">
-        {/* Mobile: 100% edge-to-edge full viewport height; Tablet & Desktop: centered at max-w-[430px] with responsive height */}
-        <div className="relative w-full sm:max-w-[430px] h-[100dvh] sm:h-[880px] sm:max-h-[96vh] bg-[#0d0f12] sm:rounded-[28px] sm:border sm:border-[#1e2329] sm:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col mx-auto">
+        {/* Full-screen app layout occupying 100% of the screen */}
+        <div className="relative w-full max-w-[480px] h-[100dvh] min-h-[100dvh] bg-[#0d0f12] overflow-hidden flex flex-col mx-auto">
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"
             ref={scrollContainerRef}
-            className="w-full h-full bg-[#0d0f12] text-white flex flex-col overflow-y-auto overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
+            className="w-full h-full bg-[#0d0f12] text-white flex flex-col overflow-y-auto overscroll-y-contain overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
           >
             {/* Header: Back arrow · Reel insights · Insights trend · Options (Fixed & never stretches) */}
             <Header />
 
-            {/* Elastic Overscroll Stretchable Content Layer */}
-            <div
-              className="flex-1 flex flex-col w-full"
-              style={{
-                transform: overscrollOffset !== 0 ? `translate3d(0, ${overscrollOffset}px, 0)` : undefined,
-                transition: isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
-                willChange: isDragging || overscrollOffset !== 0 ? 'transform' : 'auto',
-              }}
-            >
+            {/* Stable Content Layer */}
+            <div className="flex-1 flex flex-col w-full">
               {/* Reel Video/Image Preview & Top 5 Metrics (Likes, Comments, Reposts, Shares, Saves) */}
               <ReelMediaHeader />
 

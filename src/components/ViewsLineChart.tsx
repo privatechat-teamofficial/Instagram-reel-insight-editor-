@@ -123,7 +123,7 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('all')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none active:scale-[0.98] select-none transition-all ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
             viewsChartFilter === 'all'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
@@ -135,7 +135,7 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('followers')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none active:scale-[0.98] select-none transition-all ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
             viewsChartFilter === 'followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
@@ -147,7 +147,7 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('non_followers')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none active:scale-[0.98] select-none transition-all ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
             viewsChartFilter === 'non_followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'

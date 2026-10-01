@@ -53,7 +53,7 @@ export const EditableValue: React.FC<EditableValueProps> = ({
       role="button"
       tabIndex={0}
       title={`Click to edit ${title}`}
-      className={`cursor-pointer transition-colors duration-150 hover:text-pink-400 active:scale-98 rounded px-0.5 -mx-0.5 hover:bg-pink-500/10 ${className}`}
+      className={`cursor-pointer transition-colors duration-150 hover:text-pink-400 rounded px-0.5 -mx-0.5 hover:bg-pink-500/10 ${className}`}
     >
       {children ?? displayValue ?? String(value)}
     </span>

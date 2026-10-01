@@ -156,7 +156,7 @@ export const AudienceTab: React.FC = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setAudienceSubTab(tab.id)}
-                className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:scale-[0.98] select-none transition-all ${
+                className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 select-none transition-colors ${
                   isActive
                     ? 'bg-[#282d35] text-white border-[#38404c]'
                     : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-white hover:border-[#323842]'

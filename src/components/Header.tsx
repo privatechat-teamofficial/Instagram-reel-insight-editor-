@@ -29,7 +29,7 @@ export const Header: React.FC = () => {
           <button
             type="button"
             aria-label="Back"
-            className="text-white hover:opacity-80 active:scale-95 transition-opacity -ml-0.5 flex items-center justify-center shrink-0"
+            className="text-white hover:opacity-80 transition-opacity -ml-0.5 flex items-center justify-center shrink-0"
           >
             <HeaderBackIcon className="w-[20px] h-[18px]" />
           </button>
@@ -56,7 +56,7 @@ export const Header: React.FC = () => {
             type="button"
             onClick={() => setIsChartModalOpen(true)}
             aria-label="Views Chart"
-            className="hover:opacity-80 active:scale-95 transition-opacity p-1 flex items-center justify-center"
+            className="hover:opacity-80 transition-opacity p-1 flex items-center justify-center"
             title="Edit Views Chart"
           >
             <HeaderInsightsIcon className="w-[22px] h-[22px]" />
@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
             type="button"
             onClick={() => setIsPresetsModalOpen(true)}
             aria-label="Options"
-            className="hover:opacity-80 active:scale-95 transition-opacity p-1 -mr-1 flex items-center justify-center"
+            className="hover:opacity-80 transition-opacity p-1 -mr-1 flex items-center justify-center"
             title="Options & Presets"
           >
             <ThreeDotsIcon className="w-[20px] h-[20px]" />

@@ -189,7 +189,7 @@ export const SideControlPanel: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsExportModalOpen(true)}
-          className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white text-[13px] font-semibold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-pink-600/30 active:scale-98 transition-all"
+          className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white text-[13px] font-semibold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-pink-600/30 transition-all"
         >
           <Download className="w-4 h-4" />
           Export Clean Screenshot
