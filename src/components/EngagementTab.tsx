@@ -6,7 +6,7 @@ import { DEFAULT_REEL_DATA } from '../data/defaultData';
 import { Play, Calendar } from 'lucide-react';
 
 export const EngagementTab: React.FC = () => {
-  const { data, isEditMode, setIsMediaModalOpen, setIsDateShiftModalOpen } = useInsights();
+  const { data, isEditMode, openMediaModal, setIsDateShiftModalOpen } = useInsights();
   const [hoverPoint, setHoverPoint] = useState<{ time: string; percentage: number; x: number } | null>(null);
   const touchTimerRef = useRef<number | null>(null);
 
@@ -172,22 +172,28 @@ export const EngagementTab: React.FC = () => {
         {/* Center Thumbnail with Play Button matching Instagram reference */}
         <div className="flex justify-center mt-6 mb-6">
           <div
-            onClick={() => isEditMode && setIsMediaModalOpen(true)}
-            className="relative w-[76px] h-[120px] rounded-[10px] overflow-hidden bg-[#030405] shadow-md cursor-pointer group"
+            onClick={() => isEditMode && openMediaModal('engagement')}
+            className={`relative w-[76px] h-[120px] rounded-[10px] overflow-hidden bg-[#030405] shadow-md cursor-pointer group ${
+              isEditMode ? 'ring-2 ring-[#ec008c]' : ''
+            }`}
+            title={isEditMode ? 'Click to change liked thumbnail' : undefined}
           >
-            {data.mediaType === 'video' ? (
-              <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
+            {(data.engagementMediaType || data.mediaType) === 'video' ? (
+              <video
+                src={data.engagementMediaUrl || data.mediaUrl}
+                className="w-full h-full object-cover"
+                muted
+                playsInline
+                preload="metadata"
+              />
             ) : (
               <img
-                src={data.mediaUrl}
+                src={data.engagementMediaUrl || data.mediaUrl}
                 alt="Reel thumbnail"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             )}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <Play className="w-5 h-5 text-white/90 fill-white/70 drop-shadow" />
-            </div>
           </div>
         </div>
 

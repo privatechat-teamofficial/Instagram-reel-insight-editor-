@@ -35,6 +35,9 @@ interface InsightsContextType {
   updateValueByPath: (path: string, newValue: any) => void;
   isMediaModalOpen: boolean;
   setIsMediaModalOpen: (open: boolean) => void;
+  mediaUploadTarget: 'main' | 'retention' | 'engagement';
+  setMediaUploadTarget: (target: 'main' | 'retention' | 'engagement') => void;
+  openMediaModal: (target?: 'main' | 'retention' | 'engagement') => void;
   isChartModalOpen: boolean;
   setIsChartModalOpen: (open: boolean) => void;
   isPresetsModalOpen: boolean;
@@ -64,6 +67,13 @@ const InsightsContext = createContext<InsightsContextType | undefined>(undefined
 
 export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMediaModalOpen, setIsMediaModalOpen] = useState(false);
+  const [mediaUploadTarget, setMediaUploadTarget] = useState<'main' | 'retention' | 'engagement'>('main');
+
+  const openMediaModal = (target: 'main' | 'retention' | 'engagement' = 'main') => {
+    setMediaUploadTarget(target);
+    setIsMediaModalOpen(true);
+  };
 
   useEffect(() => {
     // Initial data load transition: simulated realistic Instagram Reel insights data loading
@@ -162,7 +172,6 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [viewsChartFilter, setViewsChartFilter] = useState<ViewsChartFilter>('all');
   const [activeEditTarget, setActiveEditTarget] = useState<ActiveEditTarget | null>(null);
 
-  const [isMediaModalOpen, setIsMediaModalOpen] = useState<boolean>(false);
   const [isChartModalOpen, setIsChartModalOpen] = useState<boolean>(false);
   const [isPresetsModalOpen, setIsPresetsModalOpen] = useState<boolean>(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
@@ -315,6 +324,9 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         updateValueByPath,
         isMediaModalOpen,
         setIsMediaModalOpen,
+        mediaUploadTarget,
+        setMediaUploadTarget,
+        openMediaModal,
         isChartModalOpen,
         setIsChartModalOpen,
         isPresetsModalOpen,

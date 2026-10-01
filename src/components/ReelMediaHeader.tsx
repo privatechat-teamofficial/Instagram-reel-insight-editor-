@@ -6,7 +6,7 @@ import { Play } from 'lucide-react';
 import { DEFAULT_PODCAST_THUMBNAIL } from '../assets/defaultReelThumbnail';
 
 export const ReelMediaHeader: React.FC = () => {
-  const { data, isEditMode, setIsMediaModalOpen, isLoading } = useInsights();
+  const { data, isEditMode, openMediaModal, isLoading } = useInsights();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const formatCount = (num: number): string => {
@@ -17,7 +17,7 @@ export const ReelMediaHeader: React.FC = () => {
     <div className="flex flex-col items-center pt-1.5 pb-1 px-3 select-none shrink-0 bg-[#0c1014]">
       {/* Reel Preview: ~132 × 235px (9:16) matching Instagram reference scale */}
       <div
-        onClick={() => isEditMode && setIsMediaModalOpen(true)}
+        onClick={() => isEditMode && openMediaModal('main')}
         className={`relative w-[132px] h-[235px] aspect-[9/16] rounded-[10px] overflow-hidden bg-[#030405] mb-3.5 shadow-md transition-shadow duration-150 shrink-0 ${
           isEditMode ? 'cursor-pointer ring-2 ring-[#ec008c]' : ''
         }`}

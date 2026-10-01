@@ -70,6 +70,10 @@ export interface ReelInsightsState {
   mediaUrl: string;
   mediaType: 'image' | 'video';
   mediaAspectRatio: string; // e.g. "9/16" or "4/5"
+  retentionMediaUrl?: string; // Separate thumbnail for "How long people watched your reel"
+  retentionMediaType?: 'image' | 'video';
+  engagementMediaUrl?: string; // Separate thumbnail for "When people liked your reel"
+  engagementMediaType?: 'image' | 'video';
   topMetrics: TopMetrics;
   summary: SummaryData;
   viewsChart: {

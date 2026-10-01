@@ -4,20 +4,37 @@ import { SAMPLE_MEDIA } from '../data/defaultData';
 import { X, Upload, Check, Video, Image as ImageIcon } from 'lucide-react';
 
 export const MediaUploaderModal: React.FC = () => {
-  const { isMediaModalOpen, setIsMediaModalOpen, data, setData } = useInsights();
+  const {
+    isMediaModalOpen,
+    setIsMediaModalOpen,
+    mediaUploadTarget,
+    setMediaUploadTarget,
+    data,
+    setData,
+  } = useInsights();
+
+  const [applyToAll, setApplyToAll] = useState(false);
   const [selectedUrl, setSelectedUrl] = useState(data.mediaUrl);
   const [selectedType, setSelectedType] = useState<'image' | 'video'>(data.mediaType);
   const [customUrl, setCustomUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Sync state whenever modal opens or active media changes
+  // Sync state whenever modal opens or target changes
   useEffect(() => {
     if (isMediaModalOpen) {
-      setSelectedUrl(data.mediaUrl);
-      setSelectedType(data.mediaType);
+      if (mediaUploadTarget === 'retention') {
+        setSelectedUrl(data.retentionMediaUrl || data.mediaUrl);
+        setSelectedType(data.retentionMediaType || data.mediaType);
+      } else if (mediaUploadTarget === 'engagement') {
+        setSelectedUrl(data.engagementMediaUrl || data.mediaUrl);
+        setSelectedType(data.engagementMediaType || data.mediaType);
+      } else {
+        setSelectedUrl(data.mediaUrl);
+        setSelectedType(data.mediaType);
+      }
       setCustomUrl('');
     }
-  }, [isMediaModalOpen, data.mediaUrl, data.mediaType]);
+  }, [isMediaModalOpen, mediaUploadTarget, data]);
 
   if (!isMediaModalOpen) return null;
 
@@ -33,12 +50,51 @@ export const MediaUploaderModal: React.FC = () => {
 
   const handleApply = () => {
     const finalUrl = customUrl.trim() || selectedUrl;
-    setData((prev) => ({
-      ...prev,
-      mediaUrl: finalUrl,
-      mediaType: selectedType,
-    }));
+
+    setData((prev) => {
+      if (applyToAll) {
+        return {
+          ...prev,
+          mediaUrl: finalUrl,
+          mediaType: selectedType,
+          retentionMediaUrl: finalUrl,
+          retentionMediaType: selectedType,
+          engagementMediaUrl: finalUrl,
+          engagementMediaType: selectedType,
+        };
+      }
+
+      if (mediaUploadTarget === 'retention') {
+        return {
+          ...prev,
+          retentionMediaUrl: finalUrl,
+          retentionMediaType: selectedType,
+        };
+      }
+
+      if (mediaUploadTarget === 'engagement') {
+        return {
+          ...prev,
+          engagementMediaUrl: finalUrl,
+          engagementMediaType: selectedType,
+        };
+      }
+
+      // Default: main top reel preview
+      return {
+        ...prev,
+        mediaUrl: finalUrl,
+        mediaType: selectedType,
+      };
+    });
+
     setIsMediaModalOpen(false);
+  };
+
+  const getTargetTitle = () => {
+    if (mediaUploadTarget === 'retention') return 'Watched Retention Thumbnail (Overview)';
+    if (mediaUploadTarget === 'engagement') return 'Liked Section Thumbnail (Engagement)';
+    return 'Main Top Reel Media';
   };
 
   return (
@@ -51,7 +107,7 @@ export const MediaUploaderModal: React.FC = () => {
         <div className="flex items-center justify-between pb-2 border-b border-[#262626]">
           <div className="flex items-center gap-2">
             <ImageIcon className="w-5 h-5 text-pink-400" />
-            <h3 className="text-[17px] font-semibold text-white">Reel Media Preview</h3>
+            <h3 className="text-[17px] font-semibold text-white">Thumbnail & Media Uploader</h3>
           </div>
           <button
             type="button"
@@ -60,6 +116,61 @@ export const MediaUploaderModal: React.FC = () => {
           >
             <X className="w-4 h-4" />
           </button>
+        </div>
+
+        {/* Target Selector Tabs */}
+        <div className="flex flex-col gap-1.5">
+          <span className="text-[11px] font-medium text-gray-400">Target Thumbnail:</span>
+          <div className="grid grid-cols-3 gap-1.5 bg-[#121212] p-1 rounded-xl border border-[#262626]">
+            <button
+              type="button"
+              onClick={() => {
+                setMediaUploadTarget('main');
+                setSelectedUrl(data.mediaUrl);
+                setSelectedType(data.mediaType);
+              }}
+              className={`py-1.5 px-2 rounded-lg text-[11.5px] font-medium transition-all text-center ${
+                mediaUploadTarget === 'main'
+                  ? 'bg-pink-600 text-white shadow-sm font-semibold'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Main Reel
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMediaUploadTarget('retention');
+                setSelectedUrl(data.retentionMediaUrl || data.mediaUrl);
+                setSelectedType(data.retentionMediaType || data.mediaType);
+              }}
+              className={`py-1.5 px-2 rounded-lg text-[11.5px] font-medium transition-all text-center ${
+                mediaUploadTarget === 'retention'
+                  ? 'bg-pink-600 text-white shadow-sm font-semibold'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Watched (Overview)
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMediaUploadTarget('engagement');
+                setSelectedUrl(data.engagementMediaUrl || data.mediaUrl);
+                setSelectedType(data.engagementMediaType || data.mediaType);
+              }}
+              className={`py-1.5 px-2 rounded-lg text-[11.5px] font-medium transition-all text-center ${
+                mediaUploadTarget === 'engagement'
+                  ? 'bg-pink-600 text-white shadow-sm font-semibold'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Liked (Engagement)
+            </button>
+          </div>
+          <span className="text-[11px] text-pink-400 font-medium mt-0.5">
+            Editing: {getTargetTitle()}
+          </span>
         </div>
 
         {/* Upload Button */}
@@ -74,17 +185,17 @@ export const MediaUploaderModal: React.FC = () => {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="w-full py-4 border-2 border-dashed border-[#383838] hover:border-pink-500 rounded-xl bg-[#121212] flex flex-col items-center justify-center gap-2 text-center group transition-colors"
+            className="w-full py-3.5 border-2 border-dashed border-[#383838] hover:border-pink-500 rounded-xl bg-[#121212] flex flex-col items-center justify-center gap-2 text-center group transition-colors"
           >
             <Upload className="w-6 h-6 text-pink-400 group-hover:scale-110 transition-transform" />
             <div className="flex flex-col">
-              <span className="text-[14px] font-medium text-white">Upload image or video from your device</span>
+              <span className="text-[13.5px] font-medium text-white">Upload image or video from your device</span>
               <span className="text-[11px] text-gray-400">Supports MP4, MOV, PNG, JPG, WebP</span>
             </div>
           </button>
 
           {/* Sample Presets */}
-          <div className="flex flex-col gap-2 pt-1">
+          <div className="flex flex-col gap-2 pt-0.5">
             <span className="text-[12px] font-semibold text-gray-300">Or pick a sample template:</span>
             <div className="grid grid-cols-5 gap-2">
               {SAMPLE_MEDIA.map((item) => (
@@ -110,7 +221,7 @@ export const MediaUploaderModal: React.FC = () => {
           </div>
 
           {/* Direct URL input */}
-          <div className="flex flex-col gap-1.5 pt-1">
+          <div className="flex flex-col gap-1.5 pt-0.5">
             <label className="text-[11px] text-gray-400">Or paste media image URL:</label>
             <input
               type="text"
@@ -120,10 +231,23 @@ export const MediaUploaderModal: React.FC = () => {
               className="w-full bg-[#0d0d0d] border border-[#333333] rounded-xl px-3 py-2 text-[13px] text-white focus:outline-none focus:border-pink-500"
             />
           </div>
+
+          {/* Apply to all checkbox */}
+          <label className="flex items-center gap-2 cursor-pointer select-none pt-1">
+            <input
+              type="checkbox"
+              checked={applyToAll}
+              onChange={(e) => setApplyToAll(e.target.checked)}
+              className="w-4 h-4 rounded text-pink-600 focus:ring-0 focus:ring-offset-0 bg-[#0d0d0d] border-[#383838]"
+            />
+            <span className="text-[12px] text-gray-300">
+              Apply this thumbnail to all sections (Main, Watched, Liked)
+            </span>
+          </label>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#262626]">
+        <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#262626]">
           <button
             type="button"
             onClick={() => setIsMediaModalOpen(false)}
@@ -137,7 +261,7 @@ export const MediaUploaderModal: React.FC = () => {
             className="px-5 py-2 text-[13px] font-semibold text-white rounded-xl bg-pink-600 hover:bg-pink-500 shadow-md flex items-center gap-1.5"
           >
             <Check className="w-4 h-4" />
-            Set Reel Media
+            Save Thumbnail
           </button>
         </div>
       </div>

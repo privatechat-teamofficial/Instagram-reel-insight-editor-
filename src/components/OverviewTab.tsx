@@ -22,7 +22,7 @@ export const OverviewTab: React.FC = () => {
     isEditMode,
     addSourceItem,
     removeSourceItem,
-    setIsMediaModalOpen,
+    openMediaModal,
     setIsDateShiftModalOpen,
     isLoading,
   } = useInsights();
@@ -379,21 +379,30 @@ export const OverviewTab: React.FC = () => {
         {/* Center Thumbnail with Play indicator matching Instagram reference */}
         <div className="flex justify-center mt-6 mb-6">
           <div
-            onClick={() => isEditMode && setIsMediaModalOpen(true)}
-            className="relative w-[76px] h-[120px] rounded-[10px] overflow-hidden bg-[#030405] shadow-md cursor-pointer group"
+            onClick={() => isEditMode && openMediaModal('retention')}
+            className={`relative w-[76px] h-[120px] rounded-[10px] overflow-hidden bg-[#030405] shadow-md cursor-pointer group ${
+              isEditMode ? 'ring-2 ring-[#ec008c]' : ''
+            }`}
+            title={isEditMode ? 'Click to change retention thumbnail' : undefined}
           >
-            {data.mediaType === 'video' ? (
-              <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
+            {(data.retentionMediaType || data.mediaType) === 'video' ? (
+              <video
+                src={data.retentionMediaUrl || data.mediaUrl}
+                className="w-full h-full object-cover"
+                muted
+                playsInline
+                preload="metadata"
+              />
             ) : (
               <img
-                src={data.mediaUrl}
+                src={data.retentionMediaUrl || data.mediaUrl}
                 alt="Reel thumbnail"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             )}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <Play className="w-5 h-5 text-white/90 fill-white/70 drop-shadow" />
+              <Play className="w-5 h-5 text-white drop-shadow stroke-[1.8]" />
             </div>
           </div>
         </div>
