@@ -89,7 +89,9 @@ export const AudienceTab: React.FC = () => {
       <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Who viewed your reel</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          <span>
+            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+          </span>
         </div>
 
         {/* Followers & Non-followers with exact vertical alignment to Engagement tab */}
@@ -144,7 +146,9 @@ export const AudienceTab: React.FC = () => {
       <section className="flex flex-col mt-9">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Audience details</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          <span>
+            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+          </span>
         </div>
 
         {/* Sub-tabs filter pills: Age | Country | Gender */}

@@ -48,7 +48,7 @@ export const ViewsLineChart: React.FC = () => {
   });
 
   const svgWidth = 300;
-  const svgHeight = 96;
+  const svgHeight = 114;
   const padTop = 3;
   const padBottom = 3;
 
@@ -116,10 +116,8 @@ export const ViewsLineChart: React.FC = () => {
 
   return (
     <div className="w-full flex flex-col pt-0.5 pb-1 select-none">
-      {/* Filter Pills matching exact screenshot styles:
-          [ All ] [ Followers ] [ Non-followers ]
-      */}
-      <div className="flex items-center gap-2 mt-5">
+      {/* Filter Pills: Gap matches Summary to 4 boxes */}
+      <div className="flex items-center gap-2 mt-7">
         {[
           { id: 'all', label: 'All' },
           { id: 'followers', label: 'Followers' },
@@ -146,25 +144,25 @@ export const ViewsLineChart: React.FC = () => {
         })}
       </div>
 
-      {/* Chart Canvas Area on Dark Background */}
-      <div className="relative flex items-stretch mt-11">
-        {/* Y-Axis Labels: 4K, 2K, 0 perfectly aligned with the 3 grid line levels */}
-        <div className="relative w-[34px] h-[96px] shrink-0 text-[11px] text-[#8e959b] font-normal select-none">
-          <div className="absolute top-[3px] -translate-y-1/2 right-2">
+      {/* Chart Canvas Area: Increased gap below filter pills */}
+      <div className="relative flex items-stretch mt-14">
+        {/* Y-Axis Labels: 4K, 2K, 0 perfectly aligned with increased gap between levels and larger font */}
+        <div className="relative w-[36px] h-[114px] shrink-0 text-[12.5px] text-[#8e959b] font-normal select-none">
+          <div className="absolute top-[3px] -translate-y-1/2 right-2.5">
             <EditableValue
               path="viewsChart.yMax"
               title="Max Y value"
               type="number"
               value={yMax}
-              className="text-[11px] text-[#8e959b] font-normal"
+              className="text-[12.5px] text-[#8e959b] font-normal"
             >
               {formatYAxis(yMax)}
             </EditableValue>
           </div>
-          <div className="absolute top-[48px] -translate-y-1/2 right-2">
+          <div className="absolute top-[57px] -translate-y-1/2 right-2.5">
             {formatYAxis(Math.round(yMax / 2))}
           </div>
-          <div className="absolute top-[93px] -translate-y-1/2 right-2">0</div>
+          <div className="absolute top-[111px] -translate-y-1/2 right-2.5">0</div>
         </div>
 
         {/* SVG Curve & Axis Container */}
@@ -172,7 +170,7 @@ export const ViewsLineChart: React.FC = () => {
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             preserveAspectRatio="none"
-            className="w-full h-[96px] overflow-visible"
+            className="w-full h-[114px] overflow-visible"
             onMouseLeave={() => setHoverIndex(null)}
           >
             {/* Horizontal Grid lines (Top, Mid, Bottom 0) spanning width */}
@@ -281,7 +279,7 @@ export const ViewsLineChart: React.FC = () => {
           )}
 
           {/* Date Markers on X-Axis right below 0 grid line: 29 Sept, 30 Sept, 1 Oct */}
-          <div className="flex justify-between items-center text-[11.5px] text-[#8e959b] pt-2 px-0 select-none">
+          <div className="flex justify-between items-center text-[12.5px] text-[#8e959b] pt-2 px-0 select-none">
             {dates.map((dateStr, idx) => (
               <EditableValue
                 key={idx}
@@ -289,7 +287,7 @@ export const ViewsLineChart: React.FC = () => {
                 title={`Date label ${idx + 1}`}
                 type="date"
                 value={dateStr}
-                className="text-[11.5px] text-[#8e959b] font-normal"
+                className="text-[12.5px] text-[#8e959b] font-normal"
               >
                 {dateStr}
               </EditableValue>

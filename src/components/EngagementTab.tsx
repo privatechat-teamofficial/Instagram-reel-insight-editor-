@@ -25,7 +25,7 @@ export const EngagementTab: React.FC = () => {
       ? data.engagement.whenLikedPoints
       : DEFAULT_REEL_DATA.engagement.whenLikedPoints;
   const svgWidth = 320;
-  const svgHeight = 96;
+  const svgHeight = 124;
   const padLeft = 10;
   const padRight = 10;
   const padTop = 4;
@@ -46,11 +46,13 @@ export const EngagementTab: React.FC = () => {
 
   return (
     <div className="flex flex-col px-3 pt-[40px] pb-16 w-full text-white select-none bg-[#0c1014]">
-      {/* 1. Actions after viewing */}
+      {/* 1. Actions after viewing - Heading size equal to Summary */}
       <section className="flex flex-col">
-        <div className="flex items-center gap-1.5 text-[15px] font-bold text-white tracking-tight leading-none">
+        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Actions after viewing</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          <span>
+            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+          </span>
         </div>
 
         <div className="flex items-center justify-between py-2 mt-4">
@@ -67,11 +69,13 @@ export const EngagementTab: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Interactions Breakdown */}
+      {/* 2. Interactions Breakdown - Heading size equal to Summary */}
       <section className="flex flex-col mt-9">
-        <div className="flex items-center gap-1.5 text-[15px] font-bold text-white tracking-tight leading-none">
+        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Interactions</span>
-          <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+          <span>
+            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+          </span>
         </div>
 
         <div className="flex flex-col mt-4">
@@ -147,12 +151,14 @@ export const EngagementTab: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. When people liked your reel */}
+      {/* 3. When people liked your reel - Heading size equal to Summary */}
       <section className="flex flex-col mt-9">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-[15px] font-bold text-white tracking-tight leading-none">
+          <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">When people liked your reel</span>
-            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+            <span>
+              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            </span>
           </div>
 
           {/* Shift date button: ONLY shown in edit mode */}
@@ -202,10 +208,10 @@ export const EngagementTab: React.FC = () => {
 
         {/* When liked chart */}
         <div className="relative flex items-stretch mt-3">
-          {/* Y-Axis (80%, 40%, 0%) matching screenshot 5 */}
-          <div className="flex flex-col justify-between items-end pr-2 text-[10px] text-[#8e959b] font-normal w-8 pb-4">
+          {/* Y-Axis (80%, 50%, 0%) with height slightly taller than 4K-2K chart */}
+          <div className="flex flex-col justify-between items-end pr-2.5 text-[12px] text-[#8e959b] font-normal w-9 h-[124px] pb-3">
             <span>80%</span>
-            <span>40%</span>
+            <span>50%</span>
             <span>0%</span>
           </div>
 
@@ -213,7 +219,7 @@ export const EngagementTab: React.FC = () => {
             <svg
               viewBox={`0 0 ${svgWidth} ${svgHeight}`}
               preserveAspectRatio="none"
-              className="w-full h-[96px] overflow-visible"
+              className="w-full h-[124px] overflow-visible"
               onMouseLeave={() => setHoverPoint(null)}
             >
               <line x1={padLeft} y1={padTop} x2={svgWidth - padRight} y2={padTop} stroke="#20242a" strokeWidth="1" />
@@ -272,7 +278,7 @@ export const EngagementTab: React.FC = () => {
             )}
 
             {/* X-Axis time boundaries */}
-            <div className="flex justify-between items-center text-[10.5px] text-[#8e959b] pt-1 px-1">
+            <div className="flex justify-between items-center text-[12px] text-[#8e959b] pt-1 px-1">
               <span>0:00</span>
               <span>{data.watchTimeRetention.videoDuration}</span>
             </div>

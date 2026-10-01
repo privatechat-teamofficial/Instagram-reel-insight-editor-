@@ -89,9 +89,9 @@ export const OverviewTab: React.FC = () => {
     });
   };
 
-  // All symbol heights and widths are identical to the like symbol (HeartIcon)
+  // All symbol heights and widths are increased a bit matching the user's request
   const getImpactIcon = (iconType?: string) => {
-    const symbolClass = 'w-[21px] h-[21px] text-white';
+    const symbolClass = 'w-[23px] h-[23px] text-white';
     switch (iconType) {
       case 'skip':
         return <SkipRateIcon className={symbolClass} />;
@@ -115,10 +115,10 @@ export const OverviewTab: React.FC = () => {
     return isNaN(num) ? '0.0%' : `${num.toFixed(1)}%`;
   };
 
-  // Retention chart coordinates
+  // Retention chart coordinates - height increased to provide more spacing between 100%, 50%, and 0%
   const retentionPoints = retentionData.points || [];
   const retSvgWidth = 320;
-  const retSvgHeight = 82;
+  const retSvgHeight = 110;
   const retPadLeft = 10;
   const retPadRight = 10;
   const retPadTop = 4;
@@ -145,23 +145,23 @@ export const OverviewTab: React.FC = () => {
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Summary</span>
           <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
           </span>
         </div>
 
         {/* 2x2 Grid Cards */}
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-2.5 w-full mt-5">
-            <div className="bg-[#181d24] rounded-[12px] h-[72px] animate-pulse" />
-            <div className="bg-[#181d24] rounded-[12px] h-[72px] animate-pulse" />
-            <div className="bg-[#181d24] rounded-[12px] h-[72px] animate-pulse" />
-            <div className="bg-[#181d24] rounded-[12px] h-[72px] animate-pulse" />
+          <div className="grid grid-cols-2 gap-2.5 w-full mt-7">
+            <div className="bg-[#181d24] rounded-[12px] h-[82px] animate-pulse" />
+            <div className="bg-[#181d24] rounded-[12px] h-[82px] animate-pulse" />
+            <div className="bg-[#181d24] rounded-[12px] h-[82px] animate-pulse" />
+            <div className="bg-[#181d24] rounded-[12px] h-[82px] animate-pulse" />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-2.5 w-full mt-5 animate-in fade-in duration-300">
+          <div className="grid grid-cols-2 gap-2.5 w-full mt-7 animate-in fade-in duration-300">
             {/* Box 1: Views */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3 h-[72px] flex flex-col justify-between shadow-sm">
-              <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Views
               </span>
               <EditableValue
@@ -169,15 +169,15 @@ export const OverviewTab: React.FC = () => {
                 title="Views"
                 type="number"
                 value={data.summary.views}
-                className="text-[19px] font-bold text-white tracking-tight leading-none"
+                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
               >
                 {formatNumber(data.summary.views)}
               </EditableValue>
             </div>
 
             {/* Box 2: Viewers */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3 h-[72px] flex flex-col justify-between shadow-sm">
-              <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Viewers
               </span>
               <EditableValue
@@ -185,15 +185,15 @@ export const OverviewTab: React.FC = () => {
                 title="Viewers"
                 type="number"
                 value={data.summary.viewers}
-                className="text-[19px] font-bold text-white tracking-tight leading-none"
+                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
               >
                 {formatNumber(data.summary.viewers)}
               </EditableValue>
             </div>
 
             {/* Box 3: Average watch time */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3 h-[72px] flex flex-col justify-between shadow-sm">
-              <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Average watch time
               </span>
               <EditableValue
@@ -201,15 +201,15 @@ export const OverviewTab: React.FC = () => {
                 title="Average watch time"
                 type="time"
                 value={data.summary.averageWatchTime}
-                className="text-[19px] font-bold text-white tracking-tight leading-none"
+                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
               >
                 {data.summary.averageWatchTime}
               </EditableValue>
             </div>
 
             {/* Box 4: Follows */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3 h-[72px] flex flex-col justify-between shadow-sm">
-              <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Follows
               </span>
               <EditableValue
@@ -217,7 +217,7 @@ export const OverviewTab: React.FC = () => {
                 title="Follows"
                 type="number"
                 value={data.summary.follows}
-                className="text-[19px] font-bold text-white tracking-tight leading-none"
+                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
               >
                 {formatNumber(data.summary.follows)}
               </EditableValue>
@@ -227,11 +227,11 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 2. Views Over Time Section */}
-      <section className="flex flex-col mt-9">
+      <section className="flex flex-col mt-12">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Views over time</span>
           <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
           </span>
         </div>
         {isLoading ? (
@@ -249,7 +249,7 @@ export const OverviewTab: React.FC = () => {
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">What impacts your views</span>
             <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-              <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
             </span>
           </div>
           {isEditMode && !isLoading && (
@@ -263,7 +263,7 @@ export const OverviewTab: React.FC = () => {
             </button>
           )}
         </div>
-        <p className="text-[12.5px] text-[#8e959b] font-normal mt-3.5">
+        <p className="text-[12.5px] text-[#8e959b] font-normal mt-5">
           Rates are listed in order of importance to reach.
         </p>
 
@@ -293,7 +293,7 @@ export const OverviewTab: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div
                       onClick={() => cycleIcon(idx)}
-                      className={`w-9 h-9 rounded-full bg-[#25292e] flex items-center justify-center shrink-0 ${
+                      className={`w-10 h-10 rounded-full bg-[#25292e] flex items-center justify-center shrink-0 ${
                         isEditMode ? 'cursor-pointer hover:ring-2 hover:ring-pink-500/50' : ''
                       }`}
                       title={isEditMode ? 'Click to change symbol (Skip, Share, Like, Save, Repost, Comment)' : undefined}
@@ -359,7 +359,9 @@ export const OverviewTab: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">How long people watched your reel</span>
-            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+            <span>
+              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            </span>
           </div>
 
           {/* Shift date button: ONLY shown in edit mode */}
@@ -409,8 +411,8 @@ export const OverviewTab: React.FC = () => {
 
         {/* Retention Drop Curve */}
         <div className="relative flex items-stretch mt-4">
-          {/* Y-Axis (100%, 50%, 0%) */}
-          <div className="flex flex-col justify-between items-end pr-2 text-[10px] text-[#8e959b] font-normal w-8 h-[82px] pb-2">
+          {/* Y-Axis (100%, 50%, 0%) with increased vertical spacing and font size */}
+          <div className="flex flex-col justify-between items-end pr-2.5 text-[12px] text-[#8e959b] font-normal w-9 h-[110px] pb-2">
             <span>100%</span>
             <span>50%</span>
             <span>0%</span>
@@ -420,7 +422,7 @@ export const OverviewTab: React.FC = () => {
             <svg
               viewBox={`0 0 ${retSvgWidth} ${retSvgHeight}`}
               preserveAspectRatio="none"
-              className="w-full h-[82px] overflow-visible"
+              className="w-full h-[110px] overflow-visible"
               onMouseLeave={() => setRetentionHover(null)}
             >
               {/* Guidelines */}
@@ -497,14 +499,14 @@ export const OverviewTab: React.FC = () => {
             )}
 
             {/* X-Axis time boundaries (0:00 to 0:25) */}
-            <div className="flex justify-between items-center text-[10.5px] text-[#8e959b] pt-1 px-1">
+            <div className="flex justify-between items-center text-[12px] text-[#8e959b] pt-1 px-1">
               <span>0:00</span>
               <EditableValue
                 path="watchTimeRetention.videoDuration"
                 title="Video duration"
                 type="text"
                 value={data.watchTimeRetention.videoDuration}
-                className="text-[10.5px] text-[#8e959b]"
+                className="text-[12px] text-[#8e959b]"
               >
                 {data.watchTimeRetention.videoDuration}
               </EditableValue>
@@ -518,7 +520,9 @@ export const OverviewTab: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">Top sources of views</span>
-            <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
+            <span>
+              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            </span>
           </div>
 
           {isEditMode && (

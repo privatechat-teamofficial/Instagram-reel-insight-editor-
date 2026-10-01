@@ -49,26 +49,26 @@ export const CommentIcon: React.FC<{ className?: string }> = ({ className = 'w-[
 
 /**
  * 3. REPOST: Two separate curved arrows forming the reshare symbol
- * (Top arrow curving right, Bottom arrow curving left with exact 180° symmetry)
+ * (Top arrow curving right, Bottom arrow curving left)
  */
 export const RepostIcon: React.FC<{ className?: string }> = ({ className = 'w-[19px] h-[19px]' }) => (
   <svg
-    viewBox="0 0 24 24"
+    viewBox="1.5 1.5 21 21"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.9"
+    strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-hidden="true"
   >
-    {/* Top arrow: goes up from mid-left, curves smoothly right, ends with right-pointing arrowhead */}
-    <path d="M5 12.5V8.5A3.5 3.5 0 0 1 8.5 5h10" />
-    <polyline points="14.5 1.5 18.5 5 14.5 8.5" />
+    {/* Top arrow: goes up from left, curves right, ends with right-pointing arrow */}
+    <path d="M5.5 11V8a3 3 0 0 1 3-3h9" />
+    <polyline points="15 2.5 18 5 15 7.5" />
 
-    {/* Bottom arrow: goes down from mid-right, curves smoothly left, ends with left-pointing arrowhead */}
-    <path d="M19 11.5v4a3.5 3.5 0 0 1-3.5 3.5h-10" />
-    <polyline points="9.5 22.5 5.5 19 9.5 15.5" />
+    {/* Bottom arrow: goes down from right, curves left, ends with left-pointing arrow */}
+    <path d="M18.5 13v3a3 3 0 0 1-3 3h-9" />
+    <polyline points="9 21.5 6 19 9 16.5" />
   </svg>
 );
 
@@ -220,21 +220,15 @@ export const ThreeDotsIcon: React.FC<{ className?: string }> = ({ className = 'w
 
 /**
  * INFO CIRCLE (ⓘ)
- * Matches Instagram heading info icon: inherits text color (pure white) and aligns horizontally on text midline
+ * Matches Instagram heading info icon: inherits text color (pure white) and aligns horizontally on text midline with slight right offset
  */
-export const InfoCircleIcon: React.FC<{ className?: string }> = ({ className = 'w-[13.5px] h-[13.5px]' }) => (
+export const InfoCircleIcon: React.FC<{ className?: string }> = ({ className = 'w-[12px] h-[12px]' }) => (
   <svg
     viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={`shrink-0 -translate-y-[2.5px] ${className}`}
+    fill="currentColor"
+    className={`shrink-0 ml-1.5 -translate-y-[1px] ${className}`}
     aria-hidden="true"
   >
-    <circle cx="12" cy="12" r="9.5" />
-    <line x1="12" y1="11" x2="12" y2="16.5" />
-    <circle cx="12" cy="7.5" r="0.8" fill="currentColor" stroke="none" />
+    <path d="M12 1.5a10.5 10.5 0 1 0 10.5 10.5A10.512 10.512 0 0 0 12 1.5Zm0 19a8.5 8.5 0 1 1 8.5-8.5 8.51 8.51 0 0 1-8.5 8.5Zm0-12.75a1.25 1.25 0 1 0 1.25 1.25A1.25 1.25 0 0 0 12 7.75Zm1 8.75a1 1 0 0 1-2 0v-5a1 1 0 0 1 2 0Z" />
   </svg>
 );
