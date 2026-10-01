@@ -194,6 +194,9 @@ export const EngagementTab: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             )}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+              <Play className="w-5 h-5 text-white drop-shadow stroke-[1.8]" />
+            </div>
           </div>
         </div>
 
