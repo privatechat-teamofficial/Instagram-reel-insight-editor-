@@ -52,82 +52,72 @@ export const ReelMediaHeader: React.FC = () => {
       </div>
 
       {/* 5 Metric Icons & Counts: Like, Comment, Repost, Share, Save */}
-      <div className="w-full grid grid-cols-5 text-center px-1 mt-0.5 mb-1">
+      <div className="w-full grid grid-cols-5 text-center px-0.5 mt-0.5 mb-1">
         {/* Likes */}
-        <div className="flex flex-col items-center justify-center gap-1 py-0.5">
-          <div className="w-6 h-6 flex items-center justify-center shrink-0">
-            <HeartIcon className="w-5 h-5 text-white shrink-0" />
-          </div>
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
+          <HeartIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.likes"
             title="Likes count"
             type="number"
             value={data.topMetrics.likes}
-            className="text-[14px] font-semibold text-white tabular-numbers leading-tight"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.likes)}
           </EditableValue>
         </div>
 
         {/* Comments */}
-        <div className="flex flex-col items-center justify-center gap-1 py-0.5">
-          <div className="w-6 h-6 flex items-center justify-center shrink-0">
-            <CommentIcon className="w-5 h-5 text-white shrink-0" />
-          </div>
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
+          <CommentIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.comments"
             title="Comments count"
             type="number"
             value={data.topMetrics.comments}
-            className="text-[14px] font-semibold text-white tabular-numbers leading-tight"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.comments)}
           </EditableValue>
         </div>
 
         {/* Reposts */}
-        <div className="flex flex-col items-center justify-center gap-1 py-0.5">
-          <div className="w-6 h-6 flex items-center justify-center shrink-0">
-            <RepostIcon className="w-5 h-5 text-white shrink-0" />
-          </div>
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
+          <RepostIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.reposts"
             title="Reposts count"
             type="number"
             value={data.topMetrics.reposts}
-            className="text-[14px] font-semibold text-white tabular-numbers leading-tight"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.reposts)}
           </EditableValue>
         </div>
 
         {/* Shares */}
-        <div className="flex flex-col items-center justify-center gap-1 py-0.5">
-          <div className="w-6 h-6 flex items-center justify-center shrink-0">
-            <ShareIcon className="w-5 h-5 text-white shrink-0" />
-          </div>
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
+          <ShareIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.shares"
             title="Shares count"
             type="number"
             value={data.topMetrics.shares}
-            className="text-[14px] font-semibold text-white tabular-numbers leading-tight"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.shares)}
           </EditableValue>
         </div>
 
         {/* Saves */}
-        <div className="flex flex-col items-center justify-center gap-1 py-0.5">
-          <div className="w-6 h-6 flex items-center justify-center shrink-0">
-            <BookmarkIcon className="w-5 h-5 text-white shrink-0" />
-          </div>
+        <div className="flex flex-col items-center justify-center gap-1.5 py-0.5">
+          <BookmarkIcon className="w-[21px] h-[21px] text-white" />
           <EditableValue
             path="topMetrics.saves"
             title="Saves count"
             type="number"
             value={data.topMetrics.saves}
-            className="text-[14px] font-semibold text-white tabular-numbers leading-tight"
+            className="text-[14.5px] font-semibold text-white tabular-numbers leading-tight"
           >
             {formatCount(data.topMetrics.saves)}
           </EditableValue>

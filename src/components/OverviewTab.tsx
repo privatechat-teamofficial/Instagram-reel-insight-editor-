@@ -138,7 +138,7 @@ export const OverviewTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col px-4 pt-5 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Summary Section */}
       <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -146,10 +146,10 @@ export const OverviewTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* 2x2 Grid Cards: Roomier cards with #21252b background and rounded corners */}
-        <div className="grid grid-cols-2 gap-2.5 w-full mt-3.5">
+        {/* 2x2 Grid Cards: Roomier cards with #25292E background and rounded corners */}
+        <div className="grid grid-cols-2 gap-2.5 w-full mt-4">
           {/* Box 1: Views */}
-          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Views
             </span>
@@ -165,7 +165,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 2: Viewers */}
-          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Viewers
             </span>
@@ -181,7 +181,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 3: Average watch time */}
-          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Average watch time
             </span>
@@ -197,7 +197,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 4: Follows */}
-          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Follows
             </span>
@@ -215,7 +215,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 2. Views Over Time Section */}
-      <section className="flex flex-col mt-7">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Views over time</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
