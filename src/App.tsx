@@ -48,9 +48,9 @@ const ReelInsightsScreen: React.FC = () => {
   return (
     <div className="min-h-screen min-h-[100dvh] h-[100dvh] w-full bg-[#0d0f12] flex items-center justify-center p-0 select-none relative font-acumin overflow-hidden">
       {/* Central Viewport Wrapper */}
-      <div className="relative flex items-center justify-center gap-6 h-full w-full">
-        {/* Full-screen app layout occupying 100% of the screen */}
-        <div className="relative w-full max-w-[480px] h-[100dvh] min-h-[100dvh] bg-[#0d0f12] overflow-hidden flex flex-col mx-auto">
+      <div className="relative flex items-center justify-center lg:gap-6 h-full w-full">
+        {/* Full-screen app layout occupying 100% of the screen on mobile/devices */}
+        <div className="relative w-full lg:max-w-[440px] h-[100dvh] min-h-[100dvh] bg-[#0d0f12] overflow-hidden flex flex-col">
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"
