@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { SAMPLE_MEDIA } from '../data/defaultData';
 import { X, Upload, Check, Video, Image as ImageIcon } from 'lucide-react';
@@ -9,6 +9,15 @@ export const MediaUploaderModal: React.FC = () => {
   const [selectedType, setSelectedType] = useState<'image' | 'video'>(data.mediaType);
   const [customUrl, setCustomUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Sync state whenever modal opens or active media changes
+  useEffect(() => {
+    if (isMediaModalOpen) {
+      setSelectedUrl(data.mediaUrl);
+      setSelectedType(data.mediaType);
+      setCustomUrl('');
+    }
+  }, [isMediaModalOpen, data.mediaUrl, data.mediaType]);
 
   if (!isMediaModalOpen) return null;
 
@@ -23,9 +32,10 @@ export const MediaUploaderModal: React.FC = () => {
   };
 
   const handleApply = () => {
+    const finalUrl = customUrl.trim() || selectedUrl;
     setData((prev) => ({
       ...prev,
-      mediaUrl: customUrl.trim() || selectedUrl,
+      mediaUrl: finalUrl,
       mediaType: selectedType,
     }));
     setIsMediaModalOpen(false);

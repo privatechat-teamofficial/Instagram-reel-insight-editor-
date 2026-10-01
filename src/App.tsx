@@ -131,9 +131,9 @@ const ReelInsightsScreen: React.FC = () => {
   return (
     <div className="min-h-screen min-h-[100dvh] w-full bg-[#0d0f12] lg:bg-[#080a0d] flex items-center justify-center p-0 lg:p-6 select-none relative font-acumin overflow-x-hidden">
       {/* Central Viewport Wrapper */}
-      <div className="relative flex items-center justify-center gap-6 h-full w-full lg:w-auto">
-        {/* Mobile Screen Container: 100% full width on phones, constrained max-w-[430px] on tablets/desktop */}
-        <div className="relative w-full max-w-[430px] h-[100dvh] min-h-[100dvh] lg:h-[860px] lg:max-h-[96vh] bg-[#0d0f12] lg:rounded-[28px] lg:border lg:border-[#1e2329] lg:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col mx-auto">
+      <div className="relative flex items-center justify-center gap-6 h-full w-full">
+        {/* Mobile: 100% edge-to-edge full width; Tablet & Desktop: centered at max-w-[440px] */}
+        <div className="relative w-full sm:max-w-[440px] h-[100dvh] min-h-[100dvh] lg:h-[860px] lg:max-h-[96vh] bg-[#0d0f12] lg:rounded-[28px] lg:border lg:border-[#1e2329] lg:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col mx-auto">
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"

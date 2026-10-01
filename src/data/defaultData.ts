@@ -7,21 +7,21 @@ export const DEFAULT_REEL_DATA: ReelInsightsState = {
   mediaType: 'image',
   mediaAspectRatio: '9/16',
   topMetrics: {
-    likes: 20,
+    likes: 31,
     comments: 0,
     reposts: 0,
     shares: 24,
     saves: 0,
   },
   summary: {
-    views: 3043,
-    viewers: 619,
-    averageWatchTime: '16s',
+    views: 4348,
+    viewers: 881,
+    averageWatchTime: '14s',
     follows: 0,
   },
   viewsChart: {
     dates: ['29 Sept', '30 Sept', '1 Oct'],
-    yMax: 2000,
+    yMax: 4000,
     points: [
       { id: '1', label: '29 Sept', all: 0, followers: 0, nonFollowers: 0, typical: 0, hasData: true },
       { id: '2', label: '29 Sept', all: 180, followers: 0, nonFollowers: 180, typical: 120, hasData: true },

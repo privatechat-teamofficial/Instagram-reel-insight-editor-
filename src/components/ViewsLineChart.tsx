@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { Calendar, TrendingUp } from 'lucide-react';
@@ -14,6 +14,20 @@ export const ViewsLineChart: React.FC = () => {
     setIsTypicalModalOpen,
   } = useInsights();
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const touchTimerRef = useRef<number | null>(null);
+
+  // Clear hover state on filter switch
+  useEffect(() => {
+    setHoverIndex(null);
+  }, [viewsChartFilter]);
+
+  const handleTouch = (idx: number) => {
+    setHoverIndex(idx);
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+    touchTimerRef.current = window.setTimeout(() => {
+      setHoverIndex(null);
+    }, 2500);
+  };
 
   const points = data?.viewsChart?.points || [];
   const dates = data?.viewsChart?.dates || [];
@@ -232,7 +246,10 @@ export const ViewsLineChart: React.FC = () => {
                     r="14"
                     fill="transparent"
                     onMouseEnter={() => setHoverIndex(i)}
-                    onTouchStart={() => setHoverIndex(i)}
+                    onTouchStart={(e) => {
+                      e.stopPropagation();
+                      handleTouch(i);
+                    }}
                   />
 
                   {/* Dot on hover */}
@@ -251,9 +268,15 @@ export const ViewsLineChart: React.FC = () => {
           {/* Interactive Tooltip on hover/touch */}
           {hoverIndex !== null && coords[hoverIndex] && (
             <div
-              className="absolute pointer-events-none -top-7 -translate-x-1/2 bg-[#1c2024] text-white text-[10.5px] font-semibold px-2 py-1 rounded shadow-lg border border-[#2d333b] whitespace-nowrap z-20"
+              className="absolute pointer-events-none -top-7 bg-[#1c2024] text-white text-[10.5px] font-semibold px-2 py-1 rounded shadow-lg border border-[#2d333b] whitespace-nowrap z-20 transition-transform duration-150"
               style={{
                 left: `${(coords[hoverIndex].x / svgWidth) * 100}%`,
+                transform:
+                  coords[hoverIndex].x > svgWidth * 0.75
+                    ? 'translate(-90%, 0)'
+                    : coords[hoverIndex].x < svgWidth * 0.25
+                    ? 'translate(-10%, 0)'
+                    : 'translate(-50%, 0)',
               }}
             >
               <div className="flex items-center gap-1.5 text-[#FE36FF]">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { ViewsLineChart } from './ViewsLineChart';
@@ -26,6 +26,15 @@ export const OverviewTab: React.FC = () => {
     setIsDateShiftModalOpen,
   } = useInsights();
   const [retentionHover, setRetentionHover] = useState<{ time: string; percentage: number; x: number } | null>(null);
+  const retTouchTimerRef = useRef<number | null>(null);
+
+  const handleRetTouch = (pointData: { time: string; percentage: number; x: number }) => {
+    setRetentionHover(pointData);
+    if (retTouchTimerRef.current) clearTimeout(retTouchTimerRef.current);
+    retTouchTimerRef.current = window.setTimeout(() => {
+      setRetentionHover(null);
+    }, 2500);
+  };
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
@@ -394,7 +403,10 @@ export const OverviewTab: React.FC = () => {
                   fill="transparent"
                   className="cursor-pointer"
                   onMouseEnter={() => setRetentionHover({ time: c.pt.time, percentage: c.pt.percentage, x: c.x })}
-                  onTouchStart={() => setRetentionHover({ time: c.pt.time, percentage: c.pt.percentage, x: c.x })}
+                  onTouchStart={(e) => {
+                    e.stopPropagation();
+                    handleRetTouch({ time: c.pt.time, percentage: c.pt.percentage, x: c.x });
+                  }}
                 />
               ))}
 
@@ -420,9 +432,15 @@ export const OverviewTab: React.FC = () => {
             {/* Retention Floating Tooltip - only displayed when touched / hovered */}
             {retentionHover && (
               <div
-                className="absolute -top-3.5 bg-[#1c2024] text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-[#2d333b] -translate-x-1/2 pointer-events-none z-10 whitespace-nowrap"
+                className="absolute -top-3.5 bg-[#1c2024] text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-[#2d333b] pointer-events-none z-10 whitespace-nowrap transition-transform duration-150"
                 style={{
                   left: `${(retentionHover.x / retSvgWidth) * 100}%`,
+                  transform:
+                    retentionHover.x > retSvgWidth * 0.75
+                      ? 'translate(-85%, 0)'
+                      : retentionHover.x < retSvgWidth * 0.25
+                      ? 'translate(-15%, 0)'
+                      : 'translate(-50%, 0)',
                 }}
               >
                 {retentionHover.percentage}%

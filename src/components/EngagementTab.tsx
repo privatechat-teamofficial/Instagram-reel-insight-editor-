@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useInsights } from '../context/InsightsContext';
 import { EditableValue } from './EditableValue';
 import { InfoCircleIcon } from './InstagramIcons';
@@ -8,6 +8,15 @@ import { Play, Calendar } from 'lucide-react';
 export const EngagementTab: React.FC = () => {
   const { data, isEditMode, setIsMediaModalOpen, setIsDateShiftModalOpen } = useInsights();
   const [hoverPoint, setHoverPoint] = useState<{ time: string; percentage: number; x: number } | null>(null);
+  const touchTimerRef = useRef<number | null>(null);
+
+  const handlePointTouch = (ptData: { time: string; percentage: number; x: number }) => {
+    setHoverPoint(ptData);
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+    touchTimerRef.current = window.setTimeout(() => {
+      setHoverPoint(null);
+    }, 2500);
+  };
 
   const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
@@ -220,7 +229,10 @@ export const EngagementTab: React.FC = () => {
                   fill="transparent"
                   className="cursor-pointer"
                   onMouseEnter={() => setHoverPoint({ time: c.pt.time, percentage: c.pt.percentage, x: c.x })}
-                  onTouchStart={() => setHoverPoint({ time: c.pt.time, percentage: c.pt.percentage, x: c.x })}
+                  onTouchStart={(e) => {
+                    e.stopPropagation();
+                    handlePointTouch({ time: c.pt.time, percentage: c.pt.percentage, x: c.x });
+                  }}
                 />
               ))}
 
@@ -235,9 +247,15 @@ export const EngagementTab: React.FC = () => {
             {/* Hover tooltip */}
             {hoverPoint && (
               <div
-                className="absolute -top-3.5 bg-[#1c2024] text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-[#2d333b] -translate-x-1/2 pointer-events-none z-10 whitespace-nowrap"
+                className="absolute -top-3.5 bg-[#1c2024] text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-[#2d333b] pointer-events-none z-10 whitespace-nowrap transition-transform duration-150"
                 style={{
                   left: `${(hoverPoint.x / svgWidth) * 100}%`,
+                  transform:
+                    hoverPoint.x > svgWidth * 0.75
+                      ? 'translate(-85%, 0)'
+                      : hoverPoint.x < svgWidth * 0.25
+                      ? 'translate(-15%, 0)'
+                      : 'translate(-50%, 0)',
                 }}
               >
                 {hoverPoint.percentage}% at {hoverPoint.time}
