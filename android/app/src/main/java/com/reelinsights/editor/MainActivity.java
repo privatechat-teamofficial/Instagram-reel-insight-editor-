@@ -65,7 +65,8 @@ public class MainActivity extends BridgeActivity {
         // 3. Set window background to pure black Color.BLACK (#000000)
         window.setBackgroundDrawable(new ColorDrawable(DARK_BG));
 
-        // 4. Set system bars to transparent for true seamless edge-to-edge drawing
+        // 4. Enable fullscreen flags and transparent system bars
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -78,7 +79,7 @@ public class MainActivity extends BridgeActivity {
             window.setStatusBarContrastEnforced(false);
         }
 
-        // 6. Ensure system icons (clock, battery, Wi-Fi, navigation gesture pill / buttons) are white
+        // 6. Ensure true immersive full-screen: hide system bars and allow transient swipe reveal
         View decorView = window.getDecorView();
         if (decorView != null) {
             decorView.setBackgroundColor(DARK_BG);
@@ -92,6 +93,8 @@ public class MainActivity extends BridgeActivity {
             if (insetsController != null) {
                 insetsController.setAppearanceLightStatusBars(false);       // false = light/white status bar icons
                 insetsController.setAppearanceLightNavigationBars(false);   // false = light/white navigation bar icons
+                insetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                insetsController.hide(WindowInsetsCompat.Type.systemBars());
             }
         }
 
