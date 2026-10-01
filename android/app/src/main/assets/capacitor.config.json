@@ -11,11 +11,5 @@
 		"captureInput": true,
 		"backgroundColor": "#000000"
 	},
-	"plugins": {
-		"StatusBar": {
-			"overlaysWebView": true,
-			"style": "LIGHT",
-			"backgroundColor": "#000000"
-		}
-	}
+	"plugins": {}
 }
