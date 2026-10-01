@@ -61,14 +61,14 @@ public class MainActivity extends BridgeActivity {
         // 3. Set window background to app dark color (#0d0f12)
         window.setBackgroundDrawable(new ColorDrawable(DARK_BG));
 
-        // 4. Set system bars to fully transparent so app background flows under status & nav bars
+        // 4. Set system bar backgrounds to dark background color (#0d0f12)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        window.setStatusBarColor(Color.TRANSPARENT);
-        window.setNavigationBarColor(Color.TRANSPARENT);
+        window.setStatusBarColor(DARK_BG);
+        window.setNavigationBarColor(DARK_BG);
 
-        // 5. Disable Android 10+ contrast scrim overlay so system bars don't get forced gray/scrim
+        // 5. Explicitly disable Android 10+ contrast scrim overlay so system never forces a gray strip
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setNavigationBarContrastEnforced(false);
             window.setStatusBarContrastEnforced(false);
