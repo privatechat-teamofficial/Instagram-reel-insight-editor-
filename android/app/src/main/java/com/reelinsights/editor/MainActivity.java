@@ -5,10 +5,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 
@@ -18,6 +21,12 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configureEdgeToEdge();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         configureEdgeToEdge();
     }
 
@@ -49,43 +58,61 @@ public class MainActivity extends BridgeActivity {
             window.setAttributes(params);
         }
 
-        // 3. Set window and decor view background to app dark color (#0d0f12)
+        // 3. Set window background to app dark color (#0d0f12)
         window.setBackgroundDrawable(new ColorDrawable(DARK_BG));
-        View decorView = window.getDecorView();
-        if (decorView != null) {
-            decorView.setBackgroundColor(DARK_BG);
-            decorView.setFitsSystemWindows(false);
-            decorView.setOnApplyWindowInsetsListener((v, insets) -> insets);
-        }
 
-        // 4. Ensure system bars draw #0d0f12 / transparent for true seamless top edge
+        // 4. Set system bars to fully transparent so app background flows under status & nav bars
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        window.setStatusBarColor(DARK_BG);
-        window.setNavigationBarColor(DARK_BG);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setNavigationBarColor(Color.TRANSPARENT);
 
-        // 5. Disable Android 10+ contrast scrim overlay so system bars don't get forced white/gray
+        // 5. Disable Android 10+ contrast scrim overlay so system bars don't get forced gray/scrim
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setNavigationBarContrastEnforced(false);
             window.setStatusBarContrastEnforced(false);
         }
 
         // 6. Ensure system icons (clock, battery, Wi-Fi, navigation gesture pill / buttons) are white
-        WindowInsetsControllerCompat insetsController = WindowCompat.getInsetsController(window, decorView != null ? decorView : window.getDecorView());
-        if (insetsController != null) {
-            insetsController.setAppearanceLightStatusBars(false);       // false = light/white icons
-            insetsController.setAppearanceLightNavigationBars(false);   // false = light/white navigation icons
+        View decorView = window.getDecorView();
+        if (decorView != null) {
+            decorView.setBackgroundColor(DARK_BG);
+            decorView.setFitsSystemWindows(false);
+            decorView.setPadding(0, 0, 0, 0);
+
+            // Pass insets through without applying padding
+            ViewCompat.setOnApplyWindowInsetsListener(decorView, (v, insets) -> insets);
+
+            WindowInsetsControllerCompat insetsController = WindowCompat.getInsetsController(window, decorView);
+            if (insetsController != null) {
+                insetsController.setAppearanceLightStatusBars(false);       // false = light/white status bar icons
+                insetsController.setAppearanceLightNavigationBars(false);   // false = light/white navigation bar icons
+            }
         }
 
-        // 7. Ensure underlying WebView and container have the same dark background and no system insets
+        // 7. Ensure content container and WebView start at (0, 0) with zero padding
+        View contentView = findViewById(android.R.id.content);
+        if (contentView != null) {
+            contentView.setFitsSystemWindows(false);
+            contentView.setPadding(0, 0, 0, 0);
+            ViewCompat.setOnApplyWindowInsetsListener(contentView, (v, insets) -> insets);
+        }
+
         if (getBridge() != null && getBridge().getWebView() != null) {
             WebView webView = getBridge().getWebView();
             webView.setBackgroundColor(DARK_BG);
             webView.setFitsSystemWindows(false);
-            if (webView.getParent() instanceof View) {
-                ((View) webView.getParent()).setBackgroundColor(DARK_BG);
-                ((View) webView.getParent()).setFitsSystemWindows(false);
+            webView.setPadding(0, 0, 0, 0);
+            webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+            ViewCompat.setOnApplyWindowInsetsListener(webView, (v, insets) -> insets);
+
+            if (webView.getParent() instanceof ViewGroup) {
+                ViewGroup parent = (ViewGroup) webView.getParent();
+                parent.setBackgroundColor(DARK_BG);
+                parent.setFitsSystemWindows(false);
+                parent.setPadding(0, 0, 0, 0);
+                ViewCompat.setOnApplyWindowInsetsListener(parent, (v, insets) -> insets);
             }
         }
     }

@@ -132,8 +132,8 @@ const ReelInsightsScreen: React.FC = () => {
     <div className="min-h-screen min-h-[100dvh] w-full bg-[#0d0f12] lg:bg-[#080a0d] flex items-center justify-center p-0 lg:p-6 select-none relative font-acumin overflow-x-hidden">
       {/* Central Viewport Wrapper */}
       <div className="relative flex items-center justify-center gap-6 h-full w-full lg:w-auto">
-        {/* Mobile Screen Container: 100% full width and height on mobile/Android; framed mockup on desktop */}
-        <div className="relative w-full h-[100dvh] min-h-[100dvh] lg:w-[420px] lg:h-[860px] lg:max-h-[96vh] bg-[#0d0f12] lg:rounded-[28px] lg:border lg:border-[#1e2329] lg:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col">
+        {/* Mobile Screen Container: 100% full width on phones, constrained max-w-[430px] on tablets/desktop */}
+        <div className="relative w-full max-w-[430px] h-[100dvh] min-h-[100dvh] lg:h-[860px] lg:max-h-[96vh] bg-[#0d0f12] lg:rounded-[28px] lg:border lg:border-[#1e2329] lg:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col mx-auto">
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"

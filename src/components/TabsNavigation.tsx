@@ -36,9 +36,10 @@ export const TabsNavigation: React.FC = () => {
                   }
                 }
               }}
-              className={`pt-2.5 pb-1.5 flex items-center justify-center z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+              className={`pt-2.5 pb-1.5 flex items-center justify-center z-10 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none transition-colors ${
                 isActive ? 'text-white font-medium' : 'text-[#8a9199] hover:text-[#d0d4d9]'
               }`}
+              style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               <span className="text-[15.5px] tracking-[0.015em] font-medium">
                 {tab.label}

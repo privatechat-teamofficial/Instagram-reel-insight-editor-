@@ -34,9 +34,9 @@ export const ViewsLineChart: React.FC = () => {
   });
 
   const svgWidth = 300;
-  const svgHeight = 70;
-  const padTop = 5;
-  const padBottom = 5;
+  const svgHeight = 104;
+  const padTop = 4;
+  const padBottom = 4;
 
   const chartWidth = svgWidth;
   const chartHeight = svgHeight - padTop - padBottom;
@@ -93,7 +93,7 @@ export const ViewsLineChart: React.FC = () => {
     return `${acc} L ${x} ${curr.typY}`;
   }, '');
 
-  // Format numbers for Y-axis (e.g. 2K, 1K, 0)
+  // Format numbers for Y-axis (e.g. 4K, 2K, 0)
   const formatYAxis = (num: number) => {
     if (num >= 1000000) return `${(num / 1000000).toFixed(0)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
@@ -101,7 +101,7 @@ export const ViewsLineChart: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col pt-1 pb-1 select-none">
+    <div className="w-full flex flex-col pt-0.5 pb-1 select-none">
       {/* Filter Pills matching exact screenshot styles:
           [ All ] [ Followers ] [ Non-followers ]
       */}
@@ -109,43 +109,46 @@ export const ViewsLineChart: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewsChartFilter('all')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none active:scale-[0.98] select-none transition-all ${
             viewsChartFilter === 'all'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
+          style={{ WebkitTapHighlightColor: 'transparent' }}
         >
           <span className="leading-none text-center font-medium">All</span>
         </button>
         <button
           type="button"
           onClick={() => setViewsChartFilter('followers')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none active:scale-[0.98] select-none transition-all ${
             viewsChartFilter === 'followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
+          style={{ WebkitTapHighlightColor: 'transparent' }}
         >
           <span className="leading-none text-center font-medium">Followers</span>
         </button>
         <button
           type="button"
           onClick={() => setViewsChartFilter('non_followers')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
+          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none active:scale-[0.98] select-none transition-all ${
             viewsChartFilter === 'non_followers'
               ? 'bg-[#282d35] text-white border-[#38404c]'
               : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
           }`}
+          style={{ WebkitTapHighlightColor: 'transparent' }}
         >
           <span className="leading-none text-center font-medium">Non-followers</span>
         </button>
       </div>
 
       {/* Chart Canvas Area on Dark Background */}
-      <div className="relative flex items-stretch mt-5">
+      <div className="relative flex items-stretch mt-7">
         {/* Y-Axis Labels: 4K, 2K, 0 perfectly aligned with the 3 grid line levels */}
-        <div className="relative w-8 h-[74px] shrink-0 text-[11.5px] text-[#8e959b] font-normal tabular-numbers select-none">
-          <div className="absolute top-[5px] -translate-y-1/2 right-2">
+        <div className="relative w-8 h-[104px] shrink-0 text-[11.5px] text-[#8e959b] font-normal tabular-numbers select-none">
+          <div className="absolute top-[4px] -translate-y-1/2 right-2">
             <EditableValue
               path="viewsChart.yMax"
               title="Max Y value"
@@ -156,10 +159,10 @@ export const ViewsLineChart: React.FC = () => {
               {formatYAxis(yMax)}
             </EditableValue>
           </div>
-          <div className="absolute top-[37px] -translate-y-1/2 right-2">
+          <div className="absolute top-[52px] -translate-y-1/2 right-2">
             {formatYAxis(Math.round(yMax / 2))}
           </div>
-          <div className="absolute top-[69px] -translate-y-1/2 right-2">0</div>
+          <div className="absolute top-[100px] -translate-y-1/2 right-2">0</div>
         </div>
 
         {/* SVG Curve & Axis Container */}
@@ -167,7 +170,7 @@ export const ViewsLineChart: React.FC = () => {
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             preserveAspectRatio="none"
-            className="w-full h-[74px] overflow-visible"
+            className="w-full h-[104px] overflow-visible"
             onMouseLeave={() => setHoverIndex(null)}
           >
             {/* Horizontal Grid lines (Top, Mid, Bottom 0) spanning width */}
@@ -226,7 +229,7 @@ export const ViewsLineChart: React.FC = () => {
                   <circle
                     cx={c.x}
                     cy={c.y}
-                    r="12"
+                    r="14"
                     fill="transparent"
                     onMouseEnter={() => setHoverIndex(i)}
                     onTouchStart={() => setHoverIndex(i)}
@@ -235,9 +238,9 @@ export const ViewsLineChart: React.FC = () => {
                   {/* Dot on hover */}
                   {isHovered && (
                     <>
-                      <circle cx={c.x} cy={c.y} r="4" fill="#FE36FF" />
-                      <circle cx={c.x} cy={c.y} r="1.8" fill="#ffffff" />
-                      <circle cx={c.x} cy={c.typY} r="3" fill="#5c6370" />
+                      <circle cx={c.x} cy={c.y} r="4.5" fill="#FE36FF" />
+                      <circle cx={c.x} cy={c.y} r="2" fill="#ffffff" />
+                      <circle cx={c.x} cy={c.typY} r="3.5" fill="#5c6370" />
                     </>
                   )}
                 </g>
@@ -248,7 +251,7 @@ export const ViewsLineChart: React.FC = () => {
           {/* Interactive Tooltip on hover/touch */}
           {hoverIndex !== null && coords[hoverIndex] && (
             <div
-              className="absolute pointer-events-none -top-6 -translate-x-1/2 bg-[#1c2024] text-white text-[10.5px] font-semibold px-2 py-1 rounded shadow-lg border border-[#2d333b] whitespace-nowrap z-20"
+              className="absolute pointer-events-none -top-7 -translate-x-1/2 bg-[#1c2024] text-white text-[10.5px] font-semibold px-2 py-1 rounded shadow-lg border border-[#2d333b] whitespace-nowrap z-20"
               style={{
                 left: `${(coords[hoverIndex].x / svgWidth) * 100}%`,
               }}
@@ -266,7 +269,7 @@ export const ViewsLineChart: React.FC = () => {
           )}
 
           {/* Date Markers on X-Axis right below 0 grid line: 29 Sept, 30 Sept, 1 Oct */}
-          <div className="flex justify-between items-center text-[11.5px] text-[#8e959b] pt-1.5 px-0 select-none">
+          <div className="flex justify-between items-center text-[11.5px] text-[#8e959b] pt-2.5 px-0 select-none">
             {dates.map((dateStr, idx) => (
               <EditableValue
                 key={idx}
@@ -282,7 +285,7 @@ export const ViewsLineChart: React.FC = () => {
           </div>
 
           {/* Dual series legend matching Instagram: ● This reel   ● Your typical reel */}
-          <div className="flex items-center justify-between pt-2.5 pb-0.5 px-0 select-none text-[11px] text-[#8e959b]">
+          <div className="flex items-center justify-between pt-3 pb-0.5 px-0 select-none text-[11px] text-[#8e959b]">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
                 <span className="w-[6px] h-[6px] rounded-full bg-[#FE36FF] shrink-0" />

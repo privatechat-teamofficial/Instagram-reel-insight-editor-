@@ -108,11 +108,11 @@ export const OverviewTab: React.FC = () => {
   // Retention chart coordinates
   const retentionPoints = retentionData.points || [];
   const retSvgWidth = 320;
-  const retSvgHeight = 85;
+  const retSvgHeight = 114;
   const retPadLeft = 10;
   const retPadRight = 10;
-  const retPadTop = 10;
-  const retPadBottom = 20;
+  const retPadTop = 6;
+  const retPadBottom = 12;
   const retWidth = retSvgWidth - retPadLeft - retPadRight;
   const retHeight = retSvgHeight - retPadTop - retPadBottom;
 
@@ -129,7 +129,7 @@ export const OverviewTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col px-4 pt-[54px] pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Summary Section */}
       <section className="flex flex-col gap-3.5">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -310,7 +310,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 4. How long people watched your reel */}
-      <section className="flex flex-col gap-2 mt-[48px]">
+      <section className="flex flex-col gap-2 mt-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">How long people watched your reel</span>
@@ -366,7 +366,7 @@ export const OverviewTab: React.FC = () => {
             <svg
               viewBox={`0 0 ${retSvgWidth} ${retSvgHeight}`}
               preserveAspectRatio="none"
-              className="w-full h-[80px] overflow-visible"
+              className="w-full h-[104px] overflow-visible"
               onMouseLeave={() => setRetentionHover(null)}
             >
               {/* Guidelines */}
@@ -450,7 +450,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 5. Top Sources of Views Section */}
-      <section className="flex flex-col gap-2.5 mt-[48px]">
+      <section className="flex flex-col gap-2.5 mt-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">Top sources of views</span>

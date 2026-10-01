@@ -84,7 +84,7 @@ export const AudienceTab: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col px-4 pt-[56px] pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Who viewed your reel */}
       <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -92,15 +92,15 @@ export const AudienceTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* Followers & Non-followers with generous Instagram rhythm */}
-        <div className="flex flex-col gap-6 mt-7">
+        {/* Followers & Non-followers with exact Instagram rhythm */}
+        <div className="flex flex-col gap-4 mt-4">
           {/* Followers */}
-          <div className="flex flex-col gap-2.5">
-            <span className="text-[16px] font-normal text-white leading-tight">Followers</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[14.5px] font-normal text-white leading-tight">Followers</span>
             <div className="flex items-center justify-between gap-3">
-              <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
+              <div className="flex-1 h-[5px] bg-[#222730] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#804cf0] rounded-full"
+                  className="h-full bg-[#8247ff] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, data.audience.followersPercentage))}%` }}
                 />
               </div>
@@ -109,7 +109,7 @@ export const AudienceTab: React.FC = () => {
                 title="Followers percentage"
                 type="percentage"
                 value={data.audience.followersPercentage}
-                className="text-[16px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                className="text-[14.5px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
               >
                 {formatPercent(data?.audience?.followersPercentage)}
               </EditableValue>
@@ -117,12 +117,12 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* Non-followers */}
-          <div className="flex flex-col gap-2.5">
-            <span className="text-[16px] font-normal text-white leading-tight">Non-followers</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[14.5px] font-normal text-white leading-tight">Non-followers</span>
             <div className="flex items-center justify-between gap-3">
-              <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
+              <div className="flex-1 h-[5px] bg-[#222730] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#804cf0] rounded-full"
+                  className="h-full bg-[#8247ff] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, Number(data?.audience?.nonFollowersPercentage) || 0))}%` }}
                 />
               </div>
@@ -131,7 +131,7 @@ export const AudienceTab: React.FC = () => {
                 title="Non-followers percentage"
                 type="percentage"
                 value={data.audience.nonFollowersPercentage}
-                className="text-[16px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                className="text-[14.5px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
               >
                 {formatPercent(data?.audience?.nonFollowersPercentage)}
               </EditableValue>
@@ -141,14 +141,14 @@ export const AudienceTab: React.FC = () => {
       </section>
 
       {/* 2. Audience details */}
-      <section className="flex flex-col mt-[52px]">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Audience details</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
         {/* Sub-tabs filter pills: Age | Country | Gender */}
-        <div className="flex items-center gap-2 mt-5">
+        <div className="flex items-center gap-2 mt-3.5">
           {subTabs.map((tab) => {
             const isActive = audienceSubTab === tab.id;
             return (
@@ -156,11 +156,12 @@ export const AudienceTab: React.FC = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setAudienceSubTab(tab.id)}
-                className={`h-[36px] sm:h-[40px] px-4 sm:px-5 inline-flex items-center justify-center text-[13px] sm:text-[14px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:outline-none select-none ${
+                className={`h-[32px] px-3.5 inline-flex items-center justify-center text-[13px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 active:scale-[0.98] select-none transition-all ${
                   isActive
                     ? 'bg-[#282d35] text-white border-[#38404c]'
                     : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-white hover:border-[#323842]'
                 }`}
+                style={{ WebkitTapHighlightColor: 'transparent' }}
               >
                 <span className="leading-none text-center font-medium">
                   {tab.label}
@@ -171,18 +172,18 @@ export const AudienceTab: React.FC = () => {
         </div>
 
         {/* Dynamic Sub-tab Breakdown */}
-        <div className="flex flex-col mt-7 min-h-[220px]">
+        <div className="flex flex-col mt-5 min-h-[220px]">
           {/* A. AGE SUBTAB */}
-          <div className={audienceSubTab === 'age' ? 'flex flex-col gap-[22px]' : 'hidden'}>
+          <div className={audienceSubTab === 'age' ? 'flex flex-col gap-[14px]' : 'hidden'}>
             {ageList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-2">
+              <div key={item.id} className="flex flex-col gap-1.5">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.age.${idx}.name`}
                     title="Age group label"
                     type="text"
                     value={item.name}
-                    className="text-[15px] font-normal text-white leading-tight"
+                    className="text-[14.5px] font-normal text-white leading-tight"
                   >
                     {item.name}
                   </EditableValue>
@@ -198,7 +199,7 @@ export const AudienceTab: React.FC = () => {
                   )}
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
+                  <div className="flex-1 h-[5px] bg-[#222730] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#FE36FF] rounded-full"
                       style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
@@ -209,7 +210,7 @@ export const AudienceTab: React.FC = () => {
                     title={`${item.name} percentage`}
                     type="percentage"
                     value={item.percentage}
-                    className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                    className="text-[14.5px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
                     {formatPercent(item.percentage)}
                   </EditableValue>
@@ -229,16 +230,16 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* B. COUNTRY SUBTAB */}
-          <div className={audienceSubTab === 'country' ? 'flex flex-col gap-[22px]' : 'hidden'}>
+          <div className={audienceSubTab === 'country' ? 'flex flex-col gap-[14px]' : 'hidden'}>
             {countryList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-2">
+              <div key={item.id} className="flex flex-col gap-1.5">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.country.${idx}.name`}
                     title="Country name"
                     type="country_select"
                     value={item.name}
-                    className="text-[15px] font-normal text-white leading-tight"
+                    className="text-[14.5px] font-normal text-white leading-tight"
                   >
                     {item.name}
                   </EditableValue>
@@ -254,7 +255,7 @@ export const AudienceTab: React.FC = () => {
                   )}
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
+                  <div className="flex-1 h-[5px] bg-[#222730] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#FE36FF] rounded-full"
                       style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
@@ -265,7 +266,7 @@ export const AudienceTab: React.FC = () => {
                     title={`${item.name} percentage`}
                     type="percentage"
                     value={item.percentage}
-                    className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                    className="text-[14.5px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
                     {formatPercent(item.percentage)}
                   </EditableValue>
@@ -285,16 +286,16 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* C. GENDER SUBTAB */}
-          <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-[22px]' : 'hidden'}>
+          <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-[14px]' : 'hidden'}>
             {genderList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-2">
+              <div key={item.id} className="flex flex-col gap-1.5">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.gender.${idx}.name`}
                     title="Gender label"
                     type="text"
                     value={item.name}
-                    className="text-[15px] font-normal text-white leading-tight"
+                    className="text-[14.5px] font-normal text-white leading-tight"
                   >
                     {item.name}
                   </EditableValue>
@@ -310,7 +311,7 @@ export const AudienceTab: React.FC = () => {
                   )}
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 h-[6px] bg-[#222730] rounded-full overflow-hidden">
+                  <div className="flex-1 h-[5px] bg-[#222730] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#FE36FF] rounded-full"
                       style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
@@ -321,7 +322,7 @@ export const AudienceTab: React.FC = () => {
                     title={`${item.name} percentage`}
                     type="percentage"
                     value={item.percentage}
-                    className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                    className="text-[14.5px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
                   >
                     {formatPercent(item.percentage)}
                   </EditableValue>
