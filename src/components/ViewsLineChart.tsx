@@ -48,9 +48,9 @@ export const ViewsLineChart: React.FC = () => {
   });
 
   const svgWidth = 300;
-  const svgHeight = 104;
-  const padTop = 4;
-  const padBottom = 4;
+  const svgHeight = 96;
+  const padTop = 3;
+  const padBottom = 3;
 
   const chartWidth = svgWidth;
   const chartHeight = svgHeight - padTop - padBottom;
@@ -119,64 +119,52 @@ export const ViewsLineChart: React.FC = () => {
       {/* Filter Pills matching exact screenshot styles:
           [ All ] [ Followers ] [ Non-followers ]
       */}
-      <div className="flex items-center gap-2 mt-3">
-        <button
-          type="button"
-          onClick={() => setViewsChartFilter('all')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
-            viewsChartFilter === 'all'
-              ? 'bg-[#282d35] text-white border-[#38404c]'
-              : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
-          }`}
-          style={{ WebkitTapHighlightColor: 'transparent' }}
-        >
-          <span className="leading-none text-center font-medium">All</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setViewsChartFilter('followers')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
-            viewsChartFilter === 'followers'
-              ? 'bg-[#282d35] text-white border-[#38404c]'
-              : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
-          }`}
-          style={{ WebkitTapHighlightColor: 'transparent' }}
-        >
-          <span className="leading-none text-center font-medium">Followers</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setViewsChartFilter('non_followers')}
-          className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none select-none transition-colors ${
-            viewsChartFilter === 'non_followers'
-              ? 'bg-[#282d35] text-white border-[#38404c]'
-              : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-[#d0d4d9]'
-          }`}
-          style={{ WebkitTapHighlightColor: 'transparent' }}
-        >
-          <span className="leading-none text-center font-medium">Non-followers</span>
-        </button>
+      <div className="flex items-center gap-2 mt-5">
+        {[
+          { id: 'all', label: 'All' },
+          { id: 'followers', label: 'Followers' },
+          { id: 'non_followers', label: 'Non-followers' },
+        ].map((tab) => {
+          const isActive = viewsChartFilter === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setViewsChartFilter(tab.id as 'all' | 'followers' | 'non_followers')}
+              className={`h-[36px] px-4 flex items-center justify-center text-[13.5px] font-medium rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 select-none transition-colors shrink-0 ${
+                isActive
+                  ? 'bg-[#282d35] text-white border-[#38404c]'
+                  : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-white hover:border-[#323842]'
+              }`}
+              style={{ WebkitTapHighlightColor: 'transparent' }}
+            >
+              <span className="leading-[34px] text-center font-medium block whitespace-nowrap translate-y-[0.5px]">
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Chart Canvas Area on Dark Background */}
-      <div className="relative flex items-stretch mt-7">
+      <div className="relative flex items-stretch mt-11">
         {/* Y-Axis Labels: 4K, 2K, 0 perfectly aligned with the 3 grid line levels */}
-        <div className="relative w-8 h-[104px] shrink-0 text-[11.5px] text-[#8e959b] font-normal tabular-numbers select-none">
-          <div className="absolute top-[4px] -translate-y-1/2 right-2">
+        <div className="relative w-[34px] h-[96px] shrink-0 text-[11px] text-[#8e959b] font-normal select-none">
+          <div className="absolute top-[3px] -translate-y-1/2 right-2">
             <EditableValue
               path="viewsChart.yMax"
               title="Max Y value"
               type="number"
               value={yMax}
-              className="text-[11.5px] text-[#8e959b] font-normal"
+              className="text-[11px] text-[#8e959b] font-normal"
             >
               {formatYAxis(yMax)}
             </EditableValue>
           </div>
-          <div className="absolute top-[52px] -translate-y-1/2 right-2">
+          <div className="absolute top-[48px] -translate-y-1/2 right-2">
             {formatYAxis(Math.round(yMax / 2))}
           </div>
-          <div className="absolute top-[100px] -translate-y-1/2 right-2">0</div>
+          <div className="absolute top-[93px] -translate-y-1/2 right-2">0</div>
         </div>
 
         {/* SVG Curve & Axis Container */}
@@ -184,7 +172,7 @@ export const ViewsLineChart: React.FC = () => {
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             preserveAspectRatio="none"
-            className="w-full h-[104px] overflow-visible"
+            className="w-full h-[96px] overflow-visible"
             onMouseLeave={() => setHoverIndex(null)}
           >
             {/* Horizontal Grid lines (Top, Mid, Bottom 0) spanning width */}
@@ -230,6 +218,7 @@ export const ViewsLineChart: React.FC = () => {
               fill="none"
               stroke="#FE36FF"
               strokeWidth="2.8"
+              vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -292,7 +281,7 @@ export const ViewsLineChart: React.FC = () => {
           )}
 
           {/* Date Markers on X-Axis right below 0 grid line: 29 Sept, 30 Sept, 1 Oct */}
-          <div className="flex justify-between items-center text-[11.5px] text-[#8e959b] pt-2.5 px-0 select-none">
+          <div className="flex justify-between items-center text-[11.5px] text-[#8e959b] pt-2 px-0 select-none">
             {dates.map((dateStr, idx) => (
               <EditableValue
                 key={idx}
@@ -307,8 +296,8 @@ export const ViewsLineChart: React.FC = () => {
             ))}
           </div>
 
-          {/* Dual series legend matching Instagram: ● This reel   ● Your typical reel */}
-          <div className="flex items-center justify-between pt-3 pb-0.5 px-0 select-none text-[11px] text-[#8e959b]">
+          {/* Dual series legend matching Instagram: ● This reel   ● Your typical reel, aligned with Views over time */}
+          <div className="flex items-center justify-between pt-3 pb-0.5 px-0 -ml-[34px] select-none text-[11px] text-[#8e959b]">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
                 <span className="w-[6px] h-[6px] rounded-full bg-[#FE36FF] shrink-0" />

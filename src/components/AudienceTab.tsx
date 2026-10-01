@@ -84,7 +84,7 @@ export const AudienceTab: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#000000]">
+    <div className="flex flex-col px-3 pt-[40px] pb-16 w-full text-white select-none bg-[#0c1014]">
       {/* 1. Who viewed your reel */}
       <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
@@ -92,13 +92,13 @@ export const AudienceTab: React.FC = () => {
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* Followers & Non-followers with exact Instagram rhythm */}
-        <div className="flex flex-col gap-6 mt-6">
+        {/* Followers & Non-followers with exact vertical alignment to Engagement tab */}
+        <div className="flex flex-col mt-[38px]">
           {/* Followers */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col">
             <span className="text-[15px] font-normal text-white leading-tight">Followers</span>
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex-1 h-[6.5px] bg-[#20252e] rounded-full overflow-hidden">
+            <div className="flex items-center justify-between gap-3 -mt-1">
+              <div className="flex-1 h-[7.5px] bg-[#20252e] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#8247ff] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, data.audience.followersPercentage))}%` }}
@@ -109,7 +109,7 @@ export const AudienceTab: React.FC = () => {
                 title="Followers percentage"
                 type="percentage"
                 value={data.audience.followersPercentage}
-                className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                className="text-[15px] font-bold text-white tracking-tight w-14 text-right shrink-0"
               >
                 {formatPercent(data?.audience?.followersPercentage)}
               </EditableValue>
@@ -117,10 +117,10 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* Non-followers */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col mt-3.5">
             <span className="text-[15px] font-normal text-white leading-tight">Non-followers</span>
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex-1 h-[6.5px] bg-[#20252e] rounded-full overflow-hidden">
+            <div className="flex items-center justify-between gap-3 -mt-1">
+              <div className="flex-1 h-[7.5px] bg-[#20252e] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#8247ff] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, Number(data?.audience?.nonFollowersPercentage) || 0))}%` }}
@@ -131,7 +131,7 @@ export const AudienceTab: React.FC = () => {
                 title="Non-followers percentage"
                 type="percentage"
                 value={data.audience.nonFollowersPercentage}
-                className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                className="text-[15px] font-bold text-white tracking-tight w-14 text-right shrink-0"
               >
                 {formatPercent(data?.audience?.nonFollowersPercentage)}
               </EditableValue>
@@ -141,14 +141,14 @@ export const AudienceTab: React.FC = () => {
       </section>
 
       {/* 2. Audience details */}
-      <section className="flex flex-col mt-11">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Audience details</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
         {/* Sub-tabs filter pills: Age | Country | Gender */}
-        <div className="flex items-center gap-2 mt-4">
+        <div className="flex items-center gap-2 mt-6.5">
           {subTabs.map((tab) => {
             const isActive = audienceSubTab === tab.id;
             return (
@@ -156,14 +156,14 @@ export const AudienceTab: React.FC = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setAudienceSubTab(tab.id)}
-                className={`h-[34px] px-4 inline-flex items-center justify-center text-[13.5px] font-medium leading-none rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 select-none transition-colors ${
+                className={`h-[36px] px-4 flex items-center justify-center text-[13.5px] font-medium rounded-full border outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 select-none transition-colors shrink-0 ${
                   isActive
                     ? 'bg-[#282d35] text-white border-[#38404c]'
                     : 'bg-[#14171a] text-[#8e959b] border-[#252932] hover:text-white hover:border-[#323842]'
                 }`}
                 style={{ WebkitTapHighlightColor: 'transparent' }}
               >
-                <span className="leading-none text-center font-medium">
+                <span className="leading-[34px] text-center font-medium block whitespace-nowrap translate-y-[0.5px]">
                   {tab.label}
                 </span>
               </button>
@@ -172,11 +172,11 @@ export const AudienceTab: React.FC = () => {
         </div>
 
         {/* Dynamic Sub-tab Breakdown */}
-        <div className="flex flex-col mt-6 min-h-[220px]">
+        <div className="flex flex-col mt-6.5 min-h-[220px]">
           {/* A. AGE SUBTAB */}
-          <div className={audienceSubTab === 'age' ? 'flex flex-col gap-[22px]' : 'hidden'}>
+          <div className={audienceSubTab === 'age' ? 'flex flex-col gap-3.5' : 'hidden'}>
             {ageList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-2">
+              <div key={item.id} className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.age.${idx}.name`}
@@ -198,8 +198,8 @@ export const AudienceTab: React.FC = () => {
                     </button>
                   )}
                 </div>
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 h-[6.5px] bg-[#20252e] rounded-full overflow-hidden">
+                <div className="flex items-center justify-between gap-3 -mt-1">
+                  <div className="flex-1 h-[7.5px] bg-[#20252e] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#FE36FF] rounded-full"
                       style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
@@ -210,7 +210,7 @@ export const AudienceTab: React.FC = () => {
                     title={`${item.name} percentage`}
                     type="percentage"
                     value={item.percentage}
-                    className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                    className="text-[15px] font-bold text-white tracking-tight w-14 text-right shrink-0"
                   >
                     {formatPercent(item.percentage)}
                   </EditableValue>
@@ -230,9 +230,9 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* B. COUNTRY SUBTAB */}
-          <div className={audienceSubTab === 'country' ? 'flex flex-col gap-[22px]' : 'hidden'}>
+          <div className={audienceSubTab === 'country' ? 'flex flex-col gap-3.5' : 'hidden'}>
             {countryList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-2">
+              <div key={item.id} className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <EditableValue
                     path={`audience.country.${idx}.name`}
@@ -254,8 +254,8 @@ export const AudienceTab: React.FC = () => {
                     </button>
                   )}
                 </div>
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 h-[6.5px] bg-[#20252e] rounded-full overflow-hidden">
+                <div className="flex items-center justify-between gap-3 -mt-1">
+                  <div className="flex-1 h-[7.5px] bg-[#20252e] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#FE36FF] rounded-full"
                       style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
@@ -266,7 +266,7 @@ export const AudienceTab: React.FC = () => {
                     title={`${item.name} percentage`}
                     type="percentage"
                     value={item.percentage}
-                    className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
+                    className="text-[15px] font-bold text-white tracking-tight w-14 text-right shrink-0"
                   >
                     {formatPercent(item.percentage)}
                   </EditableValue>
@@ -286,49 +286,54 @@ export const AudienceTab: React.FC = () => {
           </div>
 
           {/* C. GENDER SUBTAB */}
-          <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-[22px]' : 'hidden'}>
-            {genderList.map((item, idx) => (
-              <div key={item.id} className="flex flex-col gap-2">
-                <div className="flex items-center gap-1.5">
-                  <EditableValue
-                    path={`audience.gender.${idx}.name`}
-                    title="Gender label"
-                    type="text"
-                    value={item.name}
-                    className="text-[15px] font-normal text-white leading-tight"
-                  >
-                    {item.name}
-                  </EditableValue>
-                  {isEditMode && data.audience.gender.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveGenderItem(item.id)}
-                      className="text-gray-500 hover:text-red-400 p-0.5"
-                      title="Delete gender"
+          <div className={audienceSubTab === 'gender' ? 'flex flex-col gap-3.5' : 'hidden'}>
+            {genderList.map((item, idx) => {
+              const isWomen = item.name.toLowerCase().includes('women') || item.name.toLowerCase().includes('female');
+              const barColor = isWomen ? 'bg-[#8247ff]' : 'bg-[#FE36FF]';
+
+              return (
+                <div key={item.id} className="flex flex-col">
+                  <div className="flex items-center gap-1.5">
+                    <EditableValue
+                      path={`audience.gender.${idx}.name`}
+                      title="Gender label"
+                      type="text"
+                      value={item.name}
+                      className="text-[15px] font-normal text-white leading-tight"
                     >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
-                  )}
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 h-[6.5px] bg-[#20252e] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-[#FE36FF] rounded-full"
-                      style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
-                    />
+                      {item.name}
+                    </EditableValue>
+                    {isEditMode && data.audience.gender.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveGenderItem(item.id)}
+                        className="text-gray-500 hover:text-red-400 p-0.5"
+                        title="Delete gender"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    )}
                   </div>
-                  <EditableValue
-                    path={`audience.gender.${idx}.percentage`}
-                    title={`${item.name} percentage`}
-                    type="percentage"
-                    value={item.percentage}
-                    className="text-[15px] font-normal text-white tabular-numbers w-14 text-right shrink-0"
-                  >
-                    {formatPercent(item.percentage)}
-                  </EditableValue>
+                  <div className="flex items-center justify-between gap-3 -mt-1">
+                    <div className="flex-1 h-[7.5px] bg-[#20252e] rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${barColor} rounded-full`}
+                        style={{ width: `${Math.min(100, Math.max(0, item.percentage))}%` }}
+                      />
+                    </div>
+                    <EditableValue
+                      path={`audience.gender.${idx}.percentage`}
+                      title={`${item.name} percentage`}
+                      type="percentage"
+                      value={item.percentage}
+                      className="text-[15px] font-bold text-white tracking-tight w-14 text-right shrink-0"
+                    >
+                      {formatPercent(item.percentage)}
+                    </EditableValue>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {isEditMode && (
               <button

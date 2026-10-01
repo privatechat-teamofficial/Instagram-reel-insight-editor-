@@ -48,8 +48,9 @@
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #000000;
+    background-color: #0c1014;
     overflow-x: hidden;
+    overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
   }
   #root {
@@ -58,7 +59,7 @@
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #000000;
+    background-color: #0c1014;
   }
   input, textarea {
     user-select: auto;

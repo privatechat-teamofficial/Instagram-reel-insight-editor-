@@ -159,56 +159,58 @@ export const SkipRateIcon: React.FC<{ className?: string }> = ({ className = 'w-
 
 /**
  * BACK ARROW
- * Horizontal arrow with extended tail and head sized to match Reel insights text height
+ * Horizontal arrow with extended tail and crisp arrowhead matching Instagram header
  */
-export const HeaderBackIcon: React.FC<{ className?: string }> = ({ className = 'w-[18px] h-[16px]' }) => (
+export const HeaderBackIcon: React.FC<{ className?: string }> = ({ className = 'w-[22px] h-[22px]' }) => (
   <svg
-    viewBox="0 0 20 18"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.75"
+    strokeWidth="2.35"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`shrink-0 ${className}`}
     aria-hidden="true"
   >
-    <path d="M19 9H1.5" />
-    <polyline points="8.5 1.5 1.5 9 8.5 16.5" />
+    <line x1="21" y1="12" x2="3.5" y2="12" />
+    <polyline points="10.5 5 3.5 12 10.5 19" />
   </svg>
 );
 
 /**
  * INSIGHTS TREND ARROW
+ * Dynamic upward trend line with top-right arrowhead matching screenshot
  */
-export const HeaderInsightsIcon: React.FC<{ className?: string }> = ({ className = 'w-[21px] h-[21px]' }) => (
+export const HeaderInsightsIcon: React.FC<{ className?: string }> = ({ className = 'w-[22px] h-[22px]' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.9"
+    strokeWidth="2.35"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
+    className={`shrink-0 ${className}`}
     aria-hidden="true"
   >
-    <polyline points="3.5 16.5 8.5 11.5 13 16 20.5 8.5" />
-    <polyline points="15 8.5 20.5 8.5 20.5 14" />
+    <polyline points="3.5 17.5 9 12 13.5 16.5 20.5 9.5" />
+    <polyline points="15 9.5 20.5 9.5 20.5 15" />
   </svg>
 );
 
 /**
  * THREE-DOT MENU
+ * Vertical 3 dots matching Instagram header
  */
-export const ThreeDotsIcon: React.FC<{ className?: string }> = ({ className = 'w-[20px] h-[20px]' }) => (
+export const ThreeDotsIcon: React.FC<{ className?: string }> = ({ className = 'w-[22px] h-[22px]' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="currentColor"
-    className={className}
+    className={`shrink-0 ${className}`}
     aria-hidden="true"
   >
-    <circle cx="12" cy="5" r="1.6" />
-    <circle cx="12" cy="12" r="1.6" />
-    <circle cx="12" cy="19" r="1.6" />
+    <circle cx="12" cy="5" r="1.8" />
+    <circle cx="12" cy="12" r="1.8" />
+    <circle cx="12" cy="19" r="1.8" />
   </svg>
 );
 

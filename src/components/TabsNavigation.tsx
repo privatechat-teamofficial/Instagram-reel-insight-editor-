@@ -16,10 +16,7 @@ export const TabsNavigation: React.FC = () => {
 
   return (
     <div
-      className="sticky z-20 w-full border-b border-[#1c2025] bg-[#000000] select-none shrink-0"
-      style={{
-        top: 'calc(3.75rem + env(safe-area-inset-top, 0px))',
-      }}
+      className="sticky top-0 z-20 w-full border-b border-[#1c2025] bg-[#0c1014] select-none shrink-0"
     >
       <div className="grid grid-cols-3 w-full relative">
         {tabs.map((tab) => {
@@ -41,7 +38,7 @@ export const TabsNavigation: React.FC = () => {
               }`}
               style={{ WebkitTapHighlightColor: 'transparent' }}
             >
-              <span className="text-[15.5px] tracking-[0.015em] font-medium">
+              <span className="text-[14.5px] tracking-[0.015em] font-medium">
                 {tab.label}
               </span>
             </button>
@@ -55,7 +52,7 @@ export const TabsNavigation: React.FC = () => {
             transform: `translateX(${safeIndex * 100}%)`,
           }}
         >
-          <div className="w-[84px] h-[2px] bg-white rounded-full" />
+          <div className="w-[85px] h-[2px] bg-white rounded-full" />
         </div>
       </div>
     </div>

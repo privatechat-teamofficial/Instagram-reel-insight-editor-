@@ -25,11 +25,11 @@ export const EngagementTab: React.FC = () => {
       ? data.engagement.whenLikedPoints
       : DEFAULT_REEL_DATA.engagement.whenLikedPoints;
   const svgWidth = 320;
-  const svgHeight = 114;
+  const svgHeight = 96;
   const padLeft = 10;
   const padRight = 10;
-  const padTop = 6;
-  const padBottom = 12;
+  const padTop = 4;
+  const padBottom = 8;
   const width = svgWidth - padLeft - padRight;
   const height = svgHeight - padTop - padBottom;
 
@@ -45,22 +45,22 @@ export const EngagementTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#000000]">
+    <div className="flex flex-col px-3 pt-[40px] pb-16 w-full text-white select-none bg-[#0c1014]">
       {/* 1. Actions after viewing */}
       <section className="flex flex-col">
-        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
+        <div className="flex items-center gap-1.5 text-[15px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Actions after viewing</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        <div className="flex items-center justify-between py-1.5 mt-3.5">
+        <div className="flex items-center justify-between py-2 mt-4">
           <span className="text-[15px] font-normal text-white">Follows</span>
           <EditableValue
             path="engagement.followsAfterViewing"
             title="Follows after viewing"
             type="number"
             value={data.engagement.followsAfterViewing}
-            className="text-[15px] font-normal text-white tabular-numbers"
+            className="text-[15px] font-bold text-white tracking-tight"
           >
             {formatNumber(data.engagement.followsAfterViewing)}
           </EditableValue>
@@ -68,78 +68,78 @@ export const EngagementTab: React.FC = () => {
       </section>
 
       {/* 2. Interactions Breakdown */}
-      <section className="flex flex-col mt-8">
-        <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
+      <section className="flex flex-col mt-9">
+        <div className="flex items-center gap-1.5 text-[15px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Interactions</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        <div className="flex flex-col gap-1 mt-3.5">
+        <div className="flex flex-col mt-4">
           {/* Likes */}
-          <div className="flex items-center justify-between py-1.5">
+          <div className="flex items-center justify-between py-2">
             <span className="text-[15px] font-normal text-white">Likes</span>
             <EditableValue
               path="topMetrics.likes"
               title="Likes count"
               type="number"
               value={data.topMetrics.likes}
-              className="text-[15px] font-normal text-white tabular-numbers"
+              className="text-[15px] font-bold text-white tracking-tight"
             >
               {formatNumber(data.topMetrics.likes)}
             </EditableValue>
           </div>
 
           {/* Comments */}
-          <div className="flex items-center justify-between py-1.5">
+          <div className="flex items-center justify-between py-2">
             <span className="text-[15px] font-normal text-white">Comments</span>
             <EditableValue
               path="topMetrics.comments"
               title="Comments count"
               type="number"
               value={data.topMetrics.comments}
-              className="text-[15px] font-normal text-white tabular-numbers"
+              className="text-[15px] font-bold text-white tracking-tight"
             >
               {formatNumber(data.topMetrics.comments)}
             </EditableValue>
           </div>
 
           {/* Reposts */}
-          <div className="flex items-center justify-between py-1.5">
+          <div className="flex items-center justify-between py-2">
             <span className="text-[15px] font-normal text-white">Reposts</span>
             <EditableValue
               path="topMetrics.reposts"
               title="Reposts count"
               type="number"
               value={data.topMetrics.reposts}
-              className="text-[15px] font-normal text-white tabular-numbers"
+              className="text-[15px] font-bold text-white tracking-tight"
             >
               {formatNumber(data.topMetrics.reposts)}
             </EditableValue>
           </div>
 
           {/* Shares */}
-          <div className="flex items-center justify-between py-1.5">
+          <div className="flex items-center justify-between py-2">
             <span className="text-[15px] font-normal text-white">Shares</span>
             <EditableValue
               path="topMetrics.shares"
               title="Shares count"
               type="number"
               value={data.topMetrics.shares}
-              className="text-[15px] font-normal text-white tabular-numbers"
+              className="text-[15px] font-bold text-white tracking-tight"
             >
               {formatNumber(data.topMetrics.shares)}
             </EditableValue>
           </div>
 
           {/* Saves */}
-          <div className="flex items-center justify-between py-1.5">
+          <div className="flex items-center justify-between py-2">
             <span className="text-[15px] font-normal text-white">Saves</span>
             <EditableValue
               path="topMetrics.saves"
               title="Saves count"
               type="number"
               value={data.topMetrics.saves}
-              className="text-[15px] font-normal text-white tabular-numbers"
+              className="text-[15px] font-bold text-white tracking-tight"
             >
               {formatNumber(data.topMetrics.saves)}
             </EditableValue>
@@ -148,9 +148,9 @@ export const EngagementTab: React.FC = () => {
       </section>
 
       {/* 3. When people liked your reel */}
-      <section className="flex flex-col mt-8">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
+          <div className="flex items-center gap-1.5 text-[15px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">When people liked your reel</span>
             <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
           </div>
@@ -170,10 +170,10 @@ export const EngagementTab: React.FC = () => {
         </div>
 
         {/* Center Thumbnail with Play Button matching Instagram reference */}
-        <div className="flex justify-center mt-4 mb-3">
+        <div className="flex justify-center mt-6 mb-6">
           <div
             onClick={() => isEditMode && setIsMediaModalOpen(true)}
-            className="relative w-[76px] h-[120px] rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
+            className="relative w-[76px] h-[120px] rounded-[10px] overflow-hidden bg-[#030405] shadow-md cursor-pointer group"
           >
             {data.mediaType === 'video' ? (
               <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
@@ -186,17 +186,17 @@ export const EngagementTab: React.FC = () => {
               />
             )}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <Play className="w-5 h-5 text-white fill-white/80" />
+              <Play className="w-5 h-5 text-white/90 fill-white/70 drop-shadow" />
             </div>
           </div>
         </div>
 
         {/* When liked chart */}
-        <div className="relative flex items-stretch mt-1">
-          {/* Y-Axis (100%, 50%, 0%) */}
-          <div className="flex flex-col justify-between items-end pr-2 text-[10px] text-[#8e959b] font-normal w-8 pb-5 tabular-numbers">
-            <span>100%</span>
-            <span>50%</span>
+        <div className="relative flex items-stretch mt-3">
+          {/* Y-Axis (80%, 40%, 0%) matching screenshot 5 */}
+          <div className="flex flex-col justify-between items-end pr-2 text-[10px] text-[#8e959b] font-normal w-8 pb-4">
+            <span>80%</span>
+            <span>40%</span>
             <span>0%</span>
           </div>
 
@@ -204,7 +204,7 @@ export const EngagementTab: React.FC = () => {
             <svg
               viewBox={`0 0 ${svgWidth} ${svgHeight}`}
               preserveAspectRatio="none"
-              className="w-full h-[104px] overflow-visible"
+              className="w-full h-[96px] overflow-visible"
               onMouseLeave={() => setHoverPoint(null)}
             >
               <line x1={padLeft} y1={padTop} x2={svgWidth - padRight} y2={padTop} stroke="#20242a" strokeWidth="1" />

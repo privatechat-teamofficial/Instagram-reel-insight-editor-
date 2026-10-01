@@ -9,7 +9,7 @@
 	"android": {
 		"allowMixedContent": true,
 		"captureInput": true,
-		"backgroundColor": "#000000"
+		"backgroundColor": "#0c1014"
 	},
 	"plugins": {}
 }

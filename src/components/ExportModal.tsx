@@ -26,7 +26,7 @@ export const ExportModal: React.FC = () => {
       const dataUrl = await toPng(node, {
         pixelRatio: 2,
         cacheBust: true,
-        backgroundColor: '#000000',
+        backgroundColor: '#0c1014',
       });
 
       setCapturedImageUrl(dataUrl);

@@ -30,6 +30,11 @@ import {
 
 const ReelInsightsScreen: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [overscrollY, setOverscrollY] = useState(0);
+  const [isOverscrolling, setIsOverscrolling] = useState(false);
+  const touchStartRef = useRef<{ x: number; y: number; scrollTop: number; time: number } | null>(null);
+
+  const TABS: TabType[] = ['overview', 'engagement', 'audience'];
 
   useEffect(() => {
     // Hide native status bar if running inside Capacitor
@@ -42,6 +47,7 @@ const ReelInsightsScreen: React.FC = () => {
 
   const {
     activeTab,
+    setActiveTab,
     isEditMode,
     toggleEditMode,
     setIsExportModalOpen,
@@ -54,23 +60,98 @@ const ReelInsightsScreen: React.FC = () => {
     resetToDefaults,
   } = useInsights();
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+      scrollTop: container.scrollTop,
+      time: Date.now(),
+    };
+    setIsOverscrolling(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const touch = e.touches[0];
+    const deltaY = touch.clientY - touchStartRef.current.y;
+
+    // Check if at scroll boundaries (top or bottom) for elastic stretch
+    const isAtTop = container.scrollTop <= 0 && deltaY > 0;
+    const isAtBottom =
+      container.scrollTop + container.clientHeight >= container.scrollHeight - 2 && deltaY < 0;
+
+    if (isAtTop || isAtBottom) {
+      // Apply rubber-band damping (max ~26px stretch)
+      const damp = Math.sign(deltaY) * Math.min(26, Math.pow(Math.abs(deltaY), 0.72) * 1.15);
+      setOverscrollY(damp);
+    } else {
+      if (overscrollY !== 0) setOverscrollY(0);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartRef.current) {
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - touchStartRef.current.x;
+      const deltaY = touch.clientY - touchStartRef.current.y;
+      const deltaTime = Date.now() - touchStartRef.current.time;
+
+      // Check for horizontal swipe gesture to change section (Overview <-> Engagement <-> Audience)
+      if (
+        Math.abs(deltaX) > 45 &&
+        Math.abs(deltaX) > Math.abs(deltaY) * 1.25 &&
+        deltaTime < 600
+      ) {
+        const currentIndex = TABS.indexOf(activeTab);
+        if (deltaX < 0 && currentIndex < TABS.length - 1) {
+          // Swipe left -> next section
+          setActiveTab(TABS[currentIndex + 1]);
+        } else if (deltaX > 0 && currentIndex > 0) {
+          // Swipe right -> previous section
+          setActiveTab(TABS[currentIndex - 1]);
+        }
+      }
+    }
+
+    touchStartRef.current = null;
+    setIsOverscrolling(false);
+    setOverscrollY(0);
+  };
+
   return (
-    <div className="w-full h-full min-h-screen min-h-[100dvh] h-[100dvh] bg-[#000000] flex flex-col p-0 m-0 select-none relative font-acumin overflow-hidden">
-      {/* Reel Insights Screen Content Container */}
+    <div className="w-full h-full min-h-screen min-h-[100dvh] h-[100dvh] bg-[#0c1014] flex flex-col p-0 m-0 select-none relative font-acumin overflow-hidden">
+      {/* Header: Back arrow · Reel insights · Insights trend · Options (100% FIRM, never moves or scrolls) */}
+      <Header />
+
+      {/* Reel Insights Screen Scrollable Container */}
       <div
         id="reel-insights-preview-container"
         ref={scrollContainerRef}
-        className="w-full h-full bg-[#000000] text-white flex flex-col overflow-y-auto overscroll-y-contain overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        className="w-full flex-1 bg-[#0c1014] text-white flex flex-col overflow-y-auto overscroll-none overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
+          overscrollBehavior: 'none',
         }}
       >
-        {/* Header: Back arrow · Reel insights · Insights trend · Options (Fixed & never stretches) */}
-        <Header />
-
-        {/* Stable Content Layer */}
-        <div className="flex-1 flex flex-col w-full bg-[#000000]">
+        {/* Stable Content Layer with elastic overscroll stretch */}
+        <div
+          className="flex-1 flex flex-col w-full bg-[#0c1014] will-change-transform"
+          style={{
+            transform: overscrollY !== 0 ? `translateY(${overscrollY}px)` : undefined,
+            transition: isOverscrolling ? 'none' : 'transform 300ms cubic-bezier(0.25, 1, 0.5, 1)',
+          }}
+        >
           {/* Reel Video/Image Preview & Top 5 Metrics (Likes, Comments, Reposts, Shares, Saves) */}
           <ReelMediaHeader />
 
@@ -78,7 +159,7 @@ const ReelInsightsScreen: React.FC = () => {
           <TabsNavigation />
 
           {/* Active Tab Content - kept mounted to prevent DOM unmount flicker and tablet layout collapse */}
-          <div className="flex-1 w-full bg-[#000000]">
+          <div className="flex-1 w-full bg-[#0c1014]">
             <div className={activeTab === 'overview' ? 'block' : 'hidden'}>
               <OverviewTab />
             </div>
@@ -92,7 +173,7 @@ const ReelInsightsScreen: React.FC = () => {
 
           {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar */}
           <div
-            className="w-full h-12 lg:h-6 shrink-0 bg-[#000000]"
+            className="w-full h-12 lg:h-6 shrink-0 bg-[#0c1014]"
             style={{
               paddingBottom: 'env(safe-area-inset-bottom, 0px)',
             }}

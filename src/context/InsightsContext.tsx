@@ -53,6 +53,9 @@ interface InsightsContextType {
   removeCountryItem: (id: string) => void;
   addSourceItem: (name: string, percentage: number) => void;
   removeSourceItem: (id: string) => void;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadTransition: () => void;
 }
 
 const STORAGE_KEY = 'reel_insights_editor_state_v6';
@@ -60,6 +63,22 @@ const STORAGE_KEY = 'reel_insights_editor_state_v6';
 const InsightsContext = createContext<InsightsContextType | undefined>(undefined);
 
 export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Initial data load transition: simulated realistic Instagram Reel insights data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const reloadTransition = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1800);
+  };
   const [data, setData] = useState<ReelInsightsState>(() => {
     try {
       const keysToTry = [
@@ -314,6 +333,9 @@ export const InsightsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         removeCountryItem,
         addSourceItem,
         removeSourceItem,
+        isLoading,
+        setIsLoading,
+        reloadTransition,
       }}
     >
       {children}

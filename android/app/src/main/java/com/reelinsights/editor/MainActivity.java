@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
-    private static final int DARK_BG = Color.BLACK;
+    private static final int DARK_BG = Color.parseColor("#0c1014");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
