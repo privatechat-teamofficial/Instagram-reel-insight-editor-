@@ -12,101 +12,96 @@ import React from 'react';
 // ==================================================
 
 /**
- * 1. LIKE: Custom Instagram heart curve
+ * 1. LIKE: Custom Instagram heart curve in uniform 0 0 24 24
  */
-export const HeartIcon: React.FC<{ className?: string }> = ({ className = 'w-[19px] h-[19px]' }) => (
+export const HeartIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
   <svg
-    viewBox="0 0 100 100"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="7.5"
+    strokeWidth="1.85"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-hidden="true"
   >
-    <path d="M 50 24.5 C 41.5 8, 17 6.5, 7 24 C -1.5 39, 6 54.5, 17 66 L 47 91 Q 50 93.5 53 91 L 83 66 C 94 54.5, 101.5 39, 93 24 C 83 6.5, 58.5 8, 50 24.5 Z" />
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
   </svg>
 );
 
 /**
- * 2. COMMENT: Chat bubble
+ * 2. COMMENT: Chat bubble in uniform 0 0 24 24
  */
-export const CommentIcon: React.FC<{ className?: string }> = ({ className = 'w-[19px] h-[19px]' }) => (
+export const CommentIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
   <svg
-    viewBox="1.5 1.5 21 21"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="1.85"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-hidden="true"
   >
-    <path d="M12 3.5a8.5 8.5 0 1 0 5.4 15.1l3.1.9-1-2.9A8.47 8.47 0 0 0 20.5 12a8.5 8.5 0 0 0-8.5-8.5z" />
+    <path d="M12 3.5a8.5 8.5 0 0 0-7.36 12.75L3.5 20.5l4.35-1.12A8.5 8.5 0 1 0 12 3.5z" />
   </svg>
 );
 
 /**
- * 3. REPOST: Two separate curved arrows forming the reshare symbol
- * (Top arrow curving right, Bottom arrow curving left)
+ * 3. REPOST: Curved reshare arrows in uniform 0 0 24 24
  */
-export const RepostIcon: React.FC<{ className?: string }> = ({ className = 'w-[19px] h-[19px]' }) => (
+export const RepostIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
   <svg
-    viewBox="1.5 1.5 21 21"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.8"
+    strokeWidth="1.85"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-hidden="true"
   >
-    {/* Top arrow: goes up from left, curves right, ends with right-pointing arrow */}
-    <path d="M5.5 11V8a3 3 0 0 1 3-3h9" />
-    <polyline points="15 2.5 18 5 15 7.5" />
-
-    {/* Bottom arrow: goes down from right, curves left, ends with left-pointing arrow */}
-    <path d="M18.5 13v3a3 3 0 0 1-3 3h-9" />
-    <polyline points="9 21.5 6 19 9 16.5" />
+    <path d="M17 2l4 4-4 4" />
+    <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
+    <path d="M7 22l-4-4 4-4" />
+    <path d="M21 13v1a4 4 0 0 1-4 4H3" />
   </svg>
 );
 
 /**
- * 4. SHARE: Rotated paper airplane, centered in viewBox
+ * 4. SHARE: Rotated paper airplane in uniform 0 0 24 24
  */
-export const ShareIcon: React.FC<{ className?: string }> = ({ className = 'w-[19px] h-[19px]' }) => (
+export const ShareIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
   <svg
-    viewBox="21 21 65 65"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="5"
+    strokeWidth="1.85"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-hidden="true"
   >
-    <g transform="rotate(17.35 50 50)">
-      <path d="M 28.5 36 L 68 23.5 Q 80 19.5 76.5 32.5 L 63.5 70.5 Q 60.5 79.5 53.5 73.5 L 45.5 61.5 Q 43.5 57 39 52.5 L 27.5 44.5 Q 19 39 28.5 36 Z M 43.5 57 L 58.5 42" />
-    </g>
+    <path d="M21.5 2.5L10.5 13.5" />
+    <path d="M21.5 2.5L14.5 21.5L10.5 13.5L2.5 9.5L21.5 2.5Z" />
   </svg>
 );
 
 /**
- * 5. SAVE: Bookmark with notched bottom
+ * 5. SAVE: Bookmark with notched bottom in uniform 0 0 24 24
  */
-export const BookmarkIcon: React.FC<{ className?: string }> = ({ className = 'w-[19px] h-[19px]' }) => (
+export const BookmarkIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
   <svg
-    viewBox="1.5 1 21 22"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="1.85"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-hidden="true"
   >
-    <path d="M5.5 3h13a1.5 1.5 0 0 1 1.5 1.5v16.5a1 1 0 0 1-1.6.8L12 16.5l-6.4 5.3a1 1 0 0 1-1.6-.8V4.5A1.5 1.5 0 0 1 5.5 3z" />
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
   </svg>
 );
 

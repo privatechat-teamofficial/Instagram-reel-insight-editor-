@@ -129,11 +129,11 @@ const ReelInsightsScreen: React.FC = () => {
   } = useInsights();
 
   return (
-    <div className="min-h-screen min-h-[100dvh] w-full bg-[#0d0f12] lg:bg-[#080a0d] flex items-center justify-center p-0 lg:p-6 select-none relative font-acumin overflow-x-hidden">
+    <div className="min-h-screen min-h-[100dvh] w-full bg-[#0d0f12] sm:bg-[#080a0d] flex items-center justify-center p-0 sm:p-6 select-none relative font-acumin overflow-x-hidden">
       {/* Central Viewport Wrapper */}
       <div className="relative flex items-center justify-center gap-6 h-full w-full">
-        {/* Mobile: 100% edge-to-edge full width; Tablet & Desktop: centered at max-w-[440px] */}
-        <div className="relative w-full sm:max-w-[440px] h-[100dvh] min-h-[100dvh] lg:h-[860px] lg:max-h-[96vh] bg-[#0d0f12] lg:rounded-[28px] lg:border lg:border-[#1e2329] lg:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col mx-auto">
+        {/* Mobile: 100% edge-to-edge full width; Tablet & Desktop: authentic framed Instagram window */}
+        <div className="relative w-full h-[100dvh] min-h-[100dvh] sm:w-[412px] sm:h-[870px] sm:max-h-[96vh] bg-[#0d0f12] sm:rounded-[28px] sm:border sm:border-[#1e2329] sm:shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col mx-auto">
           {/* Reel Insights Screen Content Container */}
           <div
             id="reel-insights-preview-container"

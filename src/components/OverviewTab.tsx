@@ -138,18 +138,18 @@ export const OverviewTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-5 pb-14 w-full text-white select-none bg-[#0d0f12]">
       {/* 1. Summary Section */}
-      <section className="flex flex-col gap-3.5">
+      <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Summary</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
         </div>
 
-        {/* 2x2 Grid Cards: Roomier cards with #25292E background and rounded corners */}
-        <div className="grid grid-cols-2 gap-2.5 w-full">
+        {/* 2x2 Grid Cards: Roomier cards with #21252b background and rounded corners */}
+        <div className="grid grid-cols-2 gap-2.5 w-full mt-3.5">
           {/* Box 1: Views */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Views
             </span>
@@ -165,7 +165,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 2: Viewers */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Viewers
             </span>
@@ -181,7 +181,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 3: Average watch time */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Average watch time
             </span>
@@ -197,7 +197,7 @@ export const OverviewTab: React.FC = () => {
           </div>
 
           {/* Box 4: Follows */}
-          <div className="bg-[#25292E] rounded-[14px] px-3.5 py-3 min-h-[76px] flex flex-col justify-between shadow-sm">
+          <div className="bg-[#21252b] rounded-[12px] px-3.5 py-3 min-h-[72px] flex flex-col justify-between shadow-sm">
             <span className="text-[13px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
               Follows
             </span>
@@ -215,7 +215,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 2. Views Over Time Section */}
-      <section className="flex flex-col gap-3 mt-10">
+      <section className="flex flex-col mt-7">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Views over time</span>
           <InfoCircleIcon className="w-[13.5px] h-[13.5px] text-white" />
@@ -224,7 +224,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 3. What Impacts Your Views Section */}
-      <section className="flex flex-col gap-1.5 mt-10">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">What impacts your views</span>
@@ -241,12 +241,12 @@ export const OverviewTab: React.FC = () => {
             </button>
           )}
         </div>
-        <p className="text-[12px] text-[#8e959b] font-normal -mt-0.5">
+        <p className="text-[12px] text-[#8e959b] font-normal mt-1">
           Rates are listed in order of importance to reach.
         </p>
 
         {/* Impact List Rows with no partition horizontal line and vertically aligned lighter circular badges */}
-        <div className="flex flex-col mt-1">
+        <div className="flex flex-col mt-3.5">
           {impactList.map((item, idx) => {
             const statusStr = String(item?.status || 'Lower');
             const isGreen =
@@ -319,7 +319,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 4. How long people watched your reel */}
-      <section className="flex flex-col gap-2 mt-10">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">How long people watched your reel</span>
@@ -341,10 +341,10 @@ export const OverviewTab: React.FC = () => {
         </div>
 
         {/* Center Thumbnail with Play indicator matching Instagram reference */}
-        <div className="flex justify-center my-3">
+        <div className="flex justify-center mt-4 mb-3">
           <div
             onClick={() => isEditMode && setIsMediaModalOpen(true)}
-            className="relative w-[78px] h-[112px] rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
+            className="relative w-[76px] h-[120px] rounded-[8px] overflow-hidden bg-[#000000] border border-[#222228] shadow cursor-pointer group"
           >
             {data.mediaType === 'video' ? (
               <video src={data.mediaUrl} className="w-full h-full object-cover" muted playsInline preload="metadata" />
@@ -468,7 +468,7 @@ export const OverviewTab: React.FC = () => {
       </section>
 
       {/* 5. Top Sources of Views Section */}
-      <section className="flex flex-col gap-2.5 mt-10">
+      <section className="flex flex-col mt-9">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">Top sources of views</span>
@@ -488,10 +488,10 @@ export const OverviewTab: React.FC = () => {
         </div>
 
         {/* Source Progress Bars */}
-        <div className="flex flex-col gap-4 mt-2">
+        <div className="flex flex-col gap-5 mt-4">
           {sourcesList.map((source, idx) => (
-            <div key={source.id} className="flex flex-col gap-1.5">
-              <div className="flex items-center justify-between text-[14px]">
+            <div key={source.id} className="flex flex-col gap-2">
+              <div className="flex items-center justify-between text-[15px]">
                 <div className="flex items-center gap-2">
                   <EditableValue
                     path={`topSources.${idx}.name`}
@@ -525,8 +525,8 @@ export const OverviewTab: React.FC = () => {
                 </EditableValue>
               </div>
 
-              {/* Progress Bar (Pink #FE36FF on track #1c2024) */}
-              <div className="w-full h-[5px] bg-[#1c2024] rounded-full overflow-hidden">
+              {/* Progress Bar (Pink #FE36FF on track #20252e) */}
+              <div className="w-full h-[6.5px] bg-[#20252e] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#FE36FF] rounded-full"
                   style={{ width: `${Math.min(100, Math.max(0, Number(source?.percentage) || 0))}%` }}
