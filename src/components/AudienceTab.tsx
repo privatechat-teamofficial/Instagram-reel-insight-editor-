@@ -90,7 +90,7 @@ export const AudienceTab: React.FC = () => {
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Who viewed your reel</span>
           <span>
-            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
           </span>
         </div>
 
@@ -147,7 +147,7 @@ export const AudienceTab: React.FC = () => {
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Audience details</span>
           <span>
-            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
           </span>
         </div>
 

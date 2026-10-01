@@ -222,11 +222,11 @@ export const ThreeDotsIcon: React.FC<{ className?: string }> = ({ className = 'w
  * INFO CIRCLE (ⓘ)
  * Matches Instagram heading info icon: inherits text color (pure white) and aligns horizontally on text midline with slight right offset
  */
-export const InfoCircleIcon: React.FC<{ className?: string }> = ({ className = 'w-[12px] h-[12px]' }) => (
+export const InfoCircleIcon: React.FC<{ className?: string }> = ({ className = 'w-[13px] h-[13px]' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="currentColor"
-    className={`shrink-0 ml-1.5 -translate-y-[1px] ${className}`}
+    className={`shrink-0 ml-2 -translate-y-[1px] ${className}`}
     aria-hidden="true"
   >
     <path d="M12 1.5a10.5 10.5 0 1 0 10.5 10.5A10.512 10.512 0 0 0 12 1.5Zm0 19a8.5 8.5 0 1 1 8.5-8.5 8.51 8.51 0 0 1-8.5 8.5Zm0-12.75a1.25 1.25 0 1 0 1.25 1.25A1.25 1.25 0 0 0 12 7.75Zm1 8.75a1 1 0 0 1-2 0v-5a1 1 0 0 1 2 0Z" />

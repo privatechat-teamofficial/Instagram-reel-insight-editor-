@@ -48,7 +48,7 @@ export const ViewsLineChart: React.FC = () => {
   });
 
   const svgWidth = 300;
-  const svgHeight = 114;
+  const svgHeight = 122;
   const padTop = 3;
   const padBottom = 3;
 
@@ -145,9 +145,9 @@ export const ViewsLineChart: React.FC = () => {
       </div>
 
       {/* Chart Canvas Area: Increased gap below filter pills */}
-      <div className="relative flex items-stretch mt-14">
+      <div className="relative flex items-stretch mt-[66px]">
         {/* Y-Axis Labels: 4K, 2K, 0 perfectly aligned with increased gap between levels and larger font */}
-        <div className="relative w-[36px] h-[114px] shrink-0 text-[12.5px] text-[#8e959b] font-normal select-none">
+        <div className="relative w-[36px] h-[122px] shrink-0 text-[12.5px] text-[#8e959b] font-normal select-none">
           <div className="absolute top-[3px] -translate-y-1/2 right-2.5">
             <EditableValue
               path="viewsChart.yMax"
@@ -159,10 +159,10 @@ export const ViewsLineChart: React.FC = () => {
               {formatYAxis(yMax)}
             </EditableValue>
           </div>
-          <div className="absolute top-[57px] -translate-y-1/2 right-2.5">
+          <div className="absolute top-[61px] -translate-y-1/2 right-2.5">
             {formatYAxis(Math.round(yMax / 2))}
           </div>
-          <div className="absolute top-[111px] -translate-y-1/2 right-2.5">0</div>
+          <div className="absolute top-[119px] -translate-y-1/2 right-2.5">0</div>
         </div>
 
         {/* SVG Curve & Axis Container */}
@@ -170,7 +170,7 @@ export const ViewsLineChart: React.FC = () => {
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             preserveAspectRatio="none"
-            className="w-full h-[114px] overflow-visible"
+            className="w-full h-[122px] overflow-visible"
             onMouseLeave={() => setHoverIndex(null)}
           >
             {/* Horizontal Grid lines (Top, Mid, Bottom 0) spanning width */}
@@ -215,7 +215,7 @@ export const ViewsLineChart: React.FC = () => {
               d={pathData}
               fill="none"
               stroke="#FE36FF"
-              strokeWidth="2.8"
+              strokeWidth="3.4"
               vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
               strokeLinejoin="round"

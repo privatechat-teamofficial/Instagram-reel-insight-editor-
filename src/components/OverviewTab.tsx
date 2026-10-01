@@ -145,7 +145,7 @@ export const OverviewTab: React.FC = () => {
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Summary</span>
           <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
           </span>
         </div>
 
@@ -160,8 +160,8 @@ export const OverviewTab: React.FC = () => {
         ) : (
           <div className="grid grid-cols-2 gap-2.5 w-full mt-7 animate-in fade-in duration-300">
             {/* Box 1: Views */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
-              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 pt-4 pb-3 h-[84px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12.5px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Views
               </span>
               <EditableValue
@@ -169,15 +169,15 @@ export const OverviewTab: React.FC = () => {
                 title="Views"
                 type="number"
                 value={data.summary.views}
-                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
+                className="text-[18.5px] font-bold text-white tracking-tight leading-none translate-y-[0.5px]"
               >
                 {formatNumber(data.summary.views)}
               </EditableValue>
             </div>
 
             {/* Box 2: Viewers */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
-              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 pt-4 pb-3 h-[84px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12.5px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Viewers
               </span>
               <EditableValue
@@ -185,15 +185,15 @@ export const OverviewTab: React.FC = () => {
                 title="Viewers"
                 type="number"
                 value={data.summary.viewers}
-                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
+                className="text-[18.5px] font-bold text-white tracking-tight leading-none translate-y-[0.5px]"
               >
                 {formatNumber(data.summary.viewers)}
               </EditableValue>
             </div>
 
             {/* Box 3: Average watch time */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
-              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 pt-4 pb-3 h-[84px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12.5px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Average watch time
               </span>
               <EditableValue
@@ -201,15 +201,15 @@ export const OverviewTab: React.FC = () => {
                 title="Average watch time"
                 type="time"
                 value={data.summary.averageWatchTime}
-                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
+                className="text-[18.5px] font-bold text-white tracking-tight leading-none translate-y-[0.5px]"
               >
                 {data.summary.averageWatchTime}
               </EditableValue>
             </div>
 
             {/* Box 4: Follows */}
-            <div className="bg-[#25292e] rounded-[12px] px-3.5 py-3.5 h-[82px] flex flex-col justify-between shadow-sm">
-              <span className="text-[12px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="bg-[#25292e] rounded-[12px] px-3.5 pt-4 pb-3 h-[84px] flex flex-col justify-between shadow-sm">
+              <span className="text-[12.5px] text-[#8e959b] font-normal leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                 Follows
               </span>
               <EditableValue
@@ -217,7 +217,7 @@ export const OverviewTab: React.FC = () => {
                 title="Follows"
                 type="number"
                 value={data.summary.follows}
-                className="text-[17.5px] font-bold text-white tracking-tight leading-none"
+                className="text-[18.5px] font-bold text-white tracking-tight leading-none translate-y-[0.5px]"
               >
                 {formatNumber(data.summary.follows)}
               </EditableValue>
@@ -231,7 +231,7 @@ export const OverviewTab: React.FC = () => {
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
           <span className="leading-none">Views over time</span>
           <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-            <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+            <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
           </span>
         </div>
         {isLoading ? (
@@ -249,7 +249,7 @@ export const OverviewTab: React.FC = () => {
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">What impacts your views</span>
             <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+              <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
             </span>
           </div>
           {isEditMode && !isLoading && (
@@ -360,7 +360,7 @@ export const OverviewTab: React.FC = () => {
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">How long people watched your reel</span>
             <span>
-              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+              <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
             </span>
           </div>
 
@@ -521,7 +521,7 @@ export const OverviewTab: React.FC = () => {
           <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">
             <span className="leading-none">Top sources of views</span>
             <span>
-              <InfoCircleIcon className="w-[12px] h-[12px] text-white" />
+              <InfoCircleIcon className="w-[13px] h-[13px] text-white" />
             </span>
           </div>
 
