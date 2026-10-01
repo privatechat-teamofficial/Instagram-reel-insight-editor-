@@ -95,6 +95,12 @@ public class MainActivity extends BridgeActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(flags);
 
+            decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    decorView.setSystemUiVisibility(flags);
+                }
+            });
+
             // Pass insets through without applying padding
             ViewCompat.setOnApplyWindowInsetsListener(decorView, (v, insets) -> insets);
 

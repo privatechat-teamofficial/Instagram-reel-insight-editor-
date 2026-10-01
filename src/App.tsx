@@ -31,6 +31,15 @@ import {
 const ReelInsightsScreen: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Hide native status bar if running inside Capacitor
+    import('@capacitor/status-bar')
+      .then(({ StatusBar }) => {
+        StatusBar.hide().catch(() => {});
+      })
+      .catch(() => {});
+  }, []);
+
   const {
     activeTab,
     isEditMode,
