@@ -14,7 +14,7 @@ export const ReelMediaHeader: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-1.5 pb-1 px-3 select-none shrink-0 bg-[#0d0f12]">
+    <div className="flex flex-col items-center pt-1.5 pb-1 px-3 select-none shrink-0 bg-[#000000]">
       {/* Reel Preview: ~132 × 235px (9:16) matching Instagram reference scale */}
       <div
         onClick={() => isEditMode && setIsMediaModalOpen(true)}

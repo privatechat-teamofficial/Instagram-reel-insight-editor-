@@ -16,7 +16,7 @@ export const TabsNavigation: React.FC = () => {
 
   return (
     <div
-      className="sticky z-20 w-full border-b border-[#1c2025] bg-[#0d0f12] select-none shrink-0"
+      className="sticky z-20 w-full border-b border-[#1c2025] bg-[#000000] select-none shrink-0"
       style={{
         top: 'calc(3.75rem + env(safe-area-inset-top, 0px))',
       }}

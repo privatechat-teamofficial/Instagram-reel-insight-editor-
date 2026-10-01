@@ -45,7 +45,7 @@ export const EngagementTab: React.FC = () => {
   }, '');
 
   return (
-    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#0d0f12]">
+    <div className="flex flex-col px-4 pt-6 pb-14 w-full text-white select-none bg-[#000000]">
       {/* 1. Actions after viewing */}
       <section className="flex flex-col">
         <div className="flex items-center gap-1.5 text-[16px] font-bold text-white tracking-tight leading-none">

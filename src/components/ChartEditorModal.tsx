@@ -429,7 +429,7 @@ export const ChartEditorModal: React.FC = () => {
         </div>
 
         {/* 2. REAL-TIME INTERACTIVE SVG CANVAS WITH IMAGE OVERLAY TRACING */}
-        <div className="bg-[#0d0f12] p-3.5 rounded-xl border border-[#21262d] flex flex-col gap-2">
+        <div className="bg-[#000000] p-3.5 rounded-xl border border-[#21262d] flex flex-col gap-2">
           <div className="flex items-center justify-between text-[11px] text-[#8e959b]">
             <span className="font-semibold text-white">Live Curve Visualizer ({points.length} points)</span>
             <span className="font-mono text-white/90">Peak: {yMax.toLocaleString()}</span>
@@ -612,7 +612,7 @@ export const ChartEditorModal: React.FC = () => {
               type="number"
               value={yMax}
               onChange={(e) => setYMax(Number(e.target.value))}
-              className="bg-[#0d0f12] border border-[#2d333b] rounded-xl px-3 py-1.5 text-[13.5px] text-white focus:outline-none focus:border-[#ec008c] tabular-numbers"
+              className="bg-[#000000] border border-[#2d333b] rounded-xl px-3 py-1.5 text-[13.5px] text-white focus:outline-none focus:border-[#ec008c] tabular-numbers"
             />
           </div>
 
@@ -625,7 +625,7 @@ export const ChartEditorModal: React.FC = () => {
                   type="text"
                   value={d}
                   onChange={(e) => handleDateChange(i, e.target.value)}
-                  className="w-1/3 bg-[#0d0f12] border border-[#2d333b] rounded-lg px-2 py-1.5 text-[11px] text-white text-center focus:outline-none focus:border-[#ec008c]"
+                  className="w-1/3 bg-[#000000] border border-[#2d333b] rounded-lg px-2 py-1.5 text-[11px] text-white text-center focus:outline-none focus:border-[#ec008c]"
                 />
               ))}
             </div>

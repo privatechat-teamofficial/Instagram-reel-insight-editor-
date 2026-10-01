@@ -9,13 +9,13 @@
 	"android": {
 		"allowMixedContent": true,
 		"captureInput": true,
-		"backgroundColor": "#0d0f12"
+		"backgroundColor": "#000000"
 	},
 	"plugins": {
 		"StatusBar": {
 			"overlaysWebView": true,
 			"style": "LIGHT",
-			"backgroundColor": "#0d0f12"
+			"backgroundColor": "#000000"
 		}
 	}
 }

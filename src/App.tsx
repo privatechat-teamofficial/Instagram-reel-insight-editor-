@@ -46,12 +46,12 @@ const ReelInsightsScreen: React.FC = () => {
   } = useInsights();
 
   return (
-    <div className="w-full h-full min-h-screen min-h-[100dvh] h-[100dvh] bg-[#0d0f12] flex flex-col p-0 m-0 select-none relative font-acumin overflow-hidden">
+    <div className="w-full h-full min-h-screen min-h-[100dvh] h-[100dvh] bg-[#000000] flex flex-col p-0 m-0 select-none relative font-acumin overflow-hidden">
       {/* Reel Insights Screen Content Container */}
       <div
         id="reel-insights-preview-container"
         ref={scrollContainerRef}
-        className="w-full h-full bg-[#0d0f12] text-white flex flex-col overflow-y-auto overscroll-y-contain overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
+        className="w-full h-full bg-[#000000] text-white flex flex-col overflow-y-auto overscroll-y-contain overflow-x-hidden selection:bg-[#ec008c]/20 font-acumin"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -61,7 +61,7 @@ const ReelInsightsScreen: React.FC = () => {
         <Header />
 
         {/* Stable Content Layer */}
-        <div className="flex-1 flex flex-col w-full">
+        <div className="flex-1 flex flex-col w-full bg-[#000000]">
           {/* Reel Video/Image Preview & Top 5 Metrics (Likes, Comments, Reposts, Shares, Saves) */}
           <ReelMediaHeader />
 
@@ -69,7 +69,7 @@ const ReelInsightsScreen: React.FC = () => {
           <TabsNavigation />
 
           {/* Active Tab Content - kept mounted to prevent DOM unmount flicker and tablet layout collapse */}
-          <div className="flex-1 w-full bg-[#0d0f12]">
+          <div className="flex-1 w-full bg-[#000000]">
             <div className={activeTab === 'overview' ? 'block' : 'hidden'}>
               <OverviewTab />
             </div>
@@ -83,7 +83,7 @@ const ReelInsightsScreen: React.FC = () => {
 
           {/* Bottom spacer for comfortable scrolling above Android gesture navigation bar */}
           <div
-            className="w-full h-12 lg:h-6 shrink-0 bg-[#0d0f12]"
+            className="w-full h-12 lg:h-6 shrink-0 bg-[#000000]"
             style={{
               paddingBottom: 'env(safe-area-inset-bottom, 0px)',
             }}
